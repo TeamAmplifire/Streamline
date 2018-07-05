@@ -1,51 +1,25 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  ListView,
-  Text
-} from 'react-native';
-import { connect } from 'react-redux';
-import ListItem from './src/Components/ListItem';
+import React from 'react';
+import { View } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { fetchAllSongs } from './react_native_fetch_music_filesNativeModule';
+import Reducers from './src/Reducers';
+import SongList from './src/Components/SongList';
 
-class App extends Component {
-  componentWillMount() {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
+const App = () => {
+    fetchAllSongs((errorCallBack) => {
+        console.log(errorCallBack);
+    }, (successCallback) => {
+        console.log(successCallback);
     });
-    this.dataSource = ds.cloneWithRows(this.props.songs);
-  }
-
-  renderRow(song) {
     return (
-      <ListItem item={song} />
+        <Provider store={createStore(Reducers)}>
+            <View>
+                <SongList />
+            </View>
+         </Provider>
     );
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <ListView 
-          dataSource={this.dataSource}
-          renderRow={this.renderRow}
-        />>
-        <Text>djjhcchjd</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
-
-const mapStateToProps = (state) => {
-  return { songs: state.songs };
 };
 
-export default connect(mapStateToProps)(App);
+export default App;
+

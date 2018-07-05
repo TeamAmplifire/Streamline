@@ -59,7 +59,7 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
             return;
         }
 
-        successCallback.invoke(new Gson.toJson(SongCollection.getInstance().getListOfSongs()));
+        successCallback.invoke(new Gson().toJson(SongCollection.getInstance().getListOfSongs()));
     }
 
     private static void emitDeviceEvent(String eventName, @Nullable WritableMap eventData) {
