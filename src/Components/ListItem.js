@@ -9,19 +9,17 @@ import { CardSection } from './Common';
 import * as Actions from '../Actions';
 
 class ListItem extends Component {
-    renderTitle() {
-        return (
-            <CardSection>
-                <Text style={styles.titleStyle}>{this.props.item.title}</Text>
-            </CardSection>
-        );
-    }
-
     render() {
+        console.log('ListItem');
         return (
-            <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.id)}>
+            <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
                 <View>
-                    {this.renderTitle()}
+                    <CardSection>
+                        <Text style={styles.titleStyle}>
+                            {this.props.item.songName}
+                        </Text>
+                        <Text>jhsdc</Text>
+                    </CardSection>
                 </View>
             </TouchableWithoutFeedback>
         );
