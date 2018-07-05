@@ -10,7 +10,8 @@ import * as Actions from '../Actions';
 
 class SongList extends Component {
   componentWillMount() {
-    Actions.fetchSongs();
+    this.props.fetchSongs();
+    
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });

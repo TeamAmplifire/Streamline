@@ -11,13 +11,13 @@ export const selectLibrary = (songID) => {
 };
 
 export const fetchSongs = () => {
-    fetchAllSongs((errorCallBack) => {
-        console.log(errorCallBack);
-    },
-    (successCallback) => {
-        console.log(successCallback);
-        return (dispatch) => {
+    return (dispatch) => {
+        fetchAllSongs((errorCallBack) => {
+            console.log(errorCallBack);
+        },
+        (successCallback) => {
+            console.log(successCallback);
             dispatch({ type: 'data-fetch', payload: successCallback });
-        };
-    });
+        })
+    };
 };
