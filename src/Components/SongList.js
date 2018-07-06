@@ -5,14 +5,14 @@ import {
 import { connect } from 'react-redux';
 import ListItem from './ListItem';
 import * as Actions from '../Actions';
-import Header from './Common';
+import { Header } from './Common';
 
 class SongList extends Component {
   componentWillMount() {
     this.props.fetchSongs();
   }
 
-  renderHeader() {
+  renderHeader = () => {
     return <Header headerText='All Songs' />;
   }
 

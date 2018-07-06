@@ -5,11 +5,16 @@ import {
 import { connect } from 'react-redux';
 import ListItem from './ListItem';
 import * as Actions from '../Actions';
+import { Header } from './Common';
 
 class SongList extends Component {
   componentWillMount() {
     this.props.fetchRecentlyAdded();
     
+  }
+
+  renderHeader = () => {
+    return <Header headerText='Recently Added' />;
   }
 
   render() {
@@ -20,6 +25,7 @@ class SongList extends Component {
           extraData={this.props}
           keyExtractor={item => item.songName} //Need to change songName to songID 
           renderItem={({item}) => <ListItem item={item} />}
+          ListHeaderComponent={this.renderHeader}
         />
     );
   }
