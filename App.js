@@ -5,12 +5,13 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import Reducers from './src/Reducers';
 import SongList from './src/Components/SongList';
+import RecentlyAddedList from './src/Components/RecentlyAddedList';
 
 const App = () => {
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
             <View>
-                <SongList />
+                <RecentlyAddedList />
             </View>
         </Provider>
     );

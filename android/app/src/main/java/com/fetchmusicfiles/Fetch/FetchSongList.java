@@ -52,7 +52,7 @@ public class FetchSongList {
         SongCollection.getInstance().getListOfSongs().clear();
 
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
-                null, null, MediaStore.Audio.Media.DATE_ADDED + "DESC");
+                null, null, MediaStore.Audio.Media.DATE_ADDED + " DESC");
         int i = 0;
         if (cursor != null) {
             if (cursor.moveToFirst()) {
