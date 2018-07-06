@@ -1,4 +1,7 @@
-import { fetchAllSongs } from '../../react_native_fetch_music_filesNativeModule';
+import { 
+    fetchAllSongs,
+    fetchRecentlyAddedSongs
+} from '../../react_native_fetch_music_filesNativeModule';
 
 export const selectLibrary = (songID) => {
     return (
@@ -17,7 +20,20 @@ export const fetchSongs = () => {
         (successCallback) => {
             let JsonArray = [];
             JsonArray = JSON.parse(successCallback);
-            dispatch({ type: 'data-fetch', payload: JsonArray });
+            dispatch({ type: 'data-fetch-all-songs', payload: JsonArray });
+        });
+    };
+};
+
+export const fetchRecentlyAdded = () => {
+    return (dispatch) => {
+        fetchRecentlyAddedSongs((errorCallBack) => {
+            console.log(errorCallBack);
+        },
+        (successCallback) => {
+            let JsonArray = [];
+            JsonArray = JSON.parse(successCallback);
+            dispatch({ type: 'data-fetch-recently-added', payload: JsonArray });
         });
     };
 };
