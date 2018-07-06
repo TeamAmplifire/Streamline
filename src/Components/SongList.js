@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {
-  ListView
+  ListView,
+  FlatList,
+  Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import ListItem from './ListItem';
 import * as Actions from '../Actions';
+import { backgroundColor } from '../Values/colors';
 
 class SongList extends Component {
   componentWillMount() {
@@ -31,10 +34,16 @@ class SongList extends Component {
 
   render() {
     return (
-        <ListView 
-          dataSource={this.dataSource}
-          renderRow={this.renderRow}
+        <FlatList style={{ backgroundColor={backgroundColor} }}
+          data={this.props.songs}
+          extraData={this.props}
+          keyExtractor={}
+          renderItem={({item}) => <ListItem item={item} />}
         />
+        // <ListView 
+        //   dataSource={this.dataSource}
+        //   renderRow={this.renderRow}
+        // />
     );
   }
 }
