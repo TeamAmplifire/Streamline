@@ -10,7 +10,6 @@ class SongList extends Component {
   componentWillMount() {
     this.props.fetchSongs();
     this.createDataSource(this.props);
-    // console.log(this.props.songs);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -22,7 +21,6 @@ class SongList extends Component {
         rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.dataSource = ds.cloneWithRows(songs);
-    console.log('createDataSource', this.dataSource);
   }
 
   renderRow(song) {
@@ -42,7 +40,7 @@ class SongList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state);
   return { songs: state.songs };
 };
 
