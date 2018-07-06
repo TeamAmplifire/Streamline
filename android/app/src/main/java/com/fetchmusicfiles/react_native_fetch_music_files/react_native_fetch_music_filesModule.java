@@ -8,8 +8,11 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.fetchmusicfiles.DataModels.PlaylistCollection;
 import com.fetchmusicfiles.DataModels.SongCollection;
+import com.fetchmusicfiles.Fetch.FetchPlaylists;
 import com.fetchmusicfiles.Fetch.FetchSongList;
+import com.fetchmusicfiles.Update.UpdateSongInfo;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -37,6 +40,10 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
         return constants;
     }
 
+    private static void emitDeviceEvent(String eventName, @Nullable WritableMap eventData) {
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, eventData);
+    }
+
     @ReactMethod
     public void fetchAllSongs(Callback errorCallback,
                               Callback successCallback) {
@@ -62,7 +69,71 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
         successCallback.invoke(new Gson().toJson(SongCollection.getInstance().getListOfSongs()));
     }
 
-    private static void emitDeviceEvent(String eventName, @Nullable WritableMap eventData) {
-        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, eventData);
+    @ReactMethod
+    public void fetchAllPlaylists(Callback errorCallback, Callback successCallback){
+        FetchPlaylists.getInstance().getAllPlaylists(reactContext);
+
+        if(PlaylistCollection.getInstance().getListOfPlaylists().isEmpty()) {
+            errorCallback.invoke("There are no playlists found on this device.");
+            return;
+        }
+
+        successCallback.invoke(new Gson().toJson(PlaylistCollection.getInstance().getListOfPlaylists()));
+    }
+
+    @ReactMethod
+    public void createPlaylist(String playlistName, Callback errorCallback, Callback successCallback){
+        long playlistId = FetchPlaylists.getInstance().createPlaylist(reactContext, playlistName);
+
+        if(playlistId == -1) {
+            errorCallback.invoke("Playlist could not be created.");
+            return;
+        }
+
+        successCallback.invoke("{ id: " + playlistId + " playlistName: " + playlistName + " }");
+    }
+
+    @ReactMethod
+    public void addSongToPlaylist(long playlistId, long songId, Callback errorCallback, Callback successCallback){
+        int check = FetchPlaylists.getInstance().addToPlaylist(reactContext, playlistId, songId);
+
+        if(check == 0) {
+            errorCallback.invoke("Song could not be added to playlist.");
+            return;
+        }
+
+        successCallback.invoke("Song added to playlist.");
+    }
+
+    @ReactMethod
+    public void deletePlaylist(long playlistId){
+        FetchPlaylists.getInstance().deletePlaylist(reactContext, playlistId);
+    }
+
+    @ReactMethod
+    public void renamePlaylist(long playlistId, String newName, Callback errorCallback, Callback successCallback){
+        FetchPlaylists.getInstance().renamePlaylist(reactContext, playlistId, newName);
+    }
+
+    @ReactMethod
+    public void getSongsFromPlaylist(long playlistId, Callback errorCallback, Callback successCallback){
+        FetchPlaylists.getInstance().getSongs(reactContext, playlistId);
+
+        if(SongCollection.getInstance().getListOfSongs().isEmpty()) {
+            errorCallback.invoke("Playlist has no songs.");
+            return;
+        }
+
+        successCallback.invoke(new Gson().toJson(SongCollection.getInstance().getListOfSongs()));
+    }
+
+    @ReactMethod
+    public void editSongInfo(String newTitle, String newAlbum, String newArtist, long songId, String fullPath){
+        UpdateSongInfo.updateID3Tags(reactContext, newTitle, newAlbum, newArtist, songId, fullPath);
+    }
+
+    @ReactMethod
+    public void deleteSong(long songId, String fullPath){
+        UpdateSongInfo.deleteSong(reactContext, songId, fullPath);
     }
 }

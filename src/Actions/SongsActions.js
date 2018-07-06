@@ -3,7 +3,7 @@ import {
     fetchRecentlyAddedSongs
 } from '../../react_native_fetch_music_filesNativeModule';
 
-export const selectLibrary = (songID) => {
+export const selectSong = (songID) => {
     return (
         {
             type: 'select-song',
