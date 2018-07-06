@@ -1,10 +1,17 @@
 
-const InitialState = {};
+const InitialState = [{ 
+    songName: null,
+    songID: null,
+    albumArt: null,
+    albumName: null,
+    fullpath: null,
+    songLength: null
+ }];
 
 export default (state = InitialState, action) => {
     switch (action.type) {
         case 'data-fetch': 
-            return { ...state, songs: action.payload };
+            return action.payload;
         default: 
             return state;
     }

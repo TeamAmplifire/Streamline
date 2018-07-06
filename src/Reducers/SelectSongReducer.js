@@ -1,4 +1,8 @@
-export default (state = null, action) => {
+const InitialState = { 
+    selectedSongID: null
+ };
+
+export default (state = InitialState, action) => {
     switch (action.type) {
         case 'select-song': 
             return action.payload;

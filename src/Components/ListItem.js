@@ -10,7 +10,6 @@ import * as Actions from '../Actions';
 
 class ListItem extends Component {
     render() {
-        console.log('ListItem');
         return (
             <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
                 <View>
@@ -18,7 +17,6 @@ class ListItem extends Component {
                         <Text style={styles.titleStyle}>
                             {this.props.item.songName}
                         </Text>
-                        <Text>jhsdc</Text>
                     </CardSection>
                 </View>
             </TouchableWithoutFeedback>

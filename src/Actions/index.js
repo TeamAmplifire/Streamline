@@ -1,6 +1,5 @@
 import { fetchAllSongs } from '../../react_native_fetch_music_filesNativeModule';
 
-
 export const selectLibrary = (songID) => {
     return (
         {
@@ -16,8 +15,9 @@ export const fetchSongs = () => {
             console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
-            dispatch({ type: 'data-fetch', payload: successCallback });
-        })
+            let JsonArray = [];
+            JsonArray = JSON.parse(successCallback);
+            dispatch({ type: 'data-fetch', payload: JsonArray });
+        });
     };
 };

@@ -34,7 +34,7 @@ public class FetchSongList {
                 do {
                     SongCollection.getInstance().getListOfSongs().add(new Song(
                             cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),
-                            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)),
+                            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
@@ -59,7 +59,7 @@ public class FetchSongList {
                 do {
                     SongCollection.getInstance().getListOfSongs().add(new Song(
                             cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),
-                            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)),
+                            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),

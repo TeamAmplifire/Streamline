@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View,
   ListView
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -11,13 +9,20 @@ import * as Actions from '../Actions';
 class SongList extends Component {
   componentWillMount() {
     this.props.fetchSongs();
-    
+    this.createDataSource(this.props);
+    // console.log(this.props.songs);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.createDataSource(nextProps);
+  }
+
+  createDataSource({ songs }) {
     const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
+        rowHasChanged: (r1, r2) => r1 !== r2
     });
-    console.log(this.props.songs);
-    this.dataSource = ds.cloneWithRows(this.props.songs);
-    console.log(this.dataSource);
+    this.dataSource = ds.cloneWithRows(songs);
+    console.log('createDataSource', this.dataSource);
   }
 
   renderRow(song) {
@@ -28,28 +33,16 @@ class SongList extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
         <ListView 
-          enableEmptySections
           dataSource={this.dataSource}
           renderRow={this.renderRow}
         />
-      </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
-
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return { songs: state.songs };
 };
 

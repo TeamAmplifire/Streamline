@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -12,7 +12,7 @@ const App = () => {
             <View>
                 <SongList />
             </View>
-         </Provider>
+        </Provider>
     );
 };
 
