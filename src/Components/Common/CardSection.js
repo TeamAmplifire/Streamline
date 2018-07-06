@@ -11,9 +11,8 @@ const CardSection = ({ children }) => {
 
 const styles = {
     containerStyle: {
-        borderBottomWidth: 1,
-        padding: 5,
-        backgroundColor: '#fff',
+        padding: 0,
+        backgroundColor: '#242424',
         justifyContent: 'flex-start',
         flexDirection: 'row',
         borderColor: '#ddd',
