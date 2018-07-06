@@ -11,11 +11,11 @@ import { backgroundColor } from './src/Values/colors';
 const App = () => {
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
-            <View style={{ backgroundColor=backgroundColor }}>
+            <View>
                 <StatusBar 
                     backgroundColor={backgroundColor}
                 />
-                <SongList />
+                <RecentlyAddedList />
             </View>
         </Provider>
     );

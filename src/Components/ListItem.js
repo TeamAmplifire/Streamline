@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { 
     Text, 
     TouchableWithoutFeedback, 
-    View
+    View,
+    LayoutAnimation,
+    Platform,
+    UIManager
     } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection } from './Common';
@@ -10,6 +13,15 @@ import * as Actions from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 
 class ListItem extends Component {
+    componentWillMount() {
+            if (Platform.OS === 'android') {
+                UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+            }
+    }
+
+    componentDidMount() {
+        LayoutAnimation.spring();
+    }
     render() {
         return (
             <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
