@@ -27,7 +27,7 @@ public class FetchSongList {
 
         String[] STAR = null;
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, STAR,
-                MediaStore.Audio.Media.IS_MUSIC + " != 0", null, null);
+                null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -52,7 +52,7 @@ public class FetchSongList {
         SongCollection.getInstance().getListOfSongs().clear();
 
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
-                MediaStore.Audio.Media.IS_MUSIC + " != 0", null, MediaStore.Audio.Media.DATE_ADDED + "DESC");
+                null, null, MediaStore.Audio.Media.DATE_ADDED + "DESC");
         int i = 0;
         if (cursor != null) {
             if (cursor.moveToFirst()) {
