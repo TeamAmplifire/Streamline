@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { 
     Text, 
     TouchableWithoutFeedback, 
-    View
+    View,
+    LayoutAnimation,
+    Platform,
+    UIManager
     } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection } from './Common';
@@ -10,6 +13,15 @@ import * as Actions from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 
 class ListItem extends Component {
+    componentWillMount() {
+            if (Platform.OS === 'android') {
+                UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+            }
+    }
+
+    componentDidMount() {
+        LayoutAnimation.spring();
+    }
     render() {
         return (
             <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
@@ -37,37 +49,37 @@ class ListItem extends Component {
 
 const styles = {
     titleStyle: {
-        fontSize: 16,
-        paddingLeft: 16,
-        paddingRight: 72,
+        fontSize: 14,
+        paddingLeft: 8,
+        paddingRight: 122,
         paddingTop: 8,
         paddingBottom: 0,
         color: onBackgroundColor,
-        fontWeight: 'bold'
+        fontFamily: 'Montserrat-SemiBold'
     },
 
     leftTextStyle: {
         flex: 1,
-        fontSize: 14,
-        paddingLeft: 16,
-        paddingRight: 72,
-        paddingTop: 4,
+        fontSize: 12,
+        paddingLeft: 8,
+        paddingRight: 8,
+        paddingTop: 2,
         paddingBottom: 8,
-        color: onBackgroundColor
-        //Font-Regular
+        color: onBackgroundColor,
+        fontFamily: 'Montserrat-Regular'
     },
 
     rightTextStyle: {
         flex: 1,
-        fontSize: 14,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingTop: 4,
+        fontSize: 12,
+        paddingLeft: 8,
+        paddingRight: 8,
+        paddingTop: 2,
         paddingBottom: 8,
         color: onBackgroundColor,
         alignSelf: 'stretch',
-        textAlign: 'right'
-        //Font-Regular
+        textAlign: 'right',
+        fontFamily: 'Montserrat-Regular'
     },
 
     containerStyle: {

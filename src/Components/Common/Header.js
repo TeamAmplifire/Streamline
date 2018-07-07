@@ -1,32 +1,48 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Text,
+         View,
+         Platform,
+         UIManager,
+         LayoutAnimation
+} from 'react-native';
+import { backgroundColor, primaryColor } from '../../Values/colors';
 
-const Header = ({ headerText }) => {
-    const { textStyle, viewStyle } = styles;
-return (
-        <View style={viewStyle}>
-            <Text style={textStyle}>
-                {headerText}
-            </Text>
-        </View>
-    );
-};
+class Header extends Component {
+    
+    componentWillMount() {
+        if (Platform.OS === 'android') {
+            UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
+        LayoutAnimation.easeInEaseOut();   
+    }
+
+    render() {
+        const { textStyle, viewStyle } = styles;
+
+        return (
+            <View style={viewStyle}>
+                <Text style={textStyle}>
+                    {this.props.headerText}
+                </Text>
+            </View>
+        );
+    }
+}
 
 const styles = {
     viewStyle: {
-        backgroundColor: '#b8a3cd',
+        backgroundColor,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         height: 65,
         paddingTop: 5,
-        shadowColor: '#f8f8',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        elevation: 16,
+        paddingLeft: 8,
         position: 'relative'
     },
     textStyle: {
-            fontSize: 20
+            fontSize: 24,
+            fontFamily: 'Montserrat-Bold',
+            color: primaryColor
     }
 };
 
