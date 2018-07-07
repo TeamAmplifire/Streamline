@@ -5,14 +5,17 @@ import {
     Image,
 } from 'react-native';
 import { onBackgroundColor, primaryColor, backgroundColor } from '../Values/colors';
+import { SquareButton } from './Common';
+import imageSource from '../Drawables/images/placeholder_cover.png';
+import { playIcon, prevIcon, nextIcon } from '../Drawables/icons';
 
 class PlayerScreen extends Component {
     render() {
         return (
-            <View>
+            <View style={styles.containerStyle}>
                 <View style={styles.albumArtContainerStyle}>
                     <Image
-                        source={require('../Drawables/images/placeholder_cover.png')} 
+                        source={imageSource} 
                         style={styles.albumArtStyle}
                     />
                 </View>
@@ -23,15 +26,24 @@ class PlayerScreen extends Component {
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
                     Artist Name  •  Album Name
                 </Text>
+
+                <View style={styles.buttonContainerStyle}>
+                    <SquareButton image={prevIcon} />
+                    <SquareButton image={playIcon} style={{ width: 45, height: 45 }}/>
+                    <SquareButton image={nextIcon} />
+                </View>
             </View>
         );
     }
 }
 
 const styles = {
+    containerStyle: {
+
+    },
+    
     albumArtContainerStyle: {
         paddingTop: 40,
- 
     },
 
     albumArtStyle: {
@@ -62,8 +74,16 @@ const styles = {
         textAlign: 'center',
         color: onBackgroundColor,
         fontFamily: 'Montserrat-Regular'
-    }
+    },
 
+    buttonContainerStyle: {
+        padding: 16,
+        backgroundColor,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        borderColor: '#ddd',
+        position: 'relative'
+    }
 };
 
 export default PlayerScreen;

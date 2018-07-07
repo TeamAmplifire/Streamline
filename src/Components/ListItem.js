@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { 
-    Text, 
+    Text,
     TouchableWithoutFeedback, 
     View,
     LayoutAnimation,
@@ -8,7 +8,7 @@ import {
     UIManager
     } from 'react-native';
 import { connect } from 'react-redux';
-import { CardSection } from './Common';
+import { CardSection, Card } from './Common';
 import * as Actions from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 
@@ -22,6 +22,7 @@ class ListItem extends Component {
     componentDidMount() {
         LayoutAnimation.spring();
     }
+    
     render() {
         return (
             <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
@@ -37,7 +38,7 @@ class ListItem extends Component {
                             {this.props.item.artistName}
                         </Text>
 
-                         <Text style={styles.rightTextStyle} numberOfLines={1}>
+                        <Text style={styles.rightTextStyle} numberOfLines={1}>
                             {this.props.item.albumName}
                         </Text>
                     </CardSection>
