@@ -71,15 +71,20 @@ class ListView extends Component {
     return <Header headerText='Recently Added' />;
   }
 
+  _keyExtractor = item => (item.index || item.songName || item.fullpath)
+
+  _renderItem = ({ item }) => <ListItem item={item} />
+
   render() {
       console.log(this.props);
     return (
         <FlatList
-          data={this.state.dataSource}
-          extraData={this.props}
-          keyExtractor={item => item.fullpath} //Need to change songName to songID 
-          renderItem={({ item }) => <ListItem item={item} />}
-          ListHeaderComponent={this.renderHeader}
+            data={this.state.dataSource}
+            extraData={this.props}
+            keyExtractor={this._keyExtractor} //Need to change songName to songID 
+            renderItem={this._renderItem}
+            ListHeaderComponent={this.renderHeader}
+            initialScrollIndex={0}
         />
     );
   }

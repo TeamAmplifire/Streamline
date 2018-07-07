@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { 
     Text,
     TouchableWithoutFeedback, 
@@ -12,7 +12,7 @@ import { CardSection, Card } from './Common';
 import * as Actions from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 
-class ListItem extends Component {
+class ListItem extends PureComponent {
     componentWillMount() {
             if (Platform.OS === 'android') {
                 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -20,7 +20,7 @@ class ListItem extends Component {
     }
 
     componentDidMount() {
-        LayoutAnimation.spring();
+        //LayoutAnimation.spring();
     }
     
     render() {
