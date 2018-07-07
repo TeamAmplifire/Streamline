@@ -64,7 +64,7 @@ const styles = {
         paddingLeft: 8,
         paddingRight: 8,
         paddingTop: 2,
-        paddingBottom: 8,
+        paddingBottom: 12,
         color: onBackgroundColor,
         fontFamily: 'Montserrat-Regular'
     },
@@ -75,7 +75,7 @@ const styles = {
         paddingLeft: 8,
         paddingRight: 8,
         paddingTop: 2,
-        paddingBottom: 8,
+        paddingBottom: 12,
         color: onBackgroundColor,
         alignSelf: 'stretch',
         textAlign: 'right',

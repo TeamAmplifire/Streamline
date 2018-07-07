@@ -37,10 +37,11 @@ const styles = {
         height: 65,
         paddingTop: 5,
         paddingLeft: 8,
+        paddingBottom: 12,
         position: 'relative'
     },
     textStyle: {
-            fontSize: 24,
+            fontSize: 32,
             fontFamily: 'Montserrat-Bold',
             color: primaryColor
     }
