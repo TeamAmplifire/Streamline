@@ -8,8 +8,12 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.fetchmusicfiles.DataModels.AlbumCollection;
+import com.fetchmusicfiles.DataModels.ArtistCollection;
 import com.fetchmusicfiles.DataModels.PlaylistCollection;
 import com.fetchmusicfiles.DataModels.SongCollection;
+import com.fetchmusicfiles.Fetch.FetchAlbums;
+import com.fetchmusicfiles.Fetch.FetchArtists;
 import com.fetchmusicfiles.Fetch.FetchPlaylists;
 import com.fetchmusicfiles.Fetch.FetchSongList;
 import com.fetchmusicfiles.Update.UpdateSongInfo;
@@ -45,8 +49,7 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void fetchAllSongs(Callback errorCallback,
-                              Callback successCallback) {
+    public void fetchAllSongs(Callback errorCallback, Callback successCallback) {
         FetchSongList.getInstance().getAllSongs(reactContext);
 
         if (SongCollection.getInstance().getListOfSongs().isEmpty()) {
@@ -135,5 +138,53 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     @ReactMethod
     public void deleteSong(long songId, String fullPath){
         UpdateSongInfo.deleteSong(reactContext, songId, fullPath);
+    }
+
+    @ReactMethod
+    public void fetchAllAlbums(Callback errorCallback, Callback successCallback){
+        FetchAlbums.getInstance().getAllAlbums(reactContext);
+
+        if(AlbumCollection.getInstance().getListOfAlbums().isEmpty()) {
+            errorCallback.invoke("There are no albums found on this device.");
+            return;
+        }
+
+        successCallback.invoke(new Gson().toJson(AlbumCollection.getInstance().getListOfAlbums()));
+    }
+
+    @ReactMethod
+    public void getSongsFromAlbum(long albumId, Callback errorCallback, Callback successCallback){
+        FetchAlbums.getInstance().getSongs(reactContext, albumId);
+
+        if(SongCollection.getInstance().getListOfSongs().isEmpty()) {
+            errorCallback.invoke("Album has no songs.");
+            return;
+        }
+
+        successCallback.invoke(new Gson().toJson(SongCollection.getInstance().getListOfSongs()));
+    }
+
+    @ReactMethod
+    public void fetchAllArtists(Callback errorCallback, Callback successCallback){
+        FetchArtists.getInstance().getAllArtists(reactContext);
+
+        if(ArtistCollection.getInstance().getListOfArtists().isEmpty()) {
+            errorCallback.invoke("There are no artists found on this device.");
+            return;
+        }
+
+        successCallback.invoke(new Gson().toJson(ArtistCollection.getInstance().getListOfArtists()));
+    }
+
+    @ReactMethod
+    public void getSongsFromArtist(long artistId, Callback errorCallback, Callback successCallback){
+        FetchArtists.getInstance().getSongs(reactContext, artistId);
+
+        if(SongCollection.getInstance().getListOfSongs().isEmpty()) {
+            errorCallback.invoke("Artist has no songs.");
+            return;
+        }
+
+        successCallback.invoke(new Gson().toJson(SongCollection.getInstance().getListOfSongs()));
     }
 }
