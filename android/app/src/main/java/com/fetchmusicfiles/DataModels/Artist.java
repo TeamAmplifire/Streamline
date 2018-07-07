@@ -3,6 +3,7 @@ package com.fetchmusicfiles.DataModels;
 public class Artist {
 
     private String artistName;
+    private long artistID;
 
     public Artist(String artistName, long artistID) {
         this.artistName = artistName;
@@ -26,6 +27,5 @@ public class Artist {
         this.artistID = artistID;
     }
 
-    private long artistID;
 
 }

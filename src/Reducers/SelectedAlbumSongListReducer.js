@@ -1,4 +1,4 @@
-import { DATA_FETCH_RECENTLY_ADDED } from '../Values/Types';
+import { GET_SONGS_FROM_ALBUM } from '../Values/Types';
 
 const InitialState = [{ 
     songName: null,
@@ -8,11 +8,11 @@ const InitialState = [{
     fullpath: null,
     songLength: null,
     artistName: null,
- }];
+}];
 
 export default (state = InitialState, action) => {
     switch (action.type) {
-        case DATA_FETCH_RECENTLY_ADDED: 
+        case GET_SONGS_FROM_ALBUM: 
             return action.payload;
         default: 
             return state;

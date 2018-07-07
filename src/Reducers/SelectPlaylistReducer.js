@@ -1,12 +1,12 @@
-import { SELECT_SONG } from '../Values/Types';
+import { SELECT_PLAYLIST } from '../Values/Types';
 
 const InitialState = { 
-    selectedSongID: null
- };
+    selectedPlaylistID: null
+};
 
 export default (state = InitialState, action) => {
     switch (action.type) {
-        case SELECT_SONG: 
+        case SELECT_PLAYLIST: 
             return action.payload;
         default: 
             return state;

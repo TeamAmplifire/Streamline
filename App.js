@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import Reducers from './src/Reducers';
-import SongList from './src/Components/SongList';
-import RecentlyAddedList from './src/Components/RecentlyAddedList';
 import { backgroundColor } from './src/Values/colors';
+import { ALL_SONGS, RECENTLY_ADDED_SONGS } from './src/Values/Types';
+import ListView from './src/Components/ListView';
 
 const App = () => {
     return (
@@ -15,7 +15,7 @@ const App = () => {
                 <StatusBar 
                     backgroundColor={backgroundColor}
                 />
-                <RecentlyAddedList />
+                <ListView listType={ALL_SONGS} />
             </View>
         </Provider>
     );
