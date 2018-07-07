@@ -140,6 +140,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:23.4.0'
     implementation 'com.facebook.react:react-native:+'
+    compile project(':react-native-recyclerview-list')
     // From node_modules
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation files('src/main/java/com/fetchmusicfiles/Utilities/MyID3_for_Android.jar')

@@ -13,11 +13,7 @@ const App = () => {
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
             <View style={{ flex: 1 }}>
-                <View>
-                    <StatusBar 
-                        backgroundColor={backgroundColor}
-                    />
-                </View>
+                
                 <ListView listType={ALL_SONGS} headerText={'All Songs'} />
             </View>
         </Provider>
@@ -25,4 +21,3 @@ const App = () => {
 };
 
 export default App;
-{/* <GridView listType={ALBUM_LIST} headerText='ho gya' /> */}

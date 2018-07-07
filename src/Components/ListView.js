@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import {
-  FlatList,
+  Text
 } from 'react-native';
 import { connect } from 'react-redux';
+import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import ListItem from './ListItem';
 import * as Actions from '../Actions';
 import { Header } from './Common';
@@ -66,25 +67,19 @@ class ListView extends PureComponent {
                 this.setState({ dataSource: [] });
         }
     }
-
-  renderHeader() {
-    return <Header headerText={this.props.headerText} />;
-  }
-
-  render() {
-    const keyExtractor = item => item.index;
-    const renderItem = ({ item }) => <ListItem item={item} />;
-    return (
-        <FlatList
-            data={this.state.dataSource}
-            extraData={this.props}
-            keyExtractor={keyExtractor} //Need to change songName to songID 
-            renderItem={renderItem}
-            ListHeaderComponent={this.renderHeader}
-            initialScrollIndex={0}
-        />
-    );
-  }
+    
+    render() {
+        const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
+        console.log(dataSource);
+        return (
+            <RecyclerViewList 
+                style={{ flex: 1 }}
+                dataSource={dataSource}
+                renderItem={({ item, index }) => <ListItem item={item} />}
+                ListHeaderComponent={<Header headerText={this.props.headerText} />}
+            />
+        );
+    }
 }
 
 const mapStateToProps = (state) => {

@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 import { Text,
          View,
-         Platform,
-         UIManager,
-         LayoutAnimation
 } from 'react-native';
 import { backgroundColor, primaryColor, accentColor, onBackgroundColor } from '../../Values/colors';
 
 class Header extends Component {
-    
-    componentWillMount() {
-        if (Platform.OS === 'android') {
-            UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-        }
-        LayoutAnimation.spring();   
-    }
-
     render() {
         const { textStyle, viewStyle } = styles;
 
