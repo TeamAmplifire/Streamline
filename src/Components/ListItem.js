@@ -20,7 +20,7 @@ class ListItem extends PureComponent {
     }
 
     componentDidMount() {
-        //LayoutAnimation.spring();
+        LayoutAnimation.spring();
     }
     
     render() {

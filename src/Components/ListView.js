@@ -84,6 +84,7 @@ class ListView extends Component {
             keyExtractor={this._keyExtractor} //Need to change songName to songID 
             renderItem={this._renderItem}
             ListHeaderComponent={this.renderHeader}
+            removeClippedSubviews
             initialScrollIndex={0}
         />
     );
