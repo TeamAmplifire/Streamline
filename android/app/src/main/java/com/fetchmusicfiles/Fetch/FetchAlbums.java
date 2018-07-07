@@ -27,7 +27,7 @@ public class FetchAlbums {
 
     public void getAllAlbums(Context context){
         AlbumCollection.getInstance().getListOfAlbums().clear();
-        String[] projection = {"DISTINCT ALBUM"};
+        String[] projection = {"DISTINCT ALBUM", "ALBUM_ID"};
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
                 null, null, MediaStore.Audio.Media.ALBUM);
 
@@ -59,5 +59,14 @@ public class FetchAlbums {
                     musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
                     musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
         } while (musicCursor.moveToNext());
+    }
+
+    public String getFirstSongImageURI(Context context, long albumID){
+        String where = "ALBUM_ID=?";
+        Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Cursor musicCursor = context.getContentResolver().query(musicUri, null, where, new String[] {Long.toString(albumID)}, null);
+
+        musicCursor.moveToFirst();
+        return musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
     }
 }
