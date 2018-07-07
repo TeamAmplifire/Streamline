@@ -5,7 +5,7 @@ import { Text,
          UIManager,
          LayoutAnimation
 } from 'react-native';
-import { backgroundColor, primaryColor } from '../../Values/colors';
+import { backgroundColor, primaryColor, accentColor, onBackgroundColor } from '../../Values/colors';
 
 class Header extends Component {
     
@@ -13,7 +13,7 @@ class Header extends Component {
         if (Platform.OS === 'android') {
             UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
         }
-        LayoutAnimation.easeInEaseOut();   
+        LayoutAnimation.spring();   
     }
 
     render() {
@@ -32,18 +32,21 @@ class Header extends Component {
 const styles = {
     viewStyle: {
         backgroundColor,
+       
         justifyContent: 'center',
         alignItems: 'flex-start',
         height: 65,
         paddingTop: 5,
         paddingLeft: 8,
-        paddingBottom: 12,
         position: 'relative'
     },
     textStyle: {
-            fontSize: 32,
+            fontSize: 26,
             fontFamily: 'Montserrat-Bold',
-            color: primaryColor
+            color: onBackgroundColor,
+            borderBottomWidth: 2,
+            paddingBottom: 12,
+            borderBottomColor: accentColor
     }
 };
 

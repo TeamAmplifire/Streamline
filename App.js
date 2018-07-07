@@ -6,6 +6,7 @@ import ReduxThunk from 'redux-thunk';
 import Reducers from './src/Reducers';
 import SongList from './src/Components/SongList';
 import RecentlyAddedList from './src/Components/RecentlyAddedList';
+import PlayerScreen from './src/Components/PlayerScreen';
 import { backgroundColor } from './src/Values/colors';
 
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
                 <StatusBar 
                     backgroundColor={backgroundColor}
                 />
-                <RecentlyAddedList />
+                <PlayerScreen />
             </View>
         </Provider>
     );

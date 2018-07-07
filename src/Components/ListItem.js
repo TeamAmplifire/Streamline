@@ -52,7 +52,7 @@ const styles = {
         fontSize: 14,
         paddingLeft: 8,
         paddingRight: 122,
-        paddingTop: 8,
+        paddingTop: 12,
         paddingBottom: 0,
         color: onBackgroundColor,
         fontFamily: 'Montserrat-SemiBold'
