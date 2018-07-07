@@ -150,8 +150,9 @@ public class FetchPlaylists {
         if(count != 0) {
             musicCursor.moveToFirst();
             do {
+                if(songIDList.contains(musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media._ID))))
                 SongCollection.getInstance().getListOfSongs().add(new Song(
-                        musicCursor.getInt(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),
+                        musicCursor.getInt(musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
