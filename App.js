@@ -11,12 +11,7 @@ import ListView from './src/Components/ListView';
 const App = () => {
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
-            <View>
-                <StatusBar 
-                    backgroundColor={backgroundColor}
-                />
-                <ListView listType={ALL_SONGS} />
-            </View>
+            <ListView listType={ALL_SONGS} />
         </Provider>
     );
 };

@@ -1,29 +1,17 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { 
     Text,
     TouchableWithoutFeedback, 
-    View,
-    LayoutAnimation,
-    Platform,
-    UIManager
+    View
     } from 'react-native';
 import { connect } from 'react-redux';
-import { CardSection, Card } from './Common';
+import { CardSection } from './Common';
 import * as Actions from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 
-class ListItem extends PureComponent {
-    componentWillMount() {
-            if (Platform.OS === 'android') {
-                UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-            }
-    }
-
-    componentDidMount() {
-        LayoutAnimation.spring();
-    }
-    
+class ListItem extends Component {
     render() {
+        console.log(this.props.item);
         return (
             <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
                 <View style={styles.containerStyle}>
