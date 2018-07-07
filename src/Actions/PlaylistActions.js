@@ -5,6 +5,7 @@ import {
     deletePlaylist,
     renamePlaylist,
     getSongsFromPlaylist,
+    deleteSongFromPlaylist
 } from '../../react_native_fetch_music_filesNativeModule';
 
 import { 
@@ -78,4 +79,8 @@ export const getSongsFromPlaylistWithID = (playlistID) => {
             dispatch({ type: GET_SONGS_FROM_PLAYLIST, payload: JsonArray });
         });
     };
+};
+
+export const deleteSongFromPlaylistWithID = (playlistID, songID) => {
+    deleteSongFromPlaylist(playlistID, songID);
 };

@@ -23,10 +23,12 @@ export const editSongInfo = react_native_fetch_music_files.editSongInfo;
 export const deleteSong = react_native_fetch_music_files.deleteSong;
 // long songId, String fullPath
 export const fetchAllAlbums = react_native_fetch_music_files.fetchAllAlbums;
-//Callback errorCallback, Callback successCallback
-export const getSongsfromAlbum = react_native_fetch_music_files.getSongsfromAlbum;
-//long albumId, Callback errorCallback, Callback successCallback
+// Callback errorCallback, Callback successCallback
+export const getSongsFromAlbum = react_native_fetch_music_files.getSongsFromAlbum;
+// long albumId, Callback errorCallback, Callback successCallback
 export const fetchAllArtists = react_native_fetch_music_files.fetchAllArtists;
-//Callback errorCallback, Callback successCallback
-export const getSongsfromArtist = react_native_fetch_music_files.getSongsfromArtist;
-//long artistId, Callback errorCallback, Callback successCallback
+// Callback errorCallback, Callback successCallback
+export const getSongsFromArtist = react_native_fetch_music_files.getSongsFromArtist;
+// long artistId, Callback errorCallback, Callback successCallback
+export const deleteSongFromPlaylist = react_native_fetch_music_files.deleteSongFromPlaylist;
+// long playlistId, long songId

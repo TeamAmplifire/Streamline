@@ -1,27 +1,27 @@
 package com.fetchmusicfiles.DataModels;
 
 public class Playlist {
-    private String playlistName;
-    private long playlistID;
+    private String name;
+    private long id;
 
-    public Playlist(String playlistName, long playlistID) {
-        this.playlistName = playlistName;
-        this.playlistID = playlistID;
+    public Playlist(String name, long id) {
+        this.name = name;
+        this.id = id;
     }
 
-    public String getPlaylistName() {
-        return playlistName;
+    public String getName() {
+        return name;
     }
 
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public long getPlaylistID() {
-        return playlistID;
+    public long getId() {
+        return id;
     }
 
-    public void setPlaylistID(long playlistID) {
-        this.playlistID = playlistID;
+    public void setId(long id) {
+        this.id = id;
     }
 }

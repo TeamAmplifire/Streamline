@@ -187,4 +187,9 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
 
         successCallback.invoke(new Gson().toJson(SongCollection.getInstance().getListOfSongs()));
     }
+
+    @ReactMethod
+    public void deleteSongFromPlaylist(long playlistId, long songId){
+        FetchPlaylists.getInstance().deleteSongFromPlaylist(reactContext, playlistId, songId);
+    }
 }

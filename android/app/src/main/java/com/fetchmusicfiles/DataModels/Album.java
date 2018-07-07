@@ -2,28 +2,28 @@ package com.fetchmusicfiles.DataModels;
 
 public class Album {
 
-    private String albumName;
-    private long albumID;
+    private String name;
+    private long id;
 
-    public Album(String albumName, long albumID) {
-        this.albumName = albumName;
-        this.albumID = albumID;
+    public Album(String name, long id) {
+        this.name = name;
+        this.id = id;
     }
 
-    public String getAlbumName() {
+    public String getName() {
 
-        return albumName;
+        return name;
     }
 
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public long getAlbumID() {
-        return albumID;
+    public long getId() {
+        return id;
     }
 
-    public void setAlbumID(long albumID) {
-        this.albumID = albumID;
+    public void setId(long id) {
+        this.id = id;
     }
 }

@@ -1,8 +1,8 @@
 import { DATA_FETCH_ALL_ARTISTS } from '../Values/Types';
 
 const InitialState = [{ 
-    artistName: null,
-    artistID: null
+    name: null,
+    id: null
  }];
 
 export default (state = InitialState, action) => {

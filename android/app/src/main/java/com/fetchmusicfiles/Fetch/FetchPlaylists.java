@@ -161,4 +161,11 @@ public class FetchPlaylists {
             } while (musicCursor.moveToNext());
         }
     }
+
+    public void deleteSongFromPlaylist(Context context, long playlistId, long songId){
+        Uri playlistUri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId);
+        String where = "AUDIO_ID=?";
+        String[] args = {Long.toString(songId)};
+        context.getContentResolver().delete(playlistUri, where, args);
+    }
 }

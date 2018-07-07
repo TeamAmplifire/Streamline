@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   FlatList,
 } from 'react-native';
@@ -14,7 +14,7 @@ import {
     PLAYLIST_WITH_ID
  } from '../Values/Types';
 
-class ListView extends Component {
+class ListView extends PureComponent {
     state = {
         dataSource: [],
     };
@@ -68,21 +68,18 @@ class ListView extends Component {
     }
 
   renderHeader() {
-    return <Header headerText='Recently Added' />;
+    return <Header headerText={this.props.headerText} />;
   }
 
-  _keyExtractor = item => (item.index || item.songName || item.fullpath)
-
-  _renderItem = ({ item }) => <ListItem item={item} />
-
   render() {
-      console.log(this.props);
+    const keyExtractor = item => item.index;
+    const renderItem = ({ item }) => <ListItem item={item} />;
     return (
         <FlatList
             data={this.state.dataSource}
             extraData={this.props}
-            keyExtractor={this._keyExtractor} //Need to change songName to songID 
-            renderItem={this._renderItem}
+            keyExtractor={keyExtractor} //Need to change songName to songID 
+            renderItem={renderItem}
             ListHeaderComponent={this.renderHeader}
             initialScrollIndex={0}
         />
@@ -91,20 +88,20 @@ class ListView extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    songs: state.songs,
-    selectedSongID: state.selectedSongID,
-    recentlyAdded: state.recentlyAdded,
-    playlistList: state.playlistList,
-    selectedPlaylistID: state.selectedPlaylistID,
-    selectedPlaylistSongList: state.selectedPlaylistSongList,
-    albumList: state.albumList,
-    selectedAlbumID: state.selectedAlbumID,
-    selectedAlbumSongList: state.selectedAlbumSongList,
-    artistList: state.artistList,
-    selectedArtistID: state.selectedArtistID,
-    selectedArtistSongList: state.selectedArtistSongList,
-};
+    return {
+        songs: state.songs,
+        selectedSongID: state.selectedSongID,
+        recentlyAdded: state.recentlyAdded,
+        playlistList: state.playlistList,
+        selectedPlaylistID: state.selectedPlaylistID,
+        selectedPlaylistSongList: state.selectedPlaylistSongList,
+        albumList: state.albumList,
+        selectedAlbumID: state.selectedAlbumID,
+        selectedAlbumSongList: state.selectedAlbumSongList,
+        artistList: state.artistList,
+        selectedArtistID: state.selectedArtistID,
+        selectedArtistSongList: state.selectedArtistSongList,
+    };
 };
 
 export default connect(mapStateToProps, Actions)(ListView);

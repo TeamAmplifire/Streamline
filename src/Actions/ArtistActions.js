@@ -1,6 +1,6 @@
 import { 
     fetchAllArtists,
-    getSongsfromArtist
+    getSongsFromArtist
 } from '../../react_native_fetch_music_filesNativeModule';
 
 import { 
@@ -21,9 +21,9 @@ export const fetchArtistList = () => {
     };
 };
 
-export const getSongsfromArtistWithID = (artistID) => {
+export const getSongsFromArtistWithID = (artistID) => {
     return (dispatch) => {
-        getSongsfromArtist(artistID, (errorCallBack) => {
+        getSongsFromArtist(artistID, (errorCallBack) => {
             console.log(errorCallBack);
         },
         (successCallback) => {

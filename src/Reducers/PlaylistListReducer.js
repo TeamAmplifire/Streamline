@@ -1,8 +1,8 @@
 import { DATA_FETCH_ALL_PLAYLISTS } from '../Values/Types';
 
 const InitialState = [{ 
-    playlistName: null,
-    playlistID: null
+    name: null,
+    id: null
  }];
 
 export default (state = InitialState, action) => {

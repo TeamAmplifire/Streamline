@@ -24,7 +24,7 @@ class SongList extends Component {
           data={this.props.recentlyAdded}
           extraData={this.props}
           keyExtractor={item => item.songName} //Need to change songName to songID 
-          renderItem={({item}) => <ListItem item={item} />}
+          renderItem={({ item }) => <ListItem item={item} />}
           ListHeaderComponent={this.renderHeader}
         />
     );

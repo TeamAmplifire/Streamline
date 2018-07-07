@@ -5,17 +5,20 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import Reducers from './src/Reducers';
 import { backgroundColor } from './src/Values/colors';
-import { ALL_SONGS, RECENTLY_ADDED_SONGS } from './src/Values/Types';
+import { ALL_SONGS, RECENTLY_ADDED_SONGS, PLAYLIST_LIST } from './src/Values/Types';
 import ListView from './src/Components/ListView';
+import GridView from './src/Components/GridView';
 
 const App = () => {
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
-            <View>
-                <StatusBar 
-                    backgroundColor={backgroundColor}
-                />
-                <ListView listType={ALL_SONGS} />
+            <View style={{ flex: 1 }}>
+                <View>
+                    <StatusBar 
+                        backgroundColor={backgroundColor}
+                    />
+                </View>
+                <GridView listType={PLAYLIST_LIST} headerText='ho gya' />
             </View>
         </Provider>
     );
