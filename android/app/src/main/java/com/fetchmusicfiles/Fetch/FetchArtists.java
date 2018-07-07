@@ -25,7 +25,7 @@ public class FetchArtists {
 
     public void getAllArtists(Context context){
         ArtistCollection.getInstance().getListOfArtists().clear();
-        String[] projection = {"DISTINCT ARTIST"};
+        String[] projection = {"DISTINCT ARTIST", "ARTIST_ID"};
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
                 null, null, MediaStore.Audio.Media.ARTIST);
 
@@ -45,7 +45,7 @@ public class FetchArtists {
     public void getSongs(Context context, long artistID){
         String where = "ARTIST_ID=?";
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = context.getContentResolver().query(musicUri, null, where, new String[] {Long.toString(artistID)}, null);
+        Cursor musicCursor = context.getContentResolver().query(musicUri, null, where, new String[] {Long.toString(artistID)}, MediaStore.Audio.Media.TITLE);
 
         musicCursor.moveToFirst();
         do {

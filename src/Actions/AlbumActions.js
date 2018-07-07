@@ -1,11 +1,13 @@
 import { 
     fetchAllAlbums,
-    getSongsFromAlbum
+    getSongsFromAlbum,
+    getAlbumArt
 } from '../../react_native_fetch_music_filesNativeModule';
 
 import { 
     DATA_FETCH_ALL_ALBUMS,
-    GET_SONGS_FROM_ALBUM
+    GET_SONGS_FROM_ALBUM,
+    GET_ALBUM_ART
  } from '../Values/Types';
 
 export const fetchAlbumList = () => {
@@ -30,6 +32,17 @@ export const getSongsFromAlbumWithID = (albumID) => {
             let JsonArray = [];
             JsonArray = JSON.parse(successCallback);
             dispatch({ type: GET_SONGS_FROM_ALBUM, payload: JsonArray });
+        });
+    };
+};
+
+export const getAlbumArtWithID = (albumID) => {
+    return (dispatch) => {
+        getAlbumArt(albumID, (errorCallBack) => {
+            console.log(errorCallBack);
+        },
+        (successCallback) => {
+            dispatch({ type: GET_ALBUM_ART, payload: successCallback });
         });
     };
 };

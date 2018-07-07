@@ -70,7 +70,6 @@ class ListView extends PureComponent {
     
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
-        console.log(dataSource);
         return (
             <RecyclerViewList 
                 style={{ flex: 1 }}

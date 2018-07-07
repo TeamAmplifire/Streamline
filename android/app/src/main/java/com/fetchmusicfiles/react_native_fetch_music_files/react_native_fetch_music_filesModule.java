@@ -1,5 +1,7 @@
 package com.fetchmusicfiles.react_native_fetch_music_files;
 
+import android.content.ContentUris;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import com.facebook.react.bridge.Callback;
 

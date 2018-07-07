@@ -24,3 +24,4 @@ export const GET_SONGS_FROM_ARTIST = 'get_songs_from_artist';
 export const SELECT_PLAYLIST = 'select_playlist';
 export const SELECT_ALBUM = 'select_album';
 export const SELECT_ARTIST = 'select_artist';
+export const GET_ALBUM_ART = 'get_album_art';

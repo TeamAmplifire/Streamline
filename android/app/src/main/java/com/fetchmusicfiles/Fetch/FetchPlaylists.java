@@ -33,7 +33,7 @@ public class FetchPlaylists {
         PlaylistCollection.getInstance().getListOfPlaylists().clear();
 
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, null,
-                null, null, null);
+                null, null, MediaStore.Audio.Playlists.NAME);
 
         if (cursor != null && cursor.moveToFirst()) {
             do{

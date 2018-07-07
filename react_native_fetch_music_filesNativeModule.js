@@ -32,3 +32,5 @@ export const getSongsFromArtist = react_native_fetch_music_files.getSongsFromArt
 // long artistId, Callback errorCallback, Callback successCallback
 export const deleteSongFromPlaylist = react_native_fetch_music_files.deleteSongFromPlaylist;
 // long playlistId, long songId
+export const getAlbumArt = react_native_fetch_music_files.getAlbumArt;
+// long albumID, Callback errorCallback, Callback successCallback

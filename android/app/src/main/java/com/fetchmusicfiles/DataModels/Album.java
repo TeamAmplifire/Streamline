@@ -4,10 +4,12 @@ public class Album {
 
     private String name;
     private long id;
+    private String albumArt;
 
-    public Album(String name, long id) {
+    public Album(String name, long id, String albumArt) {
         this.name = name;
         this.id = id;
+        this.albumArt = albumArt;
     }
 
     public String getName() {

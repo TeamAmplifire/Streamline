@@ -2,7 +2,8 @@ import { DATA_FETCH_ALL_ALBUMS } from '../Values/Types';
 
 const InitialState = [{ 
     name: null,
-    id: null
+    id: null,
+    albumArt: null,
  }];
 
 export default (state = InitialState, action) => {
