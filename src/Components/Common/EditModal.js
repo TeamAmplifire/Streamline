@@ -5,10 +5,15 @@ import {
     Modal
 } from 'react-native';
 import Input from './Input';
+import CardSection from './CardSection';
 
-export default class EditModal extends Component {
+class EditModal extends Component {
     state = { songName: '', albumName: '', artistName: '' };
 
+    componentWillMount() {
+        this.setState({ songName: this.props.songName, albumName: this.props.albumName, artistName: this.props.artistName });
+    }
+    
     render() {
         console.log(this.state.songName);
         return (
@@ -19,9 +24,25 @@ export default class EditModal extends Component {
                 onRequestClose={()=>{}}>
 
                 <View>
-                    <CardSection>
+                <CardSection>
                         <Input
                             label="Song Name"
+                            placeholder="song name"
+                            value={this.state.songName}
+                            onChangeText={songName => this.setState({ songName })}
+                        />
+                    </CardSection>
+                    <CardSection>
+                        <Input
+                            label="Artist Name"
+                            placeholder="song name"
+                            value={this.state.songName}
+                            onChangeText={songName => this.setState({ songName })}
+                        />
+                    </CardSection>
+                    <CardSection>
+                        <Input
+                            label="Album Name"
                             placeholder="song name"
                             value={this.state.songName}
                             onChangeText={songName => this.setState({ songName })}
@@ -31,13 +52,13 @@ export default class EditModal extends Component {
             </Modal>
         );
     }
-};
+}
 
 const styles = {
     cardSelectionStyle: {
         justifyContent: 'center'
     },
-    textStyle : {
+    textStyle: {
         flex: 1,
         fontSize: 18,
         textAlign: 'center',
@@ -50,3 +71,5 @@ const styles = {
         justifyContent: 'center'
     }
 };
+
+export default EditModal;
