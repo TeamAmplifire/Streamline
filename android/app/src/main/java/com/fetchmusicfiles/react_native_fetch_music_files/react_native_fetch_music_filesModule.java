@@ -3,6 +3,8 @@ package com.fetchmusicfiles.react_native_fetch_music_files;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
+
 import com.facebook.react.bridge.Callback;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -99,7 +101,7 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void addSongToPlaylist(long playlistId, long songId, Callback errorCallback, Callback successCallback){
+    public void addSongToPlaylist(int playlistId, int songId, Callback errorCallback, Callback successCallback){
         int check = FetchPlaylists.getInstance().addToPlaylist(reactContext, playlistId, songId);
 
         if(check == 0) {
@@ -111,17 +113,17 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void deletePlaylist(long playlistId){
+    public void deletePlaylist(int playlistId){
         FetchPlaylists.getInstance().deletePlaylist(reactContext, playlistId);
     }
 
     @ReactMethod
-    public void renamePlaylist(long playlistId, String newName, Callback errorCallback, Callback successCallback){
+    public void renamePlaylist(int playlistId, String newName, Callback errorCallback, Callback successCallback){
         FetchPlaylists.getInstance().renamePlaylist(reactContext, playlistId, newName);
     }
 
     @ReactMethod
-    public void getSongsFromPlaylist(long playlistId, Callback errorCallback, Callback successCallback){
+    public void getSongsFromPlaylist(int playlistId, Callback errorCallback, Callback successCallback){
         FetchPlaylists.getInstance().getSongs(reactContext, playlistId);
 
         if(SongCollection.getInstance().getListOfSongs().isEmpty()) {
@@ -133,12 +135,12 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void editSongInfo(String newTitle, String newAlbum, String newArtist, long songId, String fullPath){
+    public void editSongInfo(String newTitle, String newAlbum, String newArtist, int songId, String fullPath){
         UpdateSongInfo.updateID3Tags(reactContext, newTitle, newAlbum, newArtist, songId, fullPath);
     }
 
     @ReactMethod
-    public void deleteSong(long songId, String fullPath){
+    public void deleteSong(int songId, String fullPath){
         UpdateSongInfo.deleteSong(reactContext, songId, fullPath);
     }
 
@@ -155,7 +157,7 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void getSongsFromAlbum(long albumId, Callback errorCallback, Callback successCallback){
+    public void getSongsFromAlbum(int albumId, Callback errorCallback, Callback successCallback){
         FetchAlbums.getInstance().getSongs(reactContext, albumId);
 
         if(SongCollection.getInstance().getListOfSongs().isEmpty()) {
@@ -179,7 +181,7 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void getSongsFromArtist(long artistId, Callback errorCallback, Callback successCallback){
+    public void getSongsFromArtist(int artistId, Callback errorCallback, Callback successCallback){
         FetchArtists.getInstance().getSongs(reactContext, artistId);
 
         if(SongCollection.getInstance().getListOfSongs().isEmpty()) {
@@ -191,7 +193,20 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void deleteSongFromPlaylist(long playlistId, long songId){
+    public void deleteSongFromPlaylist(int playlistId, int songId){
         FetchPlaylists.getInstance().deleteSongFromPlaylist(reactContext, playlistId, songId);
+    }
+
+    @ReactMethod
+    public void getArtworkForSong(int songID, Callback errorCallback, Callback successCallback){
+        String artwork = FetchSongList.getInstance().getArtworkForSong(reactContext, songID);
+        Toast.makeText(reactContext, "jsvc", Toast.LENGTH_SHORT).show();
+
+        if(artwork.isEmpty()) {
+            errorCallback.invoke("There is no artwork for this song.");
+            return;
+        }
+
+        successCallback.invoke(artwork);
     }
 }

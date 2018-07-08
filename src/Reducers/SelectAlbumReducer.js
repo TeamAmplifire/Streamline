@@ -1,10 +1,6 @@
 import { SELECT_ALBUM } from '../Values/Types';
 
-const InitialState = { 
-    selectedAlbumID: null
-};
-
-export default (state = InitialState, action) => {
+export default (state = null, action) => {
     switch (action.type) {
         case SELECT_ALBUM: 
             return action.payload;

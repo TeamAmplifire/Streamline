@@ -7,8 +7,18 @@ import {
 import { 
     DATA_FETCH_ALL_ALBUMS,
     GET_SONGS_FROM_ALBUM,
-    GET_ALBUM_ART
+    GET_ALBUM_ART,
+    SELECT_ALBUM
  } from '../Values/Types';
+
+export const selectAlbum = (albumID) => {
+    return (
+        {
+            type: SELECT_ALBUM,
+            payload: albumID
+        }
+    );
+};
 
 export const fetchAlbumList = () => {
     return (dispatch) => {
@@ -29,6 +39,8 @@ export const getSongsFromAlbumWithID = (albumID) => {
             console.log(errorCallBack);
         },
         (successCallback) => {
+            console.log(successCallback);
+            console.log(albumID);
             let JsonArray = [];
             JsonArray = JSON.parse(successCallback);
             dispatch({ type: GET_SONGS_FROM_ALBUM, payload: JsonArray });

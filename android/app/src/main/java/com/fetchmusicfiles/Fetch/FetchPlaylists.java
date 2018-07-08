@@ -146,6 +146,7 @@ public class FetchPlaylists {
                 songIDList.add(songID);
             } while (playlistCursor.moveToNext());
         }
+        SongCollection.getInstance().getListOfSongs().clear();
         count = songIDList.size();
         if(count != 0) {
             musicCursor.moveToFirst();
@@ -157,7 +158,8 @@ public class FetchPlaylists {
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                        musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                        musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
+                ));
             } while (musicCursor.moveToNext());
         }
     }

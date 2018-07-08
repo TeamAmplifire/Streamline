@@ -28,24 +28,16 @@ public class FetchAlbums {
 
     public void getAllAlbums(Context context){
         AlbumCollection.getInstance().getListOfAlbums().clear();
-        String[] projection = {"DISTINCT ALBUM", "ALBUM_ID"};
-        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
-                null, null, MediaStore.Audio.Media.ALBUM);
-
+        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                new String[] {MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART,MediaStore.Audio.Albums.ALBUM,}, null, null,
+                MediaStore.Audio.Albums.ALBUM);
 
         if (cursor != null && cursor.moveToFirst()) {
             do{
-                String where = "ALBUM_ID=?";
-                Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                Cursor musicCursor = context.getContentResolver().query(musicUri, null, where, new String[] {Long.toString(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)))}, null);
-                musicCursor.moveToFirst();
-                long songID = musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media._ID));
-                musicCursor.close();
-                String albumArt = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), songID).toString();
                 AlbumCollection.getInstance().getListOfAlbums().add(new Album(
-                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
-                        cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),
-                        albumArt
+                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM)),
+                        cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Albums._ID)),
+                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART))
                 ));
             }while(cursor.moveToNext());
         }
@@ -58,7 +50,7 @@ public class FetchAlbums {
         String where = "ALBUM_ID=?";
         Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = context.getContentResolver().query(musicUri, null, where, new String[] {Long.toString(albumID)}, MediaStore.Audio.Media.TITLE);
-
+        SongCollection.getInstance().getListOfSongs().clear();
         musicCursor.moveToFirst();
         do {
             SongCollection.getInstance().getListOfSongs().add(new Song(
@@ -67,16 +59,8 @@ public class FetchAlbums {
                     musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                     musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                     musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                    musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                    musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
+                    ));
         } while (musicCursor.moveToNext());
-    }
-
-    public long getFirstAlbumImageURI(Context context, long albumID){
-        String where = "ALBUM_ID=?";
-        Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = context.getContentResolver().query(musicUri, null, where, new String[] {Long.toString(albumID)}, null);
-        musicCursor.moveToFirst();
-        long ID = musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media._ID));
-        return ID;
     }
 }

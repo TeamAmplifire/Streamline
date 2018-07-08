@@ -5,7 +5,7 @@ import {
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import ListItem from './ListItem';
-import * as Actions from '../Actions';
+import * as Act from '../Actions';
 import { Header } from './Common';
 import { 
     ALL_SONGS,
@@ -20,6 +20,7 @@ class ListView extends PureComponent {
         dataSource: [],
     };
     componentWillMount() {
+        console.log(this.props);
         switch (this.props.listType) {
             case ALL_SONGS:
                 this.props.fetchSongs();
@@ -30,15 +31,15 @@ class ListView extends PureComponent {
                 this.setState({ dataSource: this.props.recentlyAdded });
                 break;
             case ALBUM_WITH_ID:
-                this.props.getSongsfromAlbumWithID(this.props.ID);
+                this.props.getSongsFromAlbumWithID(this.props.selectedAlbumID);
                 this.setState({ dataSource: this.props.selectedAlbumSongList });
                 break;
             case ARTIST_WITH_ID:
-                this.props.getSongsfromArtistWithID(this.props.ID);
+                this.props.getSongsFromArtistWithID(this.props.selectedArtistID);
                 this.setState({ dataSource: this.props.selectedArtistSongList });
                 break;
             case PLAYLIST_WITH_ID:
-                this.props.getSongsFromPlaylistWithID(this.props.ID);
+                this.props.getSongsFromPlaylistWithID(this.props.selectedPlaylistID);
                 this.setState({ dataSource: this.props.selectedPlaylistSongList });
                 break;
             default:
@@ -98,5 +99,5 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, Actions)(ListView);
+export default connect(mapStateToProps, Act)(ListView);
 

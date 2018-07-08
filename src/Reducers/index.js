@@ -11,6 +11,7 @@ import SelectedArtistSongListReducer from './SelectedArtistSongListReducer';
 import SelectedPlaylistSongListReducer from './SelectedPlaylistSongListReducer';
 import SelectPlaylistReducer from './SelectPlaylistReducer';
 import SelectSongReducer from './SelectSongReducer';
+import SelectedSongArtworkReducer from './SelectedSongArtworkReducer';
 
 export default combineReducers({
     songs: AllSongsListReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
     artistList: ArtistListReducer,
     selectedArtistID: SelectArtistReducer,
     selectedArtistSongList: SelectedArtistSongListReducer,
+    selectedSongArtwork: SelectedSongArtworkReducer,
 });

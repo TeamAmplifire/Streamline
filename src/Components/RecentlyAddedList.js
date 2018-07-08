@@ -18,7 +18,6 @@ class SongList extends Component {
   }
 
   render() {
-    console.log(this.props.recentlyAdded);
     return (
         <FlatList
           data={this.props.recentlyAdded}

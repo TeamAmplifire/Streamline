@@ -7,18 +7,20 @@ import {
 import GridView from 'react-native-super-grid';
 import { connect } from 'react-redux';
 import GridItem from './GridItem';
-import * as Actions from '../Actions';
+import * as Act from '../Actions';
 import { Header } from './Common';
 import { 
     PLAYLIST_LIST,
     ALBUM_LIST,
     ARTIST_LIST,
  } from '../Values/Types';
+import { backgroundColor } from '../Values/colors';
 
 class Grid extends Component {
     state = { dataSource: [] };
 
     componentWillMount() {
+        console.log(this.props);
         switch (this.props.listType) {
             case PLAYLIST_LIST:
                 this.props.fetchPlaylistList();
@@ -38,6 +40,7 @@ class Grid extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(this.props);
         switch (this.props.listType) {
             case PLAYLIST_LIST:
                 this.setState({ dataSource: nextProps.playlistList });
@@ -53,30 +56,25 @@ class Grid extends Component {
         }
     }
 
-    renderItem(item) {
-        console.log(item);
-    return (
-        <View>
-            <GridItem item={item} />
-        </View>
-    );
-    }
-
     renderHeader() {
+        console.log(this.props, 'renderHeader');
         return (
             <Header headerText={this.props.headerText} />
         );
     }
 
     render() {
+        console.log(this.props, 'render');
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor }}>
                 {this.renderHeader()}
                 <GridView
                     itemDimension={Dimensions.get('window').width * 0.45}
                     items={this.state.dataSource}
                     style={styles.gridView}
-                    renderItem={this.renderItem}
+                    renderItem={(item) => {
+                        return <GridItem item={item} listType={this.props.listType} />;
+                    }}
                 />
             </View>
         );
@@ -107,4 +105,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, Actions)(Grid);
+export default connect(mapStateToProps, Act)(Grid);

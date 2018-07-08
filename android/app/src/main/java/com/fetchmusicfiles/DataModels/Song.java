@@ -1,7 +1,10 @@
 package com.fetchmusicfiles.DataModels;
 
 import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 public class Song {
@@ -13,19 +16,15 @@ public class Song {
     private long songLength;
     private String albumArt;
 
-    public Song(long songID, String songName, String artistName, String albumName, String fullPath, long songLength) {
+    public Song(long songID, String songName, String albumName, String artistName, String fullPath, long songLength) {
         this.songID = songID;
         this.songName = songName;
-        this.artistName = artistName;
         this.albumName = albumName;
+        this.artistName = artistName;
         this.fullPath = fullPath;
         this.songLength = songLength;
-        this.albumArt = ContentUris.withAppendedId(Uri
-                        .parse("content://media/external/audio/albumart"),
-                this.songID).toString();
-
-        Log.e("albumArt", "albumArt is "+ albumArt);
     }
+
     public String getAlbumArt() {
         return albumArt;
     }
