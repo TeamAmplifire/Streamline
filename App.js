@@ -10,6 +10,8 @@ import ListView from './src/Components/ListView';
 import GridView from './src/Components/GridView';
 
 const App = () => {
+    
+    console.log(this.props.track.albumArt);
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
             <View style={{ flex: 1 }}>
