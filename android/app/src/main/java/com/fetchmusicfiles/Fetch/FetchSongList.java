@@ -37,7 +37,9 @@ public class FetchSongList {
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
+                            Song.getArtworkForSong(context, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)))
+                    ));
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -60,7 +62,9 @@ public class FetchSongList {
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
+                            Song.getArtworkForSong(context, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)))
+                    ));
                 } while (cursor.moveToNext() && i++ != 50);
             }
             cursor.close();

@@ -157,7 +157,9 @@ public class FetchPlaylists {
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                         musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                        musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                        musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
+                        Song.getArtworkForSong(context, musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)))
+                ));
             } while (musicCursor.moveToNext());
         }
     }

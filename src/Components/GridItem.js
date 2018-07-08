@@ -3,10 +3,12 @@ import {
     View,
     UIManager,
     Platform,
-    TouchableWithoutFeedback,
-    LayoutAnimation,
-    Text
-    } from 'react-native';
+    TouchableOpacity,
+    Text,
+    ImageBackground,
+    Dimensions
+} from 'react-native';
+
 
 class GridItem extends Component {
     componentWillMount() {
@@ -15,17 +17,51 @@ class GridItem extends Component {
         }
     }
 
-    componentDidMount() {
-        //LayoutAnimation.spring();
+    renderItem() {
+        if (this.props.isALbumList) {
+            const albumArt = this.props.item.albumArt;
+            console.log(albumArt);
+            return (
+                <ImageBackground
+                    source={{ isStatic: true, uri: albumArt }} 
+                    style={styles.containerStyle}
+                >
+                    <Text style={styles.textStyle} >
+                        {this.props.item.name}
+                    </Text>
+                </ImageBackground>
+            );
+        }
+
+        return (
+            <Text style={styles.textStyle} >{this.props.item.name}</Text>
+        );        
     }
 
     render() {
         return (
-            <View>
-                <Text style={{ backgroundColor: '#fff' }} >{this.props.item.name}</Text>
-            </View>
+            <TouchableOpacity>
+                <View>
+                    {this.renderItem()}
+                </View>
+            </TouchableOpacity>
         );
     }
 }
+
+const styles = {
+    textStyle: {
+        fontSize: 20,
+        color: '#fff',
+        flex: 1,
+        justifyContent: 'center',
+    },
+    containerStyle: {
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').width * 0.5,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+    }
+};
 
 export default GridItem;

@@ -9,7 +9,7 @@ public class Album {
     public Album(String name, long id, String albumArt) {
         this.name = name;
         this.id = id;
-        this.albumArt = albumArt;
+        this.albumArt = "file://" + albumArt;
     }
 
     public String getName() {

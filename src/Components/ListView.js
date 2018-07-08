@@ -5,7 +5,7 @@ import {
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import ListItem from './ListItem';
-import * as Actions from '../Actions';
+import * as Act from '../Actions';
 import { Header } from './Common';
 import { 
     ALL_SONGS,
@@ -98,5 +98,5 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, Actions)(ListView);
+export default connect(mapStateToProps, Act)(ListView);
 

@@ -54,10 +54,10 @@ class Grid extends Component {
     }
 
     renderItem(item) {
-        console.log(item);
+        const check = item.albumArt !== undefined;
     return (
         <View>
-            <GridItem item={item} />
+            <GridItem item={item} isALbumList={check} />
         </View>
     );
     }

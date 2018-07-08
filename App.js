@@ -8,6 +8,7 @@ import { backgroundColor } from './src/Values/colors';
 import { ALL_SONGS, RECENTLY_ADDED_SONGS, PLAYLIST_LIST, ALBUM_LIST, ARTIST_LIST } from './src/Values/Types';
 import ListView from './src/Components/ListView';
 import GridView from './src/Components/GridView';
+import LibraryList from './src/Components/LibraryList';
 
 const App = () => {
     return (
@@ -15,11 +16,10 @@ const App = () => {
             <View style={{ flex: 1 }}>
                 <View>
                     <StatusBar 
-                            backgroundColor={backgroundColor}
+                        backgroundColor={backgroundColor}
                     />
-                    <ListView listType={ALL_SONGS} headerText={'All Songs'} />
                 </View>
-                <GridView listType={ARTIST_LIST} headerText='ho gya' />
+                <GridView listType={ALBUM_LIST} headerText='Albums' />
             </View>
         </Provider>
     );
