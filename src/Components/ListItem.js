@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { 
     Text,
-    TouchableWithoutFeedback, 
+    TouchableOpacity, 
     View
     } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection } from './Common';
-import * as Actions from '../Actions';
+import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 
 class ListItem extends Component {
     render() {
-        console.log(this.props.item);
         return (
-            <TouchableWithoutFeedback onPress={() => this.props.selectSong(this.props.item.songID)}>
+            <TouchableOpacity 
+            onPress={() => {
+                this.props.selectSong(this.props.item.songID);
+                this.props.getArtworkForSongWithID(this.props.item.songID);
+            }}
+            >
                 <View style={styles.containerStyle}>
                     <CardSection>
                         <Text style={styles.titleStyle} numberOfLines={1}>
@@ -31,7 +35,7 @@ class ListItem extends Component {
                         </Text>
                     </CardSection>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     }
 }
@@ -76,11 +80,4 @@ const styles = {
     }
 };
 
-
-// const mapStateToProps = (state, ownProps) => {
-//     const expand = state.selectedLibraryId === ownProps.item.id;
-
-//     return { expand };
-// };
-
-export default connect(null, Actions)(ListItem);
+export default connect(null, Act)(ListItem);

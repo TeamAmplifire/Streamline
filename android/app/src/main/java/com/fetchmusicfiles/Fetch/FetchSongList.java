@@ -37,8 +37,7 @@ public class FetchSongList {
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
-                            Song.getArtworkForSong(context, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)))
+                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
                     ));
                 } while (cursor.moveToNext());
             }
@@ -62,12 +61,30 @@ public class FetchSongList {
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
                             cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
-                            Song.getArtworkForSong(context, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)))
+                            cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
                     ));
                 } while (cursor.moveToNext() && i++ != 50);
             }
             cursor.close();
         }
+    }
+
+    public String getArtworkForSong(Context context, long songID) {
+        String artwork = "";
+        String album = "";
+        Cursor musicCursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
+                "_ID=?", new String[] {Long.toString(songID)}, null);
+        if(musicCursor != null && musicCursor.moveToFirst())
+            album = musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+        Cursor albumCursor = context.getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART}, "ALBUM=?",
+                new String[] {album},
+                null);
+        if(albumCursor != null) {
+            if(albumCursor.moveToFirst())
+                artwork = albumCursor.getString(albumCursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
+        }
+        artwork = "file://" + artwork;
+        return artwork;
     }
 }

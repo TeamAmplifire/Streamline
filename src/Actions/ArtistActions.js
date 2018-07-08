@@ -5,8 +5,18 @@ import {
 
 import { 
     DATA_FETCH_ALL_ARTISTS,
-    GET_SONGS_FROM_ARTIST
+    GET_SONGS_FROM_ARTIST,
+    SELECT_ARTIST
  } from '../Values/Types';
+
+ export const selectArtist = (artistID) => {
+    return (
+        {
+            type: SELECT_ARTIST,
+            payload: artistID
+        }
+    );
+};
 
 export const fetchArtistList = () => {
     return (dispatch) => {

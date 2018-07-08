@@ -16,14 +16,13 @@ public class Song {
     private long songLength;
     private String albumArt;
 
-    public Song(long songID, String songName, String albumName, String artistName, String fullPath, long songLength, String albumArt) {
+    public Song(long songID, String songName, String albumName, String artistName, String fullPath, long songLength) {
         this.songID = songID;
         this.songName = songName;
         this.albumName = albumName;
         this.artistName = artistName;
         this.fullPath = fullPath;
         this.songLength = songLength;
-        this.albumArt = "file://" + albumArt;
     }
 
     public String getAlbumArt() {
@@ -106,15 +105,5 @@ public class Song {
 
         // return timer string
         return finalTimerString;
-    }
-
-    public static String getArtworkForSong(Context context, long albumID) {
-        Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART, MediaStore.Audio.Albums.ALBUM,}, "_ID=?",
-                new String[] {Long.toString(albumID)},
-                MediaStore.Audio.Albums.ALBUM);
-        cursor.moveToFirst();
-        String artwork = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
-        return artwork;
     }
 }

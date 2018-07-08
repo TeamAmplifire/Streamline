@@ -5,10 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import Reducers from './src/Reducers';
 import { backgroundColor } from './src/Values/colors';
-import { ALL_SONGS, RECENTLY_ADDED_SONGS, PLAYLIST_LIST, ALBUM_LIST, ARTIST_LIST } from './src/Values/Types';
-import ListView from './src/Components/ListView';
-import GridView from './src/Components/GridView';
-import LibraryList from './src/Components/LibraryList';
+import Router from './src/Router/Router';
 
 const App = () => {
     return (
@@ -19,7 +16,7 @@ const App = () => {
                         backgroundColor={backgroundColor}
                     />
                 </View>
-                <GridView listType={ALBUM_LIST} headerText='Albums' />
+                <Router backgroundColor={backgroundColor} />
             </View>
         </Provider>
     );

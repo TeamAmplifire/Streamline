@@ -3,11 +3,13 @@ import {
     fetchRecentlyAddedSongs,
     editSongInfo,
     deleteSong,
+    getArtworkForSong
 } from '../../react_native_fetch_music_filesNativeModule';
 import {
     SELECT_SONG,
     DATA_FETCH_ALL_SONGS,
     DATA_FETCH_RECENTLY_ADDED,
+    GET_SONG_ARTWORK
 } from '../Values/Types';
 
 export const selectSong = (songID) => {
@@ -56,5 +58,17 @@ export const deleteSongWithID = (songId, fullPath) => {
     return () => {
         deleteSong(songId, fullPath);
         fetchSongs();
+    };
+};
+
+export const getArtworkForSongWithID = (songID) => {
+    return (dispatch) => {
+        getArtworkForSong(songID, (errorCallBack) => {
+            console.log(errorCallBack);
+        },
+        (successCallback) => {
+            console.log(successCallback);
+            dispatch({ type: GET_SONG_ARTWORK, payload: successCallback });
+        });
     };
 };

@@ -11,7 +11,17 @@ import {
 import { 
     DATA_FETCH_ALL_PLAYLISTS,
     GET_SONGS_FROM_PLAYLIST,
+    SELECT_PLAYLIST,
  } from '../Values/Types';
+
+export const selectPlaylist = (playlistID) => {
+    return (
+        {
+            type: SELECT_PLAYLIST,
+            payload: playlistID
+        }
+    );
+};
 
 export const fetchPlaylistList = () => {
     return (dispatch) => {

@@ -8,7 +8,17 @@ import {
     ImageBackground,
     Dimensions
 } from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import * as Act from '../Actions';
+import { 
+    PLAYLIST_WITH_ID,
+    ALBUM_WITH_ID,
+    ARTIST_WITH_ID,
+    ALBUM_LIST,
+    PLAYLIST_LIST,
+    ARTIST_LIST,
+ } from '../Values/Types';
 
 class GridItem extends Component {
     componentWillMount() {
@@ -18,9 +28,9 @@ class GridItem extends Component {
     }
 
     renderItem() {
-        if (this.props.isALbumList) {
+        console.log(this.props.listType);
+        if (this.props.listType === ALBUM_LIST) {
             const albumArt = this.props.item.albumArt;
-            console.log(albumArt);
             return (
                 <ImageBackground
                     source={{ isStatic: true, uri: albumArt }} 
@@ -32,15 +42,36 @@ class GridItem extends Component {
                 </ImageBackground>
             );
         }
-
         return (
             <Text style={styles.textStyle} >{this.props.item.name}</Text>
         );        
     }
 
     render() {
+        console.log(this.props.item);
+        const { name, id } = this.props.item;
         return (
-            <TouchableOpacity>
+            <TouchableOpacity 
+                onPress={
+                    () => {
+                        switch (this.props.listType) {
+                            case PLAYLIST_LIST:
+                                this.props.selectPlaylist(id);
+                                Actions.playlistSongList({ listType: PLAYLIST_WITH_ID, headerText: name });
+                                break;
+                            case ALBUM_LIST:
+                                this.props.selectAlbum(id);
+                                Actions.albumSongList({ listType: ALBUM_WITH_ID, headerText: name });
+                                break;
+                            case ARTIST_LIST:
+                            this.props.selectArtist(id);
+                                Actions.artistSongList({ listType: ARTIST_WITH_ID, headerText: name });
+                                break;
+                            default:
+                        }
+                    }
+                }
+            >
                 <View>
                     {this.renderItem()}
                 </View>
@@ -64,4 +95,4 @@ const styles = {
     }
 };
 
-export default GridItem;
+export default connect(null, Act)(GridItem);

@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
 import {
   Text,
-  View,
   TouchableOpacity
 } from 'react-native';
-import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
-import * as Act from '../Actions';
+import { Actions } from 'react-native-router-flux';
 import { Header } from './Common';
 import { 
     ALL_SONGS,
@@ -15,6 +13,7 @@ import {
     ARTIST_LIST,
     PLAYLIST_LIST
  } from '../Values/Types';
+import { backgroundColor } from '../Values/colors';
 
 class LibraryList extends PureComponent {
     state = {
@@ -42,68 +41,44 @@ class LibraryList extends PureComponent {
         ],
     };
 
-    onItemPress(item) {
-        switch (item.id) {
-            case ALL_SONGS:
-                console.log(item);
-                break;
-            case RECENTLY_ADDED_SONGS:
-            case PLAYLIST_LIST:
-            case ALBUM_LIST:
-            case ARTIST_LIST:
-            default:
-        }
-    }
-    
     render() {
-        console.log(this.state);
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.id);
         return (
-            <RecyclerViewList 
-                style={{ flex: 1 }}
-                dataSource={dataSource}
-                renderItem={({ item, index }) => {
-                    return (
-                        <TouchableOpacity 
-                        onPress={() => {
-                            switch (item.id) {
-                                case ALL_SONGS:
-                                    console.log(item);
-                                    break;
-                                case RECENTLY_ADDED_SONGS:
-                                case PLAYLIST_LIST:
-                                case ALBUM_LIST:
-                                case ARTIST_LIST:
-                                default:
-                            }
-                        }}
-                        >
-                            <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
-                        </TouchableOpacity>
-                    );
-                }}
-                ListHeaderComponent={<Header headerText={this.props.headerText} />}
-            />
+                <RecyclerViewList 
+                    style={{ flex: 1, backgroundColor }}
+                    dataSource={dataSource}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <TouchableOpacity 
+                            onPress={() => {
+                                switch (item.id) {
+                                    case ALL_SONGS:
+                                        Actions.allSongs({ listType: ALL_SONGS, headerText: 'All Songs' });
+                                        break;
+                                    case RECENTLY_ADDED_SONGS:
+                                        Actions.recentlyAdded({ listType: RECENTLY_ADDED_SONGS, headerText: 'Recently Added' });
+                                        break;
+                                    case PLAYLIST_LIST:
+                                        Actions.playlistList({ listType: PLAYLIST_LIST, headerText: 'Playlists' });
+                                        break;                                    
+                                    case ALBUM_LIST:
+                                        Actions.albumList({ listType: ALBUM_LIST, headerText: 'Albums' });
+                                        break;
+                                    case ARTIST_LIST:
+                                        Actions.artistList({ listType: ARTIST_LIST, headerText: 'Artists' });
+                                        break;
+                                    default:
+                                }
+                            }}
+                            >
+                                <Text style={{ fontSize: 30, color: '#fff' }}>{item.name}</Text>
+                            </TouchableOpacity>
+                        );
+                    }}
+                    ListHeaderComponent={<Header headerText='Library' />}
+                />
         );
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         songs: state.songs,
-//         selectedSongID: state.selectedSongID,
-//         recentlyAdded: state.recentlyAdded,
-//         playlistList: state.playlistList,
-//         selectedPlaylistID: state.selectedPlaylistID,
-//         selectedPlaylistSongList: state.selectedPlaylistSongList,
-//         albumList: state.albumList,
-//         selectedAlbumID: state.selectedAlbumID,
-//         selectedAlbumSongList: state.selectedAlbumSongList,
-//         artistList: state.artistList,
-//         selectedArtistID: state.selectedArtistID,
-//         selectedArtistSongList: state.selectedArtistSongList,
-//     };
-// };
-
-// export default connect(mapStateToProps, Act)(ListView);
 export default LibraryList;
