@@ -51,41 +51,27 @@ class ListView extends PureComponent {
         switch (nextProps.listType) {
             case ALL_SONGS:
                 this.setState({ dataSource: nextProps.songs });
-                this.getPlayList(nextProps.songs);
+                // this.getPlayList(nextProps.songs);
                 break;
             case RECENTLY_ADDED_SONGS:
                 this.setState({ dataSource: nextProps.recentlyAdded });
-                this.getPlayList(nextProps.recentlyAdded);
+                // this.getPlayList(nextProps.recentlyAdded);
                 break;
             case ALBUM_WITH_ID:
                 this.setState({ dataSource: nextProps.selectedAlbumSongList });
-                this.getPlayList(nextProps.selectedAlbumSongList);
+                // this.getPlayList(nextProps.selectedAlbumSongList);
                 break;
             case ARTIST_WITH_ID:
                 this.setState({ dataSource: nextProps.selectedArtistSongList });
-                this.getPlayList(nextProps.selectedArtistSongList);
+                // this.getPlayList(nextProps.selectedArtistSongList);
                 break;
             case PLAYLIST_WITH_ID:
                 this.setState({ dataSource: nextProps.selectedPlaylistSongList });
-                this.getPlayList(nextProps.selectedPlaylistSongList);
+                // this.getPlayList(nextProps.selectedPlaylistSongList);
                 break;
             default:
                 this.setState({ dataSource: [] });
         }
-    }
-    
-    getPlayList(list) {
-        let songArray = [];
-        for (let i = 0; i < list.length; i++) {
-            songArray.push({
-                id: list[i].songID,
-                url: 'file://'+ list[i].fullPath,
-                title: list[i].songName,
-                artist: list[i].artistName,
-            });
-        }
-        TrackPlayer.add(songArray, null);
-        TrackPlayer.pause();
     }
         
     render() {
@@ -94,7 +80,7 @@ class ListView extends PureComponent {
             <RecyclerViewList 
                 style={{ flex: 1 }}
                 dataSource={dataSource}
-                renderItem={({ item, index }) => <ListItem item={item} index={index} />}
+                renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} />}
                 ListHeaderComponent={<Header headerText={this.props.headerText} />}
             />
         );

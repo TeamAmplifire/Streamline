@@ -69,7 +69,7 @@ class ListItem extends Component {
                 onPress={() => {
                     this.props.selectSong(this.props.item.songID);
                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                    Actions.playerScreen({ index: this.props.index });
+                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
                 }}
             >
                 <CardSection>

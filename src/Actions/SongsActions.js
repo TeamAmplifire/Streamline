@@ -19,7 +19,6 @@ export const selectSong = (songID) => {
             console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
             let JsonArray = [];
             JsonArray = JSON.parse(successCallback);
             dispatch({ type: SELECT_SONG, payload: JsonArray });
