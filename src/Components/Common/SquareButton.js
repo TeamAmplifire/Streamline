@@ -11,7 +11,7 @@ class SquareButton extends Component {
         return (
                 <TouchableOpacity style={styles.buttonStyle}>
                     <Image 
-                        style={[ styles.imageStyle, this.props.style ]}
+                        style={[styles.imageStyle, this.props.style]}
                         source={this.props.image}
                     />
                 </TouchableOpacity>

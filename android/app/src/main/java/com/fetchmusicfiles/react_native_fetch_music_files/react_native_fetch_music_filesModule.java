@@ -1,8 +1,11 @@
 package com.fetchmusicfiles.react_native_fetch_music_files;
 
+import android.Manifest;
 import android.content.ContentUris;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.Callback;
@@ -15,6 +18,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.fetchmusicfiles.DataModels.AlbumCollection;
 import com.fetchmusicfiles.DataModels.ArtistCollection;
 import com.fetchmusicfiles.DataModels.PlaylistCollection;
+import com.fetchmusicfiles.DataModels.Song;
 import com.fetchmusicfiles.DataModels.SongCollection;
 import com.fetchmusicfiles.Fetch.FetchAlbums;
 import com.fetchmusicfiles.Fetch.FetchArtists;
@@ -28,6 +32,7 @@ import java.util.Map;
 
 public class react_native_fetch_music_filesModule extends ReactContextBaseJavaModule {
     public static final String REACT_CLASS = "react_native_fetch_music_files";
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 100;
     private static ReactApplicationContext reactContext = null;
 
     public react_native_fetch_music_filesModule(ReactApplicationContext context) {
@@ -208,5 +213,26 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
         }
 
         successCallback.invoke(artwork);
+    }
+    
+    @ReactMethod
+    public void permissionCheck(){
+        if (ActivityCompat.checkSelfPermission(reactContext.getCurrentActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(reactContext.getCurrentActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+    }
+
+    @ReactMethod
+    public void getSongWithID(int songID, Callback errorCallback, Callback successCallback){
+        Song song = FetchSongList.getInstance().getSong(reactContext, songID);
+        if(song == null) {
+            errorCallback.invoke("Error.");
+            return;
+        }
+        successCallback.invoke(new Gson().toJson(song));
     }
 }

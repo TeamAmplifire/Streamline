@@ -48,7 +48,7 @@ class Search extends PureComponent {
                         }
                     }                
                 />
-                <RecyclerViewList 
+                <RecyclerViewList
                     style={{ flex: 1 }}
                     dataSource={dataSource}
                     renderItem={({ item, index }) => <ListItem item={item} />}
@@ -61,7 +61,7 @@ class Search extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         songs: state.songs,
-        selectedSongID: state.selectedSongID,
+        selectedSong: state.selectedSong,
         recentlyAdded: state.recentlyAdded,
         playlistList: state.playlistList,
         selectedPlaylistID: state.selectedPlaylistID,

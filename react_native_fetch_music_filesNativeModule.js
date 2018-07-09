@@ -36,3 +36,7 @@ export const getAlbumArt = react_native_fetch_music_files.getAlbumArt;
 // long albumID, Callback errorCallback, Callback successCallback
 export const getArtworkForSong = react_native_fetch_music_files.getArtworkForSong;
 // long songID, Callback errorCallback, Callback successCallback
+export const permissionCheck = react_native_fetch_music_files.permissionCheck;
+// No parameters
+export const getSong = react_native_fetch_music_files.getSongWithID;
+// long songID, Callback errorCallback, Callback successCallback

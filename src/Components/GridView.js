@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         songs: state.songs,
-        selectedSongID: state.selectedSongID,
+        selectedSong: state.selectedSong,
         recentlyAdded: state.recentlyAdded,
         playlistList: state.playlistList,
         selectedPlaylistID: state.selectedPlaylistID,

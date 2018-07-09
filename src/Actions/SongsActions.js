@@ -3,7 +3,8 @@ import {
     fetchRecentlyAddedSongs,
     editSongInfo,
     deleteSong,
-    getArtworkForSong
+    getArtworkForSong,
+    getSong
 } from '../../react_native_fetch_music_filesNativeModule';
 import {
     SELECT_SONG,
@@ -13,12 +14,17 @@ import {
 } from '../Values/Types';
 
 export const selectSong = (songID) => {
-    return (
-        {
-            type: SELECT_SONG,
-            payload: songID
-        }
-    );
+    return (dispatch) => {
+        getSong(songID, (errorCallBack) => {
+            console.log(errorCallBack);
+        },
+        (successCallback) => {
+            console.log(successCallback);
+            let JsonArray = [];
+            JsonArray = JSON.parse(successCallback);
+            dispatch({ type: SELECT_SONG, payload: JsonArray });
+        });
+    };
 };
 
 export const fetchSongs = () => {

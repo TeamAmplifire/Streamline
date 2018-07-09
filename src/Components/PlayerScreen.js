@@ -12,29 +12,49 @@ import { playIcon, prevIcon, nextIcon } from '../Drawables/icons';
 
 class PlayerScreen extends Component {
     state = {
-        currentSong: null
-    }
+        currentSong: {
+            songID: null,
+            songName: null,
+            albumName: null,
+            artistName: null,
+            fullpath: null,
+        }
+    };
 
     componentWillMount() {
-        console.log(this.state);
-        this.props.songs.filter((item) => {
-            const check = item.songID === this.props.selectedSongID;
-            if (check) {
-                this.setState({ currentSong: item });
-            }
-            return check;
+        this.setState({ currentSong: this.props.selectedSong });
+        TrackPlayer.setupPlayer({}).then(() => {
+            TrackPlayer.updateOptions({
+                capabilities: [
+                    TrackPlayer.CAPABILITY_PLAY,
+                    TrackPlayer.CAPABILITY_PAUSE,
+                    TrackPlayer.CAPABILITY_SEEK_TO,
+                    TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+                    TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+                ]
+            });
         });
     }
 
+    async componentWillReceiveProps(nextProps) {
+        TrackPlayer.reset();
+        console.log(nextProps);
+        this.setState({ currentSong: nextProps.selectedSong });
+        let uri = 'file://' + nextProps.selectedSong.fullPath;
+        console.log(uri);
+        await TrackPlayer.add([{
+            id: nextProps.selectedSong.songID,
+            url: uri,
+            title: nextProps.selectedSong.songName,
+            artist: nextProps.selectedSong.artistName,
+            artwork: nextProps.selectedSongArtwork
+        }, null]);
+        TrackPlayer.play();
+        TrackPlayer.add([this.props.songs, null]);
+        console.log(TrackPlayer.getState(), uri);
+    }
+
     render() {
-        console.log(this.state);
-        TrackPlayer.add([{
-            id: 1,
-            url: this.state.currentSong.fullpath,
-            title: this.state.currentSong.songName,
-            artist: this.state.currentSong.artistName,
-            artwork: this.props.selectedSongArtwork
-        }], null);
         return (
             <View style={styles.containerStyle}>
                 <View style={styles.albumArtContainerStyle}>
@@ -48,13 +68,13 @@ class PlayerScreen extends Component {
                 </Text>
 
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
-                    {this.state.currentSong.artistName}  •  {this.state.currentSong.albumName}
+                {this.state.currentSong.artistName}  •  {this.state.currentSong.albumName}
                 </Text>
 
                 <View style={styles.buttonContainerStyle}>
-                    <SquareButton ImageBackground={prevIcon} />
-                    <SquareButton ImageBackground={playIcon} style={{ width: 45, height: 45 }} />
-                    <SquareButton ImageBackground={nextIcon} />
+                    <SquareButton image={prevIcon} />
+                    <SquareButton image={playIcon} style={{ width: 45, height: 45 }} />
+                    <SquareButton image={nextIcon} />
                 </View>
             </View>
         );
@@ -113,7 +133,7 @@ const styles = {
 const mapStateToProps = (state) => {
     return {
         songs: state.songs,
-        selectedSongID: state.selectedSongID,
+        selectedSong: state.selectedSong,
         recentlyAdded: state.recentlyAdded,
         playlistList: state.playlistList,
         selectedPlaylistID: state.selectedPlaylistID,

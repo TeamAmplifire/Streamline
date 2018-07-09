@@ -74,7 +74,7 @@ class ListView extends PureComponent {
             <RecyclerViewList 
                 style={{ flex: 1 }}
                 dataSource={dataSource}
-                renderItem={({ item, index }) => <ListItem item={item} />}
+                renderItem={({ item, index }) => <ListItem item={item} index={index} />}
                 ListHeaderComponent={<Header headerText={this.props.headerText} />}
             />
         );
@@ -84,7 +84,7 @@ class ListView extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         songs: state.songs,
-        selectedSongID: state.selectedSongID,
+        selectedSong: state.selectedSong,
         recentlyAdded: state.recentlyAdded,
         playlistList: state.playlistList,
         selectedPlaylistID: state.selectedPlaylistID,

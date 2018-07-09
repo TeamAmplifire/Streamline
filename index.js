@@ -3,4 +3,3 @@ import App from './App';
 
 AppRegistry.registerComponent('fetchMusicFiles', () => App);
 AppRegistry.registerHeadlessTask('TrackPlayer', require('./src/EventHandler/EventHandler'));
-

@@ -7,8 +7,10 @@ import TrackPlayer from 'react-native-track-player';
 import Reducers from './src/Reducers';
 import { backgroundColor } from './src/Values/colors';
 import Router from './src/Router/Router';
+import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
 
 const App = () => {
+    permissionCheck();
     initialisePlayer();
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
@@ -26,7 +28,6 @@ const App = () => {
 
 const initialisePlayer = async () => {
     await TrackPlayer.setupPlayer({});
-  
     TrackPlayer.updateOptions({
         capabilities: [
             TrackPlayer.CAPABILITY_PLAY,
@@ -35,7 +36,7 @@ const initialisePlayer = async () => {
             TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
             TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
         ]
-        });
+    });
 };
 
 export default App;

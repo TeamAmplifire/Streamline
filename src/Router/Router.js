@@ -11,8 +11,8 @@ const RouterComponent = () => {
     return (
         <Router {...sceneConfig}>
             <Stack hideNavBar>
-                <Scene key='libraryList' component={LibraryList} />
-                <Scene key='search' component={Search} initial />     
+                <Scene key='libraryList' component={LibraryList} initial />
+                <Scene key='search' component={Search} />     
                 <Scene key='allSongs' component={ListView} />
                 <Scene key='albumList' component={GridView} />     
                 <Scene key='artistList' component={GridView} />     

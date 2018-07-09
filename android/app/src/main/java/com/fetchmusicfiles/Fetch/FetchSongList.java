@@ -87,4 +87,20 @@ public class FetchSongList {
         artwork = "file://" + artwork;
         return artwork;
     }
+
+    public Song getSong(Context context, long songID){
+        Song song =  null;
+        Cursor musicCursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
+                "_ID=?", new String[] {Long.toString(songID)}, null);
+        if(musicCursor != null && musicCursor.moveToFirst()){
+            song = new Song(musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media._ID)),
+                    musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
+                    musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
+                    musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
+                    musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
+                    musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
+            );
+        }
+        return song;
+    }
 }

@@ -6,7 +6,6 @@ import {
     } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import TrackPlayer from 'react-native-track-player';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
@@ -18,8 +17,7 @@ class ListItem extends Component {
             onPress={() => {
                 this.props.selectSong(this.props.item.songID);
                 this.props.getArtworkForSongWithID(this.props.item.songID);
-                TrackPlayer.remove(TrackPlayer.getQueue());
-                Actions.playerScreen();
+                Actions.playerScreen({ index: this.props.index });
             }}
             >
                 <View style={styles.containerStyle}>
@@ -28,7 +26,6 @@ class ListItem extends Component {
                             {this.props.item.songName}
                         </Text>
                     </CardSection>
-
                     <CardSection>
                         <Text style={styles.leftTextStyle} numberOfLines={1}>
                             {this.props.item.artistName}
@@ -84,4 +81,10 @@ const styles = {
     }
 };
 
-export default connect(null, Act)(ListItem);
+const mapStateToProps = (state) => {
+    return {
+        songs: state.songs
+    };
+};
+
+export default connect(mapStateToProps, Act)(ListItem);
