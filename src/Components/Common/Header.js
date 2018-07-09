@@ -10,7 +10,7 @@ class Header extends Component {
 
         return (
             <View style={viewStyle}>
-                <Text style={textStyle}>
+                <Text style={textStyle} numberOfLines={1}>
                     {this.props.headerText}
                 </Text>
             </View>
@@ -27,6 +27,7 @@ const styles = {
         height: 65,
         paddingTop: 5,
         paddingLeft: 8,
+        paddingRight: 8,
         position: 'relative'
     },
     textStyle: {

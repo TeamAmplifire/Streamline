@@ -7,8 +7,8 @@ import Input from './Input';
 import CardSection from './CardSection';
 import BorderlessButton from './BorderlessButton';
 
-class EditModal extends Component {
-    state = { songName: '', albumName: '', artistName: '' };
+class SingleInputModal extends Component {
+    state = { playlistName: '' };
 
     componentWillMount() {
         this.setState({ songName: this.props.songName, albumName: this.props.albumName, artistName: this.props.artistName });
@@ -26,26 +26,10 @@ class EditModal extends Component {
                 <View>
                     <CardSection>
                         <Input
-                            label="Song Name"
-                            placeholder="song name"
-                            value={this.state.songName}
-                            onChangeText={songName => this.setState({ songName })}
-                        />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                            label="Artist Name"
-                            placeholder="song name"
-                            value={this.state.songName}
-                            onChangeText={songName => this.setState({ songName })}
-                        />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                            label="Album Name"
-                            placeholder="song name"
-                            value={this.state.songName}
-                            onChangeText={songName => this.setState({ songName })}
+                            label="Playlist Name"
+                            placeholder="playlist..."
+                            value={this.state.playlistName}
+                            onChangeText={playlistName => this.setState({ playlistName })}
                         />
                     </CardSection>
                     <CardSection>
@@ -76,4 +60,4 @@ const styles = {
     }
 };
 
-export default EditModal;
+export default SingleInputModal;
