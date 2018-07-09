@@ -4,9 +4,9 @@ import {
     Text, 
     Image,
 } from 'react-native';
-import { onBackgroundColor, primaryColor, backgroundColor } from '../Values/colors';
+import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { SquareButton } from './Common';
-import imageSource from '../Drawables/images/placeholder_cover.png';
+// import imageSource from '../Drawables/images/placeholder_cover.png';
 import { playIcon, prevIcon, nextIcon } from '../Drawables/icons';
 
 class PlayerScreen extends Component {
@@ -15,7 +15,7 @@ class PlayerScreen extends Component {
             <View style={styles.containerStyle}>
                 <View style={styles.albumArtContainerStyle}>
                     <Image
-                        source={imageSource} 
+                        source={this.props.track.albumArt} 
                         style={styles.albumArtStyle}
                     />
                 </View>
