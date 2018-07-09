@@ -25,7 +25,8 @@ class PlaylistListModal extends Component {
                 visible
                 transparent
                 animationType="slide"
-                onRequestClose={()=>{}}>
+                onRequestClose={() => {}}
+            >
 
                 <View>
                     <RecyclerViewList 

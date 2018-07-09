@@ -13,12 +13,14 @@ import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { BorderlessButton } from './Common/BorderlessButton';
 import ConfirmationModal from './Common/ConfirmationModal';
 import EditTagsModal from './Common/EditTagsModal';
+import PlaylistListModal from './Common/PlaylistListModal';
 
 class ListItem extends Component {
     state = { 
         isExpanded: false, 
         showDeleteConfirmation: false,  
-        showEditTags: false
+        showEditTags: false,
+        showPlaylistList: false
     };
 
     onConfirmDelete() {
@@ -41,7 +43,7 @@ class ListItem extends Component {
                     <BorderlessButton>PLAY</BorderlessButton>
                     <BorderlessButton
                         onPress={() => {
-                            
+                            this.setState({ showPlaylisList: true });
                         }}
                     >
                         ADD TO PLAYLIST
@@ -117,6 +119,11 @@ class ListItem extends Component {
                         item={this.props.item}
                         visible={this.state.showEditTags}
                         onCancel={this.onCancelEdit.bind(this)}
+                    />
+
+                    <PlaylistListModal
+                        item={this.props.item}
+                        
                     />
                 </View>
             </TouchableOpacity>

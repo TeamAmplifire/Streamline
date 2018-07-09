@@ -89,7 +89,6 @@ class LibraryList extends PureComponent {
                     image={searchIcon} 
                     onPress={() => { 
                         Actions.search(); 
-                        console.log("SEARCH KARDO PLEAJE");
                     }}
                 />
             </CardSection>
