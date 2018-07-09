@@ -95,12 +95,11 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.fetchmusicfiles"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         ndk {
@@ -141,6 +140,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:23.4.0'
     implementation 'com.facebook.react:react-native:+'
     compile project(':react-native-recyclerview-list')
+    compile project(':react-native-track-player')
     // From node_modules
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation files('src/main/java/com/fetchmusicfiles/Utilities/MyID3_for_Android.jar')

@@ -3,6 +3,7 @@ package com.fetchmusicfiles;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import guichaguri.trackplayer.TrackPlayer;
 import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new TrackPlayer(),
           new RNRecyclerviewListPackage(),
           new react_native_fetch_music_filesPackage()
       );

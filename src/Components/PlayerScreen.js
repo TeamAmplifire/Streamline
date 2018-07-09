@@ -2,35 +2,59 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text, 
-    Image,
+    ImageBackground,
 } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
+import { connect } from 'react-redux';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { SquareButton } from './Common';
-// import imageSource from '../Drawables/images/placeholder_cover.png';
 import { playIcon, prevIcon, nextIcon } from '../Drawables/icons';
 
 class PlayerScreen extends Component {
+    state = {
+        currentSong: null
+    }
+
+    componentWillMount() {
+        console.log(this.state);
+        this.props.songs.filter((item) => {
+            const check = item.songID === this.props.selectedSongID;
+            if (check) {
+                this.setState({ currentSong: item });
+            }
+            return check;
+        });
+    }
+
     render() {
+        console.log(this.state);
+        TrackPlayer.add([{
+            id: 1,
+            url: this.state.currentSong.fullpath,
+            title: this.state.currentSong.songName,
+            artist: this.state.currentSong.artistName,
+            artwork: this.props.selectedSongArtwork
+        }], null);
         return (
             <View style={styles.containerStyle}>
                 <View style={styles.albumArtContainerStyle}>
-                    <Image
-                        source={this.props.track.albumArt} 
+                    <ImageBackground
+                        source={{ isStatic: true, uri: this.props.selectedSongArtwork }} 
                         style={styles.albumArtStyle}
                     />
                 </View>
                 <Text style={styles.titleStyle} numberOfLines={1}>
-                    Song Name
+                    {this.state.currentSong.songName}
                 </Text>
 
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
-                    Artist Name  •  Album Name
+                    {this.state.currentSong.artistName}  •  {this.state.currentSong.albumName}
                 </Text>
 
                 <View style={styles.buttonContainerStyle}>
-                    <SquareButton image={prevIcon} />
-                    <SquareButton image={playIcon} style={{ width: 45, height: 45 }}/>
-                    <SquareButton image={nextIcon} />
+                    <SquareButton ImageBackground={prevIcon} />
+                    <SquareButton ImageBackground={playIcon} style={{ width: 45, height: 45 }} />
+                    <SquareButton ImageBackground={nextIcon} />
                 </View>
             </View>
         );
@@ -86,4 +110,22 @@ const styles = {
     }
 };
 
-export default PlayerScreen;
+const mapStateToProps = (state) => {
+    return {
+        songs: state.songs,
+        selectedSongID: state.selectedSongID,
+        recentlyAdded: state.recentlyAdded,
+        playlistList: state.playlistList,
+        selectedPlaylistID: state.selectedPlaylistID,
+        selectedPlaylistSongList: state.selectedPlaylistSongList,
+        albumList: state.albumList,
+        selectedAlbumID: state.selectedAlbumID,
+        selectedAlbumSongList: state.selectedAlbumSongList,
+        artistList: state.artistList,
+        selectedArtistID: state.selectedArtistID,
+        selectedArtistSongList: state.selectedArtistSongList,
+        selectedSongArtwork: state.selectedSongArtwork,
+    };
+};
+
+export default connect(mapStateToProps)(PlayerScreen);

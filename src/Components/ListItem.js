@@ -10,6 +10,8 @@ import {
     Platform
     } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import TrackPlayer from 'react-native-track-player';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
@@ -46,15 +48,16 @@ class ListItem extends Component {
         return (
             <TouchableOpacity 
                 style={styles.containerStyle}
-                onPress={() => {
-                    this.props.selectSong(this.props.item.songID);
-                    this.props.getArtworkForSongWithID(this.props.item.songID);
-                    ToastAndroid.show("TAP!", ToastAndroid.SHORT);
-                }}
                 
                 onLongPress={() => {
                     ToastAndroid.show("LONG PRESS!", ToastAndroid.SHORT);
                     this.setState({ isExpanded: !this.state.isExpanded });
+                }}
+                onPress={() => {
+                    this.props.selectSong(this.props.item.songID);
+                    this.props.getArtworkForSongWithID(this.props.item.songID);
+                    TrackPlayer.remove(TrackPlayer.getQueue());
+                    Actions.playerScreen();
                 }}
             >
                 <CardSection>
