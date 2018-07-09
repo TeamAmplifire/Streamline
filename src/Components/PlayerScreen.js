@@ -68,7 +68,7 @@ class PlayerScreen extends Component {
                 </Text>
 
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
-                {this.state.currentSong.artistName}  •  {this.state.currentSong.albumName}
+                    {this.state.currentSong.artistName}  •  {this.state.currentSong.albumName}
                 </Text>
 
                 <View style={styles.buttonContainerStyle}>
