@@ -20,7 +20,6 @@ class ListView extends PureComponent {
         dataSource: [],
     };
     componentWillMount() {
-        console.log(this.props);
         switch (this.props.listType) {
             case ALL_SONGS:
                 this.props.fetchSongs();

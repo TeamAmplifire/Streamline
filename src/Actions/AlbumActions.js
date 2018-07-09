@@ -39,8 +39,6 @@ export const getSongsFromAlbumWithID = (albumID) => {
             console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
-            console.log(albumID);
             let JsonArray = [];
             JsonArray = JSON.parse(successCallback);
             dispatch({ type: GET_SONGS_FROM_ALBUM, payload: JsonArray });
