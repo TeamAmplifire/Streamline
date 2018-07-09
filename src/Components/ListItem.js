@@ -32,11 +32,26 @@ class ListItem extends Component {
         if (this.state.isExpanded) {
             return ( 
                 <View style={styles.containerStyle}>
-                    <BorderlessButton>PLAY</BorderlessButton>
-                    <BorderlessButton>ENQUEUE</BorderlessButton>
-                    <BorderlessButton>ADD TO PLAYLIST</BorderlessButton>
-                    <BorderlessButton>RENAME</BorderlessButton>
-                    <BorderlessButton>DELETE</BorderlessButton>
+                    <BorderlessButton 
+                    onPress={() => {
+                        this.props.selectSong(this.props.item.songID);
+                        this.props.getArtworkForSongWithID(this.props.item.songID);
+                        Actions.playerScreen({ index: this.props.index });
+                    }}
+                    >
+                    PLAY
+                    </BorderlessButton>
+                    <BorderlessButton
+                    >
+                    ADD TO PLAYLIST
+                    </BorderlessButton>
+                    <BorderlessButton
+                    >
+                    EDIT FIELD
+                    </BorderlessButton>
+                    <BorderlessButton
+                    >DELETE
+                    </BorderlessButton>
                 </View>
             );
         }

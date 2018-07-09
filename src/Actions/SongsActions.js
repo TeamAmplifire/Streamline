@@ -73,7 +73,7 @@ export const getArtworkForSongWithID = (songID) => {
             console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
+            // console.log(successCallback);
             dispatch({ type: GET_SONG_ARTWORK, payload: successCallback });
         });
     };

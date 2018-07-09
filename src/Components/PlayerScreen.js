@@ -8,6 +8,7 @@ import TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { SquareButton } from './Common';
+import MyProgressBar from './ProgressBar';
 import { playIcon, prevIcon, nextIcon } from '../Drawables/icons';
 
 class PlayerScreen extends Component {
@@ -20,8 +21,10 @@ class PlayerScreen extends Component {
             fullpath: null,
         }
     };
+    
 
     componentWillMount() {
+        // TrackPlayer.pause();
         this.setState({ currentSong: this.props.selectedSong });
         TrackPlayer.setupPlayer({}).then(() => {
             TrackPlayer.updateOptions({
@@ -36,25 +39,43 @@ class PlayerScreen extends Component {
         });
     }
 
-    async componentWillReceiveProps(nextProps) {
-        TrackPlayer.reset();
-        console.log(nextProps);
+    componentWillReceiveProps(nextProps) {
+        // TrackPlayer.reset();
+        // console.log(nextProps);
         this.setState({ currentSong: nextProps.selectedSong });
-        let uri = 'file://' + nextProps.selectedSong.fullPath;
-        console.log(uri);
-        await TrackPlayer.add([{
-            id: nextProps.selectedSong.songID,
-            url: uri,
-            title: nextProps.selectedSong.songName,
-            artist: nextProps.selectedSong.artistName,
-            artwork: nextProps.selectedSongArtwork
-        }, null]);
-        TrackPlayer.play();
-        TrackPlayer.add([this.props.songs, null]);
-        console.log(TrackPlayer.getState(), uri);
+        // let uri = 'file://' + nextProps.selectedSong.fullPath;
+        // console.log(uri);
+        // await TrackPlayer.add([{
+        //     id: nextProps.selectedSong.songID,
+        //     url: uri,
+        //     title: nextProps.selectedSong.songName,
+        //     artist: nextProps.selectedSong.artistName,
+        //     artwork: nextProps.selectedSongArtwork
+        // }, null]);
+        // const trackID = TrackPlayer.getTrack(nextProps.selectedSong.songID+'');
+        // console.log(trackID);
+        console.log(nextProps.selectedSong.songID);
+        TrackPlayer.skip(nextProps.selectedSong.songID+'');
+        // TrackPlayer.play();
+        // TrackPlayer.add([this.props.songs, null]);
+        // console.log(this.props.songs.length);
+    }
+
+    getPlayList() {
+        let songArray = [];
+        for (let i = 0; i < this.props.songs.length; i++) {
+            songArray.push({
+                id: this.props.songs[i].songID,
+                url: 'file://'+ this.props.songs[i].fullPath,
+                title: this.props.songs[i].songName,
+                artist: this.props.songs[i].artistName,
+            });
+        }
+        // console.log(songArray);
     }
 
     render() {
+        console.log(this.props);
         return (
             <View style={styles.containerStyle}>
                 <View style={styles.albumArtContainerStyle}>
@@ -76,6 +97,7 @@ class PlayerScreen extends Component {
                     <SquareButton image={playIcon} style={{ width: 45, height: 45 }} />
                     <SquareButton image={nextIcon} />
                 </View>
+                <MyProgressBar />
             </View>
         );
     }

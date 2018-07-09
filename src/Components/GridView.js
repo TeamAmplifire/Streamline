@@ -20,7 +20,7 @@ class Grid extends Component {
     state = { dataSource: [] };
 
     componentWillMount() {
-        console.log(this.props);
+        // console.log(this.props);
         switch (this.props.listType) {
             case PLAYLIST_LIST:
                 this.props.fetchPlaylistList();
