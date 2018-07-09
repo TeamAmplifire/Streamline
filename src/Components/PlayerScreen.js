@@ -5,10 +5,21 @@ import {
     ImageBackground,
 } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { SquareButton } from './Common';
-import { playIcon, prevIcon, nextIcon } from '../Drawables/icons';
+import MyProgressBar from './ProgressBar';
+import { playIcon, prevIcon, nextIcon, pauseIcon } from '../Drawables/icons';
+import { 
+    ALL_SONGS,
+    RECENTLY_ADDED_SONGS,
+    ALBUM_WITH_ID,
+    ARTIST_WITH_ID,
+    PLAYLIST_WITH_ID
+ } from '../Values/Types';
+ import * as Act from '../Actions';
+
 
 class PlayerScreen extends Component {
     state = {
@@ -18,40 +29,108 @@ class PlayerScreen extends Component {
             albumName: null,
             artistName: null,
             fullpath: null,
-        }
-    };
+        },
+        iconToggle: true,
+    };    
 
     componentWillMount() {
+        this.setPlayList(this.props.item.songID);
         this.setState({ currentSong: this.props.selectedSong });
-        TrackPlayer.setupPlayer({}).then(() => {
-            TrackPlayer.updateOptions({
-                capabilities: [
-                    TrackPlayer.CAPABILITY_PLAY,
-                    TrackPlayer.CAPABILITY_PAUSE,
-                    TrackPlayer.CAPABILITY_SEEK_TO,
-                    TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-                    TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
-                ]
-            });
-        });
     }
 
-    async componentWillReceiveProps(nextProps) {
+    async setPlayList(songID) {
+        let list = [];
+        switch (this.props.listType) {
+            case ALL_SONGS:
+                list = this.props.songs;
+                break;
+            case RECENTLY_ADDED_SONGS:
+                list = this.props.recentlyAdded;
+                break;
+            case ALBUM_WITH_ID:
+                list = this.props.selectedAlbumSongList;
+                console.log(list);
+                break;
+            case ARTIST_WITH_ID:
+                list = this.props.selectedArtistSongList;
+                break;
+            case PLAYLIST_WITH_ID:
+                list = this.props.selectedPlaylistSongList;
+                break;
+            default:
+        }
+        const song = _.find(list, { songID });
+        const index = list.indexOf(song);
         TrackPlayer.reset();
-        console.log(nextProps);
-        this.setState({ currentSong: nextProps.selectedSong });
-        let uri = 'file://' + nextProps.selectedSong.fullPath;
-        console.log(uri);
-        await TrackPlayer.add([{
-            id: nextProps.selectedSong.songID,
-            url: uri,
-            title: nextProps.selectedSong.songName,
-            artist: nextProps.selectedSong.artistName,
-            artwork: nextProps.selectedSongArtwork
-        }, null]);
+        for (let i = 0; i < list.length; i++) {
+            await TrackPlayer.add([{
+                id: list[i].songID,
+                url: 'file://'+ list[i].fullPath,
+                title: list[i].songName,
+                artist: list[i].artistName,
+            }]);
+        }
         TrackPlayer.play();
-        TrackPlayer.add([this.props.songs, null]);
-        console.log(TrackPlayer.getState(), uri);
+        for (let j = 0; j < index; j++) {
+            TrackPlayer.skipToNext();
+        }
+    }
+
+    getNextSong(songID) {
+        let list = [];
+        switch (this.props.listType) {
+            case ALL_SONGS:
+                list = this.props.songs;
+                break;
+            case RECENTLY_ADDED_SONGS:
+                list = this.props.recentlyAdded;
+                break;
+            case ALBUM_WITH_ID:
+                list = this.props.selectedAlbumSongList;
+                break;
+            case ARTIST_WITH_ID:
+                list = this.props.selectedArtistSongList;
+                break;
+            case PLAYLIST_WITH_ID:
+                list = this.props.selectedPlaylistSongList;
+                break;
+            default:
+        }
+        const song = _.find(list, { songID });
+        const index = list.indexOf(song);
+        return list[index + 1];
+    }
+
+    getPreviousSong(songID) {
+        let list = [];
+        switch (this.props.listType) {
+            case ALL_SONGS:
+                list = this.props.songs;
+                break;
+            case RECENTLY_ADDED_SONGS:
+                list = this.props.recentlyAdded;
+                break;
+            case ALBUM_WITH_ID:
+                list = this.props.selectedAlbumSongList;
+                break;
+            case ARTIST_WITH_ID:
+                list = this.props.selectedArtistSongList;
+                break;
+            case PLAYLIST_WITH_ID:
+                list = this.props.selectedPlaylistSongList;
+                break;
+            default:
+        }
+        const song = _.find(list, { songID });
+        const index = list.indexOf(song);
+        return list[index - 1];
+    }
+
+    renderIcon() {
+        if (this.state.iconToggle) {
+            return pauseIcon;
+        }
+        return playIcon;
     }
 
     render() {
@@ -60,23 +139,56 @@ class PlayerScreen extends Component {
             
                 <View style={styles.albumArtContainerStyle}>
                     <ImageBackground
-                        source={{ isStatic: true, uri: this.props.selectedSongArtwork }} 
+                        source={{ isStatic: true, uri: this.props.selectedSongArtwork }}
                         style={styles.albumArtStyle}
                     />
                 </View>
                 <Text style={styles.titleStyle} numberOfLines={1}>
-                    {this.state.currentSong.songName}
+                    { this.props.selectedSong.songName}
                 </Text>
-
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
-                    {this.state.currentSong.artistName}  •  {this.state.currentSong.albumName}
+                    { this.props.selectedSong.artistName}  •  { this.props.selectedSong.albumName}
                 </Text>
-
                 <View style={styles.buttonContainerStyle}>
-                    <SquareButton image={prevIcon} />
-                    <SquareButton image={playIcon} style={{ width: 45, height: 45 }} />
-                    <SquareButton image={nextIcon} />
+                    <SquareButton 
+                    image={prevIcon}
+                    onPress={() => {
+                                const nextSong = this.getPreviousSong(this.props.selectedSong.songID);
+                                TrackPlayer.skipToPrevious();
+                                this.props.selectSong(nextSong.songID);
+                                this.props.getArtworkForSongWithID(nextSong.songID);
+                            }
+                        } 
+                    />
+                    <SquareButton 
+                    image={this.renderIcon()}
+                    style={{ width: 45, height: 45 }}
+                    onPress={() => {
+                        TrackPlayer.getState().then((playBackState)=> {
+                                if (playBackState === TrackPlayer.STATE_PLAYING || playBackState === 3) {
+                                    this.setState({ iconToggle: false });
+                                    TrackPlayer.pause();    
+                                }
+                                else {
+                                    this.setState({ iconToggle: true });
+                                    TrackPlayer.play();
+                                }
+                            });
+                            }
+                        } 
+                    />
+                    <SquareButton 
+                    image={nextIcon}
+                    onPress={() => {
+                                const nextSong = this.getNextSong(this.props.selectedSong.songID);
+                                TrackPlayer.skipToNext();
+                                this.props.selectSong(nextSong.songID);
+                                this.props.getArtworkForSongWithID(nextSong.songID);
+                            }
+                        } 
+                    />
                 </View>
+                <MyProgressBar />
             </View>
         );
     }
@@ -148,4 +260,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(PlayerScreen);
+export default connect(mapStateToProps, Act)(PlayerScreen);

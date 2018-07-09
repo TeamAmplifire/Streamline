@@ -40,7 +40,15 @@ class ListItem extends Component {
         if (this.state.isExpanded) {
             return ( 
                 <View style={styles.containerStyle}>
-                    <BorderlessButton>PLAY</BorderlessButton>
+                    <BorderlessButton
+                        onPress={() => {
+                            this.props.selectSong(this.props.item.songID);
+                            this.props.getArtworkForSongWithID(this.props.item.songID);
+                            Actions.playerScreen({ index: this.props.index });
+                        }}
+                    >
+                        PLAY
+                    </BorderlessButton>
                     <BorderlessButton
                         onPress={() => {
                             this.setState({ showPlaylisList: true });
@@ -79,7 +87,7 @@ class ListItem extends Component {
                 onPress={() => {
                     this.props.selectSong(this.props.item.songID);
                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                    Actions.playerScreen({ index: this.props.index });
+                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
                 }}
             >
                 <CardSection>
@@ -123,7 +131,7 @@ class ListItem extends Component {
 
                     <PlaylistListModal
                         item={this.props.item}
-                        
+
                     />
                 </View>
             </TouchableOpacity>

@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
+import TrackPlayer from 'react-native-track-player';
 import ListItem from './ListItem';
 import * as Act from '../Actions';
 import { Header } from './Common';
@@ -50,31 +51,36 @@ class ListView extends PureComponent {
         switch (nextProps.listType) {
             case ALL_SONGS:
                 this.setState({ dataSource: nextProps.songs });
+                // this.getPlayList(nextProps.songs);
                 break;
             case RECENTLY_ADDED_SONGS:
                 this.setState({ dataSource: nextProps.recentlyAdded });
+                // this.getPlayList(nextProps.recentlyAdded);
                 break;
             case ALBUM_WITH_ID:
                 this.setState({ dataSource: nextProps.selectedAlbumSongList });
+                // this.getPlayList(nextProps.selectedAlbumSongList);
                 break;
             case ARTIST_WITH_ID:
                 this.setState({ dataSource: nextProps.selectedArtistSongList });
+                // this.getPlayList(nextProps.selectedArtistSongList);
                 break;
             case PLAYLIST_WITH_ID:
                 this.setState({ dataSource: nextProps.selectedPlaylistSongList });
+                // this.getPlayList(nextProps.selectedPlaylistSongList);
                 break;
             default:
                 this.setState({ dataSource: [] });
         }
     }
-    
+        
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (
             <RecyclerViewList 
                 style={{ flex: 1 }}
                 dataSource={dataSource}
-                renderItem={({ item, index }) => <ListItem item={item} index={index} />}
+                renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} />}
                 ListHeaderComponent={<Header headerText={this.props.headerText} />}
             />
         );
@@ -84,6 +90,7 @@ class ListView extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         songs: state.songs,
+        dataSource: state.dataSource,
         selectedSong: state.selectedSong,
         recentlyAdded: state.recentlyAdded,
         playlistList: state.playlistList,

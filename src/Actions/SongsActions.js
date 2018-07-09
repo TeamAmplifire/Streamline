@@ -19,7 +19,6 @@ export const selectSong = (songID) => {
             console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
             let JsonArray = [];
             JsonArray = JSON.parse(successCallback);
             dispatch({ type: SELECT_SONG, payload: JsonArray });
@@ -73,7 +72,7 @@ export const getArtworkForSongWithID = (songID) => {
             console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
+            // console.log(successCallback);
             dispatch({ type: GET_SONG_ARTWORK, payload: successCallback });
         });
     };
