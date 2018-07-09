@@ -200,13 +200,12 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     @ReactMethod
     public void getArtworkForSong(int songID, Callback errorCallback, Callback successCallback){
         String artwork = FetchSongList.getInstance().getArtworkForSong(reactContext, songID);
-        Toast.makeText(reactContext, "jsvc", Toast.LENGTH_SHORT).show();
 
         if(artwork.isEmpty()) {
             errorCallback.invoke("There is no artwork for this song.");
             return;
         }
-
+        
         successCallback.invoke(artwork);
     }
 }

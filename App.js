@@ -9,7 +9,6 @@ import Router from './src/Router/Router';
 
 const App = () => {
     
-    console.log(this.props.track.albumArt);
     return (
         <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
             <View style={{ flex: 1 }}>

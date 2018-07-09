@@ -2,38 +2,86 @@ import React, { Component } from 'react';
 import { 
     Text,
     TouchableOpacity, 
-    View
+    View,
+    Animated,
+    ToastAndroid,
+    LayoutAnimation,
+    UIManager,
+    Platform
     } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
+import { BorderlessButton } from './Common/BorderlessButton';
 
 class ListItem extends Component {
-    render() {
+    state = { isExpanded: false };
+
+    componentWillMount() {
+        if (Platform.OS === 'android') {
+            UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
+    }
+    
+    componentWillUpdate() {
+        LayoutAnimation.easeInEaseOut();
+    }
+
+    renderMenu() {
+        if (this.state.isExpanded) {
+            return ( 
+                <View style={styles.containerStyle}>
+                    <BorderlessButton>PLAY</BorderlessButton>
+                    <BorderlessButton>ENQUEUE</BorderlessButton>
+                    <BorderlessButton>ADD TO PLAYLIST</BorderlessButton>
+                    <BorderlessButton>RENAME</BorderlessButton>
+                    <BorderlessButton>DELETE</BorderlessButton>
+                </View>
+            );
+        }
+    }
+
+    renderSongItem() {
         return (
             <TouchableOpacity 
-            onPress={() => {
-                this.props.selectSong(this.props.item.songID);
-                this.props.getArtworkForSongWithID(this.props.item.songID);
-            }}
+                style={styles.containerStyle}
+                onPress={() => {
+                    this.props.selectSong(this.props.item.songID);
+                    this.props.getArtworkForSongWithID(this.props.item.songID);
+                    ToastAndroid.show("TAP!", ToastAndroid.SHORT);
+                }}
+                
+                onLongPress={() => {
+                    ToastAndroid.show("LONG PRESS!", ToastAndroid.SHORT);
+                    this.setState({ isExpanded: !this.state.isExpanded });
+                }}
             >
-                <View style={styles.containerStyle}>
-                    <CardSection>
-                        <Text style={styles.titleStyle} numberOfLines={1}>
-                            {this.props.item.songName}
-                        </Text>
-                    </CardSection>
+                <CardSection>
+                    <Text style={styles.titleStyle} numberOfLines={1}>
+                        {this.props.item.songName}
+                    </Text>
+                </CardSection>
 
-                    <CardSection>
-                        <Text style={styles.leftTextStyle} numberOfLines={1}>
-                            {this.props.item.artistName}
-                        </Text>
+                <CardSection>
+                    <Text style={styles.leftTextStyle} numberOfLines={1}>
+                        {this.props.item.artistName}
+                    </Text>
 
-                        <Text style={styles.rightTextStyle} numberOfLines={1}>
-                            {this.props.item.albumName}
-                        </Text>
-                    </CardSection>
+                    <Text style={styles.rightTextStyle} numberOfLines={1}>
+                        {this.props.item.albumName}
+                    </Text>
+                </CardSection>
+            </TouchableOpacity>
+        );
+    }
+
+    render() {
+        return (
+            <TouchableOpacity>
+                <View>
+                    {this.renderSongItem()}
+                    {this.renderMenu()}
                 </View>
             </TouchableOpacity>
         );
@@ -43,7 +91,6 @@ class ListItem extends Component {
 const styles = {
     titleStyle: {
         fontSize: 14,
-        paddingLeft: 8,
         paddingRight: 122,
         paddingTop: 12,
         paddingBottom: 0,
@@ -54,7 +101,6 @@ const styles = {
     leftTextStyle: {
         flex: 1,
         fontSize: 12,
-        paddingLeft: 8,
         paddingRight: 8,
         paddingTop: 2,
         paddingBottom: 12,
@@ -66,7 +112,6 @@ const styles = {
         flex: 1,
         fontSize: 12,
         paddingLeft: 8,
-        paddingRight: 8,
         paddingTop: 2,
         paddingBottom: 12,
         color: onBackgroundColor,
@@ -76,7 +121,9 @@ const styles = {
     },
 
     containerStyle: {
-        backgroundColor
+        backgroundColor,
+        paddingLeft: 8,
+        paddingRight: 8
     }
 };
 
