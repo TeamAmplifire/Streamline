@@ -5,6 +5,8 @@ import {
     View
     } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import TrackPlayer from 'react-native-track-player';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
@@ -16,6 +18,8 @@ class ListItem extends Component {
             onPress={() => {
                 this.props.selectSong(this.props.item.songID);
                 this.props.getArtworkForSongWithID(this.props.item.songID);
+                TrackPlayer.remove(TrackPlayer.getQueue());
+                Actions.playerScreen();
             }}
             >
                 <View style={styles.containerStyle}>
