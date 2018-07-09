@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import {
   Text,
+  View,
+  ListView,
   TouchableOpacity
 } from 'react-native';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import { Actions } from 'react-native-router-flux';
-import { Header } from './Common';
+import { Header, SquareButton, CardSection } from './Common';
 import { 
     ALL_SONGS,
     RECENTLY_ADDED_SONGS,
@@ -14,6 +16,7 @@ import {
     PLAYLIST_LIST
  } from '../Values/Types';
 import { backgroundColor } from '../Values/colors';
+import { searchIcon } from '../Drawables/icons';
 
 class LibraryList extends PureComponent {
     state = {
@@ -41,42 +44,68 @@ class LibraryList extends PureComponent {
         ],
     };
 
+    componentWillMount() {
+        const ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+
+        this.dataSource = ds.cloneWithRows(this.state.dataSource);
+    }
+
+    renderRow(item) {
+        return (
+            <TouchableOpacity 
+            onPress={() => {
+                    switch (item.id) {
+                        case ALL_SONGS:
+                            Actions.allSongs({ listType: ALL_SONGS, headerText: 'All Songs' });
+                            break;
+                        case RECENTLY_ADDED_SONGS:
+                            Actions.recentlyAdded({ listType: RECENTLY_ADDED_SONGS, headerText: 'Recently Added' });
+                            break;
+                        case PLAYLIST_LIST:
+                            Actions.playlistList({ listType: PLAYLIST_LIST, headerText: 'Playlists' });
+                            break;                                    
+                        case ALBUM_LIST:
+                            Actions.albumList({ listType: ALBUM_LIST, headerText: 'Albums' });
+                            break;
+                        case ARTIST_LIST:
+                            Actions.artistList({ listType: ARTIST_LIST, headerText: 'Artists' });
+                            break;
+                        default:
+                    }
+                }}
+            >
+                <Text style={{ fontSize: 30, color: '#fff' }}>{item.name}</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    renderHeader() {
+        return (
+            <CardSection>
+                <Header headerText='Library' />
+                <SquareButton 
+                    image={searchIcon} 
+                    onPress={() => { 
+                        Actions.search(); 
+                        console.log("SEARCH KARDO PLEAJE");
+                    }}
+                />
+            </CardSection>
+        );
+    }
+
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.id);
         return (
-                <RecyclerViewList 
-                    style={{ flex: 1, backgroundColor }}
-                    dataSource={dataSource}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <TouchableOpacity 
-                            onPress={() => {
-                                switch (item.id) {
-                                    case ALL_SONGS:
-                                        Actions.allSongs({ listType: ALL_SONGS, headerText: 'All Songs' });
-                                        break;
-                                    case RECENTLY_ADDED_SONGS:
-                                        Actions.recentlyAdded({ listType: RECENTLY_ADDED_SONGS, headerText: 'Recently Added' });
-                                        break;
-                                    case PLAYLIST_LIST:
-                                        Actions.playlistList({ listType: PLAYLIST_LIST, headerText: 'Playlists' });
-                                        break;                                    
-                                    case ALBUM_LIST:
-                                        Actions.albumList({ listType: ALBUM_LIST, headerText: 'Albums' });
-                                        break;
-                                    case ARTIST_LIST:
-                                        Actions.artistList({ listType: ARTIST_LIST, headerText: 'Artists' });
-                                        break;
-                                    default:
-                                }
-                            }}
-                            >
-                                <Text style={{ fontSize: 30, color: '#fff' }}>{item.name}</Text>
-                            </TouchableOpacity>
-                        );
-                    }}
-                    ListHeaderComponent={<Header headerText='Library' />}
-                />
+            <View>
+                {this.renderHeader()}
+                <ListView 
+                    dataSource={this.dataSource}
+                    renderRow={this.renderRow} 
+                /> 
+            </View>
         );
     }
 }

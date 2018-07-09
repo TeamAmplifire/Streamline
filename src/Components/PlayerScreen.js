@@ -57,6 +57,7 @@ class PlayerScreen extends Component {
     render() {
         return (
             <View style={styles.containerStyle}>
+            
                 <View style={styles.albumArtContainerStyle}>
                     <ImageBackground
                         source={{ isStatic: true, uri: this.props.selectedSongArtwork }} 
@@ -94,8 +95,7 @@ const styles = {
         width: 300, 
         height: 300, 
         alignSelf: 'center',
-        borderWidth: 3,
-        borderColor: onBackgroundColor,
+    
     },
 
     titleStyle: {

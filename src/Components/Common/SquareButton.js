@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { 
     TouchableOpacity,
-    View, 
     Image
 } from 'react-native';
 import { onBackgroundColor } from '../../Values/colors';
@@ -9,13 +8,12 @@ import { onBackgroundColor } from '../../Values/colors';
 class SquareButton extends Component {
     render() {
         return (
-                <TouchableOpacity style={styles.buttonStyle}>
-                    <Image 
+                <TouchableOpacity style={styles.buttonStyle} onPress={this.props.onPress}>
+                    <Image
                         style={[styles.imageStyle, this.props.style]}
                         source={this.props.image}
                     />
                 </TouchableOpacity>
-         
         );
     }
 }

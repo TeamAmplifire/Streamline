@@ -4,9 +4,6 @@ import {
     TouchableOpacity, 
     View,
     ToastAndroid,
-    LayoutAnimation,
-    UIManager,
-    Platform
     } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -14,18 +11,27 @@ import { CardSection } from './Common';
 import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { BorderlessButton } from './Common/BorderlessButton';
+import ConfirmationModal from './Common/ConfirmationModal';
+import EditTagsModal from './Common/EditTagsModal';
 
 class ListItem extends Component {
-    state = { isExpanded: false };
+    state = { 
+        isExpanded: false, 
+        showDeleteConfirmation: false,  
+        showEditTags: false
+    };
 
-    componentWillMount() {
-        if (Platform.OS === 'android') {
-            UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-        }
+    onConfirmDelete() {
+        this.props.deleteSongWithID(this.props.item.songID, this.props.item.fullpath);
+        this.setState({ showDeleteConfirmation: false });
     }
-    
-    componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+
+    onCancelDelete() {
+        this.setState({ showDeleteConfirmation: false });
+    }
+
+    onCancelEdit() {
+        this.setState({ showEditTags: false });
     }
 
     renderMenu() {
@@ -33,10 +39,27 @@ class ListItem extends Component {
             return ( 
                 <View style={styles.containerStyle}>
                     <BorderlessButton>PLAY</BorderlessButton>
-                    <BorderlessButton>ENQUEUE</BorderlessButton>
-                    <BorderlessButton>ADD TO PLAYLIST</BorderlessButton>
-                    <BorderlessButton>RENAME</BorderlessButton>
-                    <BorderlessButton>DELETE</BorderlessButton>
+                    <BorderlessButton
+                        onPress={() => {
+                            
+                        }}
+                    >
+                        ADD TO PLAYLIST
+                    </BorderlessButton>
+                    <BorderlessButton
+                        onPress={() => {
+                            this.setState({ showEditTags: true });
+                        }}
+                    >
+                        RENAME
+                    </BorderlessButton>
+                    <BorderlessButton 
+                        onPress={() => {
+                            this.setState({ showDeleteConfirmation: true });
+                        }}
+                    >
+                        DELETE
+                    </BorderlessButton>
                 </View>
             );
         }
@@ -81,6 +104,20 @@ class ListItem extends Component {
                 <View>
                     {this.renderSongItem()}
                     {this.renderMenu()}
+
+                    <ConfirmationModal
+                        visible={this.state.showDeleteConfirmation}
+                        onAccept={this.onConfirmDelete.bind(this)}
+                        onDecline={this.onCancelDelete.bind(this)}
+                    >
+                        Are you sure you want to delete this?
+                    </ConfirmationModal>
+
+                    <EditTagsModal
+                        item={this.props.item}
+                        visible={this.state.showEditTags}
+                        onCancel={this.onCancelEdit.bind(this)}
+                    />
                 </View>
             </TouchableOpacity>
         );
