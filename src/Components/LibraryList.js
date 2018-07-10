@@ -15,7 +15,7 @@ import {
     ARTIST_LIST,
     PLAYLIST_LIST
  } from '../Values/Types';
-import { backgroundColor } from '../Values/colors';
+import { backgroundColor, onBackgroundColor, accentColor } from '../Values/colors';
 import { searchIcon } from '../Drawables/icons';
 
 class LibraryList extends PureComponent {
@@ -76,22 +76,27 @@ class LibraryList extends PureComponent {
                     }
                 }}
             >
-                <Text style={{ fontSize: 30, color: '#fff' }}>{item.name}</Text>
+                <Text style={styles.listTextStyle}>{item.name}</Text>
             </TouchableOpacity>
         );
     }
 
     renderHeader() {
         return (
-            <CardSection>
-                <Header headerText='Library' />
-                <SquareButton 
-                    image={searchIcon} 
-                    onPress={() => { 
-                        Actions.search(); 
-                    }}
-                />
-            </CardSection>
+            <View style={styles.headerContainerStyle}>
+                <View>
+                    <Header headerText='Library' />
+                </View>
+                <View style={{ paddingRight: 12 }}>
+                    <SquareButton 
+                        style={{ height: 25, width: 25 }}
+                        image={searchIcon} 
+                        onPress={() => { 
+                            Actions.search(); 
+                        }}
+                    />
+                </View>
+            </View>
         );
     }
 
@@ -108,5 +113,21 @@ class LibraryList extends PureComponent {
         );
     }
 }
+
+const styles = {
+    listTextStyle: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 22, 
+        color: onBackgroundColor,
+        paddingLeft: 16,
+        paddingTop: 16
+    },
+
+    headerContainerStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    }
+};
 
 export default LibraryList;

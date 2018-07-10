@@ -2,4 +2,7 @@
   <!-- We'll use 'background' name to reference this color -->
   <!-- Replace #HEX_VALUE with Your color -->
   <color name="background">#1D2226</color>
+  <color name="colorPrimary">#1D2226</color>
+  <color name="colorPrimaryDark">#0E1112</color>
+  <color name="colorAccent">#FF4200</color>
 </resources>

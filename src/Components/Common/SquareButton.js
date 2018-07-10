@@ -20,7 +20,6 @@ class SquareButton extends Component {
 
 const styles = {
     buttonStyle: {
-        padding: 36,
         backgroundColor: 'rgba(0, 0, 0, 0)',
         alignSelf: 'center',
     },
@@ -29,10 +28,7 @@ const styles = {
         resizeMode: 'contain',
         width: 30,
         height: 30,
-        padding: 10,
         tintColor: onBackgroundColor,
-        //borderWidth: 3,
-        //borderColor: onBackgroundColor,
         alignSelf: 'center',
     }
 };

@@ -10,7 +10,7 @@ import { Actions } from 'react-native-router-flux';
 // import RNFS from 'react-native-fs';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
-import { onBackgroundColor, backgroundColor } from '../Values/colors';
+import { onBackgroundColor, backgroundColor, backgroundColorDark, accentColor } from '../Values/colors';
 import { BorderlessButton } from './Common/BorderlessButton';
 import ConfirmationModal from './Common/ConfirmationModal';
 import EditTags from './Common/EditTags';
@@ -55,7 +55,7 @@ class ListItem extends Component {
             case (ALL_SONGS || RECENTLY_ADDED_SONGS):
                 if (this.state.isExpanded) {
                     return ( 
-                        <View style={styles.containerStyle}>
+                        <View style={styles.menuStyle}>
                             <BorderlessButton
                                 onPress={() => {
                                     console.log(this.props);
@@ -64,7 +64,7 @@ class ListItem extends Component {
                                     Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
                                 }}
                             >
-                                PLAY
+                                Play
                             </BorderlessButton>
                             
                             <BorderlessButton
@@ -72,7 +72,7 @@ class ListItem extends Component {
                                     this.setState({ showPlaylistList: true });
                                 }}
                             >
-                                ADD TO PLAYLIST
+                                Add to playlist
                             </BorderlessButton>
         
                             <BorderlessButton
@@ -80,7 +80,7 @@ class ListItem extends Component {
                                     this.setState({ showEditTags: true });
                                 }}
                             >
-                                EDIT INFO
+                                Edit tags
                             </BorderlessButton>
         
                             <BorderlessButton 
@@ -88,7 +88,7 @@ class ListItem extends Component {
                                     this.setState({ showDeleteConfirmation: true });
                                 }}
                             >
-                                DELETE
+                                Delete
                             </BorderlessButton>
                         </View>
                     );
@@ -224,13 +224,22 @@ const styles = {
 
     containerStyle: {
         backgroundColor,
-        paddingLeft: 8,
-        paddingRight: 8
+        paddingLeft: 12,
+        paddingRight: 12
+    },
+
+    menuStyle: {
+        borderBottomWidth: 2,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
     }
 };
 
 const mapStateToProps = (state) => {
     return {
+        paddingLeft: 16,
         songs: state.songs,
         selectedPlaylistID: state.selectedPlaylistID
     };

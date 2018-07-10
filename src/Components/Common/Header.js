@@ -21,22 +21,21 @@ class Header extends Component {
 const styles = {
     viewStyle: {
         backgroundColor,
-       
         justifyContent: 'center',
         alignItems: 'flex-start',
         height: 65,
-        paddingTop: 5,
-        paddingLeft: 8,
+        paddingTop: 8,
+        paddingLeft: 16,
         paddingRight: 8,
         position: 'relative'
     },
     textStyle: {
-            fontSize: 26,
-            fontFamily: 'Montserrat-Bold',
-            color: onBackgroundColor,
-            borderBottomWidth: 2,
-            paddingBottom: 12,
-            borderBottomColor: accentColor
+        fontSize: 26,
+        fontFamily: 'Montserrat-Bold',
+        color: onBackgroundColor,
+        borderBottomWidth: 2,
+        paddingBottom: 12,
+        borderBottomColor: accentColor
     }
 };
 
