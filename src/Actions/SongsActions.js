@@ -54,15 +54,21 @@ export const fetchRecentlyAdded = () => {
 
 export const editSongInfoWithID = (newTitle, newAlbum, newArtist, songId, fullPath) => {
     return () => {
-        editSongInfo(newTitle, newAlbum, newArtist, songId, fullPath);
-        fetchSongs();
+        editSongInfo(newTitle, newAlbum, newArtist, songId, fullPath, (successCallback) => {
+            console.log(successCallback);
+        });
     };
 };
 
 export const deleteSongWithID = (songId, fullPath) => {
     return () => {
-        deleteSong(songId, fullPath);
-        //fetchSongs();
+        deleteSong(songId, fullPath, 
+            (errorCallBack) => {
+                console.log(errorCallBack);      
+        },
+        (successCallback) => {
+            console.log(successCallback);
+        });
     };
 };
 

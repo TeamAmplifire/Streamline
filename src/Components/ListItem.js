@@ -12,8 +12,15 @@ import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { BorderlessButton } from './Common/BorderlessButton';
 import ConfirmationModal from './Common/ConfirmationModal';
-import EditTagsModal from './Common/EditTagsModal';
+import EditTags from './Common/EditTags';
 import PlaylistListModal from './Common/PlaylistListModal';
+import { 
+    ALL_SONGS,
+    RECENTLY_ADDED_SONGS,
+    ALBUM_WITH_ID,
+    ARTIST_WITH_ID,
+    PLAYLIST_WITH_ID
+ } from '../Values/Types';
 
 class ListItem extends Component {
     state = { 
@@ -37,41 +44,74 @@ class ListItem extends Component {
     }
 
     renderMenu() {
-        if (this.state.isExpanded) {
-            return ( 
-                <View style={styles.containerStyle}>
-                    <BorderlessButton
-                        onPress={() => {
-                            this.props.selectSong(this.props.item.songID);
-                            this.props.getArtworkForSongWithID(this.props.item.songID);
-                            Actions.playerScreen({ index: this.props.index });
-                        }}
-                    >
-                        PLAY
-                    </BorderlessButton>
-                    <BorderlessButton
-                        onPress={() => {
-                            this.setState({ showPlaylisList: true });
-                        }}
-                    >
-                        ADD TO PLAYLIST
-                    </BorderlessButton>
-                    <BorderlessButton
-                        onPress={() => {
-                            this.setState({ showEditTags: true });
-                        }}
-                    >
-                        RENAME
-                    </BorderlessButton>
-                    <BorderlessButton 
-                        onPress={() => {
-                            this.setState({ showDeleteConfirmation: true });
-                        }}
-                    >
-                        DELETE
-                    </BorderlessButton>
-                </View>
-            );
+        switch (this.props.listType) {
+            case (ALL_SONGS || RECENTLY_ADDED_SONGS):
+                if (this.state.isExpanded) {
+                    return ( 
+                        <View style={styles.containerStyle}>
+                            <BorderlessButton
+                                onPress={() => {
+                                    this.props.selectSong(this.props.item.songID);
+                                    this.props.getArtworkForSongWithID(this.props.item.songID);
+                                    Actions.playerScreen({ index: this.props.index });
+                                }}
+                            >
+                                PLAY
+                            </BorderlessButton>
+                            
+                            <BorderlessButton
+                                onPress={() => {
+                                    this.setState({ showPlaylistList: true });
+                                }}
+                            >
+                                ADD TO PLAYLIST
+                            </BorderlessButton>
+        
+                            <BorderlessButton
+                                onPress={() => {
+                                    this.setState({ showEditTags: true });
+                                }}
+                            >
+                                EDIT INFO
+                            </BorderlessButton>
+        
+                            <BorderlessButton 
+                                onPress={() => {
+                                    this.setState({ showDeleteConfirmation: true });
+                                }}
+                            >
+                                DELETE
+                            </BorderlessButton>
+                        </View>
+                    );
+                }
+                break;
+            case PLAYLIST_WITH_ID:
+                if (this.state.isExpanded) {
+                    return ( 
+                        <View style={styles.containerStyle}>
+                            <BorderlessButton
+                                onPress={() => {
+                                    this.props.selectSong(this.props.item.songID);
+                                    this.props.getArtworkForSongWithID(this.props.item.songID);
+                                    Actions.playerScreen({ index: this.props.index });
+                                }}
+                            >
+                                PLAY
+                            </BorderlessButton>
+        
+                            <BorderlessButton 
+                                onPress={() => {
+                                    this.props.deleteSongFromPlaylistWithID(this.props.selectedPlaylistID, this.props.item.songID);
+                                }}
+                            >
+                                REMOVE FROM PLAYLIST
+                            </BorderlessButton>
+                        </View>
+                    );
+                }
+                break;
+            default:
         }
     }
 
@@ -123,15 +163,20 @@ class ListItem extends Component {
                         Are you sure you want to delete this?
                     </ConfirmationModal>
 
-                    <EditTagsModal
+                    <EditTags 
                         item={this.props.item}
                         visible={this.state.showEditTags}
-                        onCancel={this.onCancelEdit.bind(this)}
+                        onDiscard={() => {
+                            this.setState({ showEditTags: false });
+                        }}
                     />
 
                     <PlaylistListModal
+                        visible={this.state.showPlaylistList}
                         item={this.props.item}
-
+                        onDiscard={() => {
+                            this.setState({ showPlaylistList: false });
+                        }}
                     />
                 </View>
             </TouchableOpacity>
@@ -180,7 +225,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        songs: state.songs
+        songs: state.songs,
+        selectedPlaylistID: state.selectedPlaylistID
     };
 };
 

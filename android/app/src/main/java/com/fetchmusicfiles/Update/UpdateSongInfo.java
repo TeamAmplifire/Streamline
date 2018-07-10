@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.cmc.music.common.ID3WriteException;
 import org.cmc.music.metadata.IMusicMetadata;
@@ -31,16 +32,10 @@ public class UpdateSongInfo {
         MusicMetadataSet songFileSet = null;
         try {
             songFileSet = new MyID3().read(songFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {  }
         if (songFileSet == null) {
-            Log.d("NULL", "NULL");
         } else {
             IMusicMetadata songMetadata = songFileSet.getSimplified();
-            Log.d("metadata", songMetadata.getArtist());
-            Log.d("metadata", songMetadata.getSongTitle());
-            Log.d("metadata", songMetadata.getAlbum());
             MusicMetadata newMusicMetadeta = new MusicMetadata(songFile.getName());
             newMusicMetadeta.setAlbum(newAlbum);
             newMusicMetadeta.setArtist(newArtist);
@@ -64,6 +59,7 @@ public class UpdateSongInfo {
         File songFile = new File(fullPath);
         if(songFile.exists() && songFile.isFile()){
             songFile.delete();
+            Toast.makeText(context, "Song deleted", Toast.LENGTH_SHORT).show();
         }
     }
 }

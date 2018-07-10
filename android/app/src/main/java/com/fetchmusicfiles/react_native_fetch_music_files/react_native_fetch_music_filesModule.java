@@ -140,13 +140,16 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     }
 
     @ReactMethod
-    public void editSongInfo(String newTitle, String newAlbum, String newArtist, int songId, String fullPath){
+    public void editSongInfo(String newTitle, String newAlbum, String newArtist, int songId, String fullPath, Callback successCallback){
         UpdateSongInfo.updateID3Tags(reactContext, newTitle, newAlbum, newArtist, songId, fullPath);
+        successCallback.invoke("Song info updated.");
+
     }
 
     @ReactMethod
-    public void deleteSong(int songId, String fullPath){
+    public void deleteSong(int songId, String fullPath, Callback errorCallback, Callback successCallback){
         UpdateSongInfo.deleteSong(reactContext, songId, fullPath);
+        successCallback.invoke("Song deleted.");
     }
 
     @ReactMethod

@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
 import {
     View,
+    Text,
     Modal
 } from 'react-native';
-import Input from './Input';
-import CardSection from './CardSection';
-import BorderlessButton from './BorderlessButton';
+import { connect } from 'react-redux';
+import { Input } from './Input';
+import { CardSection } from './CardSection';
+import { BorderlessButton } from './BorderlessButton';
+import * as actions from '../../Actions';
+import { onBackgroundColor } from '../../Values/colors';
 
 class SingleInputModal extends Component {
-    state = { playlistName: '' };
-
-    componentWillMount() {
-        this.setState({ songName: this.props.songName, albumName: this.props.albumName, artistName: this.props.artistName });
-    }
+    state = { playlistName: '', myVisibility: true };
     
     render() {
-        console.log(this.state.songName);
         return (
             <Modal
-                visible
+                visible={this.props.visible && this.state.myVisibility}
                 transparent
                 animationType="slide"
-                onRequestClose={()=>{}}>
-
-                <View>
+                onRequestClose={() => {}}
+            >
+                <View style={styles.containerStyle}>
                     <CardSection>
                         <Input
                             label="Playlist Name"
@@ -33,8 +32,15 @@ class SingleInputModal extends Component {
                         />
                     </CardSection>
                     <CardSection>
-                        <BorderlessButton>Discard</BorderlessButton>
-                        <BorderlessButton>Save</BorderlessButton>
+                        <BorderlessButton onPress={this.props.onDiscard}>Discard</BorderlessButton>
+                        <BorderlessButton 
+                            onPress={() => {
+                                this.props.createNewPlaylist(this.state.playlistName);
+                                this.setState({ myVisibility: false });
+                            }}
+                        >
+                            Save
+                        </BorderlessButton>
                     </CardSection>
                 </View>
             </Modal>
@@ -50,7 +56,8 @@ const styles = {
         flex: 1,
         fontSize: 18,
         textAlign: 'center',
-        lineHeight: 40
+        lineHeight: 40,
+        color: onBackgroundColor
     },
     containerStyle: {
         backgroundColor: 'rgba(0,0,0,0.75)',
@@ -60,4 +67,4 @@ const styles = {
     }
 };
 
-export default SingleInputModal;
+export default connect(null, actions)(SingleInputModal);

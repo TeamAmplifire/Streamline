@@ -8,6 +8,8 @@ import Reducers from './src/Reducers';
 import { backgroundColor } from './src/Values/colors';
 import Router from './src/Router/Router';
 import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
+import PlayerTray from './src/Components/PlayerTray';
+import PlaylistListModal from './src/Components/Common/PlaylistListModal';
 
 const App = () => {
     permissionCheck();
@@ -21,6 +23,7 @@ const App = () => {
                     />
                 </View>
                 <Router backgroundColor={backgroundColor} />
+                <PlayerTray />
             </View>
         </Provider>
     );
@@ -35,7 +38,6 @@ const initialisePlayer = async () => {
             TrackPlayer.CAPABILITY_SEEK_TO,
             TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
             TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-            TrackPlayer.CAPABILITY_SKIP
         ]
     });
 };

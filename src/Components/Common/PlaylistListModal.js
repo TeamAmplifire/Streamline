@@ -1,43 +1,77 @@
 import React, { Component } from 'react';
-import {
+import { 
     View,
     Text,
-    Modal
+    Modal,
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import RecyclerViewList from 'react-native-recyclerview-list';
-import Input from './Input';
-import CardSection from './CardSection';
-import BorderlessButton from './BorderlessButton';
-import * as Actions from '../../Actions';
+import { CardSection } from './CardSection';
+import { BorderlessButton } from './BorderlessButton';
+import * as actions from '../../Actions';
+import SingleInputModal from './SingleInputModal';
 
 class PlaylistListModal extends Component {
-    state = { playlistName: '' };
+    state = {
+        createPlaylistVisibility: false,
+        visibilty: true
+    }
 
     componentWillMount() {
-        this.setState({ songName: this.props.songName, albumName: this.props.albumName, artistName: this.props.artistName });
+        this.props.fetchPlaylistList();
     }
-    
+
     render() {
-        console.log(this.state.songName);
         return (
             <Modal
-                visible
+                visible={this.props.visible && this.state.visibilty}
                 transparent
                 animationType="slide"
                 onRequestClose={() => {}}
             >
+                <View style={styles.containerStyle}>
+                    <CardSection>
+                        <FlatList 
+                            style={{ flex: 1 }}
+                            data={this.props.playlistList}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={(item) => {
+                                console.log(item);
+                                return (
+                                    <TouchableOpacity 
+                                        onPress={() => {
+                                            this.props.addSongToPlaylistWithID(item.item.id, this.props.item.songID);
+                                            this.setState({ visibilty: false });
+                                        }}
+                                    >
+                                        <Text style={{ color: '#fff' }}>{item.item.name}</Text>
+                                    </TouchableOpacity>
+                                );
+                            }}
+                        />
+                    </CardSection>
+                 
+                    <CardSection>
+                        <BorderlessButton onPress={this.props.onDiscard}> 
+                            Cancel
+                        </BorderlessButton>
 
-                <View>
-                    <RecyclerViewList 
-                        style={{ flex: 1 }}
-                        dataSource={this.props.playlistList}
-                        renderItem={({ item, index }) => <Text style={{ color: '#fff' }}>{item.playlistName} - {index}</Text>}
-                        ListHeaderComponent={<Text style={{ color: '#fff' }}>ADD TO PLAYLIST</Text>}
+                        <BorderlessButton 
+                            onPress={() => {
+                                this.setState({ createPlaylistVisibility: true });
+                            }}
+                        >
+                            Create New Playlist
+                        </BorderlessButton>
+                    </CardSection>
+                    
+                    <SingleInputModal 
+                        visible={this.state.createPlaylistVisibility}
+                        onDiscard={() => {
+                            this.setState({ createPlaylistVisibility: false });
+                        }}
                     />
-                    <BorderlessButton>
-                        Create new playlist
-                    </BorderlessButton>
                 </View>
             </Modal>
         );
@@ -64,8 +98,20 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        playlistList: state.playlistList
+        songs: state.songs,
+        dataSource: state.dataSource,
+        selectedSong: state.selectedSong,
+        recentlyAdded: state.recentlyAdded,
+        playlistList: state.playlistList,
+        selectedPlaylistID: state.selectedPlaylistID,
+        selectedPlaylistSongList: state.selectedPlaylistSongList,
+        albumList: state.albumList,
+        selectedAlbumID: state.selectedAlbumID,
+        selectedAlbumSongList: state.selectedAlbumSongList,
+        artistList: state.artistList,
+        selectedArtistID: state.selectedArtistID,
+        selectedArtistSongList: state.selectedArtistSongList,
     };
 };
 
-export default connect(mapStateToProps, Actions)(PlaylistListModal);
+export default connect(mapStateToProps, actions)(PlaylistListModal);

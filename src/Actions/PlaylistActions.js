@@ -43,7 +43,6 @@ export const createNewPlaylist = (playlistName) => {
         },
         (successCallback) => {
             console.log(successCallback);
-            fetchPlaylistList();
         });
     };
 };
@@ -62,7 +61,6 @@ export const addSongToPlaylistWithID = (playlistID, songID) => {
 export const deletePlaylistWithID = (playlistID) => {
     return () => {
         deletePlaylist(playlistID);
-        fetchPlaylistList();
     };
 };
 
@@ -73,7 +71,6 @@ export const renamePlaylistWithID = (playlistID, newName) => {
         },
         (successCallback) => {
             console.log(successCallback);
-            fetchPlaylistList();
         });
     };
 };
