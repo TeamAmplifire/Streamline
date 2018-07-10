@@ -62,10 +62,18 @@ class PlayerScreen extends Component {
         const song = _.find(list, { songID });
         const index = list.indexOf(song);
         TrackPlayer.reset();
-        for (let i = 0; i < list.length; i++) {
+        const check = (10 - index) > 0;
+        let lowerBound;
+        if (check) {
+            lowerBound = index - 10;
+        }
+        else {
+            lowerBound = 0;
+        }
+        for (let i = lowerBound; i < index + 10; i++) {
             await TrackPlayer.add([{
                 id: list[i].songID,
-                url: 'file://'+ list[i].fullPath,
+                url: `file:// ${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
             }]);

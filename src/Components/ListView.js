@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import {
-  Text
+  Text,
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
-import TrackPlayer from 'react-native-track-player';
 import ListItem from './ListItem';
 import * as Act from '../Actions';
 import { Header } from './Common';
@@ -21,6 +21,32 @@ class ListView extends PureComponent {
         dataSource: [],
     };
     componentWillMount() {
+        this.refresh();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        switch (nextProps.listType) {
+            case ALL_SONGS:
+                this.setState({ dataSource: nextProps.songs });
+                break;
+            case RECENTLY_ADDED_SONGS:
+                this.setState({ dataSource: nextProps.recentlyAdded });
+                break;
+            case ALBUM_WITH_ID:
+                this.setState({ dataSource: nextProps.selectedAlbumSongList });
+                break;
+            case ARTIST_WITH_ID:
+                this.setState({ dataSource: nextProps.selectedArtistSongList });
+                break;
+            case PLAYLIST_WITH_ID:
+                this.setState({ dataSource: nextProps.selectedPlaylistSongList });
+                break;
+            default:
+                this.setState({ dataSource: [] });
+        }
+    }
+
+    refresh() {
         switch (this.props.listType) {
             case ALL_SONGS:
                 this.props.fetchSongs();
@@ -46,33 +72,6 @@ class ListView extends PureComponent {
                 this.setState({ dataSource: [] });
         }
     }
-
-    componentWillReceiveProps(nextProps) {
-        switch (nextProps.listType) {
-            case ALL_SONGS:
-                this.setState({ dataSource: nextProps.songs });
-                // this.getPlayList(nextProps.songs);
-                break;
-            case RECENTLY_ADDED_SONGS:
-                this.setState({ dataSource: nextProps.recentlyAdded });
-                // this.getPlayList(nextProps.recentlyAdded);
-                break;
-            case ALBUM_WITH_ID:
-                this.setState({ dataSource: nextProps.selectedAlbumSongList });
-                // this.getPlayList(nextProps.selectedAlbumSongList);
-                break;
-            case ARTIST_WITH_ID:
-                this.setState({ dataSource: nextProps.selectedArtistSongList });
-                // this.getPlayList(nextProps.selectedArtistSongList);
-                break;
-            case PLAYLIST_WITH_ID:
-                this.setState({ dataSource: nextProps.selectedPlaylistSongList });
-                // this.getPlayList(nextProps.selectedPlaylistSongList);
-                break;
-            default:
-                this.setState({ dataSource: [] });
-        }
-    }
         
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
@@ -80,7 +79,7 @@ class ListView extends PureComponent {
             <RecyclerViewList 
                 style={{ flex: 1 }}
                 dataSource={dataSource}
-                renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} />}
+                renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} refresh={this.refresh.bind(this)} />}
                 ListHeaderComponent={<Header headerText={this.props.headerText} />}
             />
         );

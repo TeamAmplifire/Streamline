@@ -63,9 +63,6 @@ export const editSongInfoWithID = (newTitle, newAlbum, newArtist, songId, fullPa
 export const deleteSongWithID = (songId, fullPath) => {
     return () => {
         deleteSong(songId, fullPath, 
-            (errorCallBack) => {
-                console.log(errorCallBack);      
-        },
         (successCallback) => {
             console.log(successCallback);
         });

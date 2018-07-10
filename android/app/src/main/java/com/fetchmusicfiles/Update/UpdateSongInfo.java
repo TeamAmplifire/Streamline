@@ -50,16 +50,5 @@ public class UpdateSongInfo {
         }
     }
 
-    public static void deleteSong(Context context, long songId, String fullPath) {
-        ContentResolver musicResolver = context.getContentResolver();
-        Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String where = "_ID=?";
-        String[] args = {Long.toString(songId)};
-        musicResolver.delete(musicUri, where, args);
-        File songFile = new File(fullPath);
-        if(songFile.exists() && songFile.isFile()){
-            songFile.delete();
-            Toast.makeText(context, "Song deleted", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 }

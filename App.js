@@ -9,7 +9,6 @@ import { backgroundColor } from './src/Values/colors';
 import Router from './src/Router/Router';
 import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
 import PlayerTray from './src/Components/PlayerTray';
-import PlaylistListModal from './src/Components/Common/PlaylistListModal';
 
 const App = () => {
     permissionCheck();

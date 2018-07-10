@@ -7,6 +7,7 @@ import {
     } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+// import RNFS from 'react-native-fs';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
 import { onBackgroundColor, backgroundColor } from '../Values/colors';
@@ -17,8 +18,6 @@ import PlaylistListModal from './Common/PlaylistListModal';
 import { 
     ALL_SONGS,
     RECENTLY_ADDED_SONGS,
-    ALBUM_WITH_ID,
-    ARTIST_WITH_ID,
     PLAYLIST_WITH_ID
  } from '../Values/Types';
 
@@ -31,8 +30,10 @@ class ListItem extends Component {
     };
 
     onConfirmDelete() {
-        this.props.deleteSongWithID(this.props.item.songID, this.props.item.fullpath);
+        console.log(this.props.item.fullPath);
+        this.props.deleteSongWithID(this.props.item.songID, this.props.item.fullPath);
         this.setState({ showDeleteConfirmation: false });
+        this.props.refresh();
     }
 
     onCancelDelete() {
@@ -43,6 +44,12 @@ class ListItem extends Component {
         this.setState({ showEditTags: false });
     }
 
+    async removeFromPlaylist() {
+        console.log(this.props);
+        await this.props.deleteSongFromPlaylistWithID(this.props.selectedPlaylistID, this.props.item.songID);
+        this.props.refresh();
+    }
+
     renderMenu() {
         switch (this.props.listType) {
             case (ALL_SONGS || RECENTLY_ADDED_SONGS):
@@ -51,9 +58,10 @@ class ListItem extends Component {
                         <View style={styles.containerStyle}>
                             <BorderlessButton
                                 onPress={() => {
+                                    console.log(this.props);
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                                    Actions.playerScreen({ index: this.props.index });
+                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
                                 }}
                             >
                                 PLAY
@@ -94,16 +102,14 @@ class ListItem extends Component {
                                 onPress={() => {
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                                    Actions.playerScreen({ index: this.props.index });
+                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
                                 }}
                             >
                                 PLAY
                             </BorderlessButton>
         
                             <BorderlessButton 
-                                onPress={() => {
-                                    this.props.deleteSongFromPlaylistWithID(this.props.selectedPlaylistID, this.props.item.songID);
-                                }}
+                                onPress={this.removeFromPlaylist.bind(this)}
                             >
                                 REMOVE FROM PLAYLIST
                             </BorderlessButton>

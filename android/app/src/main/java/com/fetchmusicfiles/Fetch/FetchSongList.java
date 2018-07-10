@@ -1,11 +1,16 @@
 package com.fetchmusicfiles.Fetch;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import com.fetchmusicfiles.DataModels.Song;
 import com.fetchmusicfiles.DataModels.SongCollection;
+
+import java.io.File;
 
 public class FetchSongList {
 
@@ -102,5 +107,48 @@ public class FetchSongList {
             );
         }
         return song;
+    }
+
+    public void deleteSong(Context context, long songId, String fullPath) {
+        ContentResolver musicResolver = context.getContentResolver();
+        Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String where = "_ID=?";
+        String[] args = {Long.toString(songId)};
+        musicResolver.delete(musicUri, where, args);
+        deleteTarget(fullPath);
+        Toast.makeText(context, "Song deleted", Toast.LENGTH_SHORT).show();
+    }
+
+    public int deleteTarget (String path){
+        File target = new File(path);
+
+        if(target.exists() && target.isFile() && target.canWrite()) {
+            target.delete();
+            return 0;
+        }
+        else if(target.exists() && target.isDirectory() && target.canRead()) {
+            String[] file_list = target.list();
+
+            if(file_list != null && file_list.length == 0) {
+                target.delete();
+                return 0;
+
+            } else if(file_list != null && file_list.length > 0) {
+
+                for(int i = 0; i < file_list.length; i++) {
+                    File temp_f = new File(target.getAbsolutePath() + "/" + file_list[i]);
+
+                    if(temp_f.isDirectory())
+                        deleteTarget(temp_f.getAbsolutePath());
+                    else if(temp_f.isFile())
+                        temp_f.delete();
+                }
+            }
+            if(target.exists())
+                if(target.delete()) {
+                    return 0;
+                }
+        }
+        return -1;
     }
 }
