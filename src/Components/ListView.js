@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
+import TrackPlayer from 'react-native-track-player';
 import ListItem from './ListItem';
 import * as Act from '../Actions';
 import { Header } from './Common';
@@ -19,54 +20,52 @@ import {
 class ListView extends PureComponent {
     state = {
         dataSource: [],
+        shouldResetState: true
     };
     componentWillMount() {
         this.refresh();
     }
 
     componentWillReceiveProps(nextProps) {
-        switch (nextProps.listType) {
-            case ALL_SONGS:
-                this.setState({ dataSource: nextProps.songs });
-                break;
-            case RECENTLY_ADDED_SONGS:
-                this.setState({ dataSource: nextProps.recentlyAdded });
-                break;
-            case ALBUM_WITH_ID:
-                this.setState({ dataSource: nextProps.selectedAlbumSongList });
-                break;
-            case ARTIST_WITH_ID:
-                this.setState({ dataSource: nextProps.selectedArtistSongList });
-                break;
-            case PLAYLIST_WITH_ID:
-                this.setState({ dataSource: nextProps.selectedPlaylistSongList });
-                break;
-            default:
-                this.setState({ dataSource: [] });
+        if (this.state.shouldResetState) {
+            switch (nextProps.listType) {
+                case ALL_SONGS:
+                    this.setState({ dataSource: nextProps.songs, shouldResetState: false });
+                    break;
+                case RECENTLY_ADDED_SONGS:
+                    this.setState({ dataSource: nextProps.recentlyAdded, shouldResetState: false });
+                    break;
+                case ALBUM_WITH_ID:
+                    this.setState({ dataSource: nextProps.selectedAlbumSongList, shouldResetState: false });
+                    break;
+                case ARTIST_WITH_ID:
+                    this.setState({ dataSource: nextProps.selectedArtistSongList, shouldResetState: false });
+                    break;
+                case PLAYLIST_WITH_ID:
+                    this.setState({ dataSource: nextProps.selectedPlaylistSongList, shouldResetState: false });
+                    break;
+                default:
+                    this.setState({ dataSource: [] });
+            }
         }
     }
-
+    
     refresh() {
         switch (this.props.listType) {
             case ALL_SONGS:
                 this.props.fetchSongs();
-                this.setState({ dataSource: this.props.songs });
                 break;
             case RECENTLY_ADDED_SONGS:
                 this.props.fetchRecentlyAdded();
-                this.setState({ dataSource: this.props.recentlyAdded });
                 break;
             case ALBUM_WITH_ID:
                 this.props.getSongsFromAlbumWithID(this.props.selectedAlbumID);
-                this.setState({ dataSource: this.props.selectedAlbumSongList });
                 break;
             case ARTIST_WITH_ID:
                 this.props.getSongsFromArtistWithID(this.props.selectedArtistID);
-                this.setState({ dataSource: this.props.selectedArtistSongList });
                 break;
             case PLAYLIST_WITH_ID:
                 this.props.getSongsFromPlaylistWithID(this.props.selectedPlaylistID);
-                this.setState({ dataSource: this.props.selectedPlaylistSongList });
                 break;
             default:
                 this.setState({ dataSource: [] });

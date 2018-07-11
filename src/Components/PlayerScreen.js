@@ -22,21 +22,15 @@ import {
 
 
 class PlayerScreen extends Component {
-    state = {
-        currentSong: {
-            songID: null,
-            songName: null,
-            albumName: null,
-            artistName: null,
-            fullpath: null,
-        },
-        iconToggle: true,
-    };    
-
-    componentWillMount() {
-        this.setPlayList(this.props.item.songID);
-        this.setState({ currentSong: this.props.selectedSong });
+    constructor(props) {
+        super(props);
+        this.setPlayList(props.item.songId);
     }
+    
+    state = {
+        iconToggle: true,
+    };
+    
 
     async setPlayList(songID) {
         let list = [];
@@ -49,7 +43,6 @@ class PlayerScreen extends Component {
                 break;
             case ALBUM_WITH_ID:
                 list = this.props.selectedAlbumSongList;
-                console.log(list);
                 break;
             case ARTIST_WITH_ID:
                 list = this.props.selectedArtistSongList;
@@ -59,17 +52,17 @@ class PlayerScreen extends Component {
                 break;
             default:
         }
-        const song = _.find(list, { songID });
+        const song = _.find(this.props.songs, { songID });
         const index = list.indexOf(song);
         TrackPlayer.reset();
         const check = (10 - index) > 0;
         let lowerBound;
         if (check) {
-            lowerBound = index - 10;
-        }
-        else {
+            lowerBound = (10 - index);
+        } else {
             lowerBound = 0;
         }
+        console.log(lowerBound);
         for (let i = lowerBound; i < index + 10; i++) {
             await TrackPlayer.add([{
                 id: list[i].songID,
@@ -77,6 +70,7 @@ class PlayerScreen extends Component {
                 title: list[i].songName,
                 artist: list[i].artistName,
             }]);
+            console.log(list[i].songID);
         }
         TrackPlayer.play();
         for (let j = 0; j < index; j++) {
