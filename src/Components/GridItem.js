@@ -69,7 +69,7 @@ class GridItem extends Component {
             </View>
         );        
     }
-m
+
     render() {
         console.log(this.props.item);
         const { name, id } = this.props.item;

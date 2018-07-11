@@ -88,6 +88,6 @@ const mapStateToProps = (state) => {
         selectedSong: state.selectedSong,
         selectedSongArtwork: state.selectedSongArtwork,        
     };
-}
+};
 
 export default connect(mapStateToProps, null)(PlayerTray);

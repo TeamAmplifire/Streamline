@@ -141,6 +141,7 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'
     implementation project(':react-native-recyclerview-list')
     implementation project(':react-native-track-player')
+    implementation project(':react-native-spinkit')
     // From node_modules
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation files('src/main/java/com/fetchmusicfiles/Utilities/MyID3_for_Android.jar')

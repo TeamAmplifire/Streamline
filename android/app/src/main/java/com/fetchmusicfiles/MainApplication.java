@@ -4,6 +4,12 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import guichaguri.trackplayer.TrackPlayer;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
+import guichaguri.trackplayer.TrackPlayer;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
+import guichaguri.trackplayer.TrackPlayer;
 import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
 import guichaguri.trackplayer.TrackPlayer;
 import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
@@ -29,10 +35,11 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new TrackPlayer(),
-          new RNRecyclerviewListPackage(),
-          new react_native_fetch_music_filesPackage()
+        new MainReactPackage(),
+        new TrackPlayer(),
+        new RNSpinkitPackage(),
+        new RNRecyclerviewListPackage(),
+        new react_native_fetch_music_filesPackage()
       );
     }
 

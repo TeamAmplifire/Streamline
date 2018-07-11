@@ -18,10 +18,6 @@ class Search extends PureComponent {
         this.setState({ dataSource: this.props.songs });
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ dataSource: nextProps.songs });
-    }
-
     SearchFilterFunction(text) {
         const newData = this.props.songs.filter((item) => {
             const itemData = item.songName.toUpperCase();
@@ -36,8 +32,9 @@ class Search extends PureComponent {
 
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
+        console.log(dataSource);
         return (
-            <View>
+            <View style={{ flex: 1 }} >
                 <StatusBar
                     backgroundColor={backgroundColorLight} 
                     barstyle='dark-content'
@@ -46,7 +43,6 @@ class Search extends PureComponent {
                     value={this.state.text} 
                     placeholder='Search...' 
                     onChangeText={(text) => {
-                            // this.setState({ text });
                             this.SearchFilterFunction(text);
                         }
                     }                
