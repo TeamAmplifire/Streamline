@@ -30,7 +30,6 @@ class ListItem extends Component {
     };
 
     onConfirmDelete() {
-        console.log(this.props.item.fullPath);
         this.props.deleteSongWithID(this.props.item.songID, this.props.item.fullPath);
         this.setState({ showDeleteConfirmation: false });
         this.props.refresh();
@@ -45,7 +44,6 @@ class ListItem extends Component {
     }
 
     async removeFromPlaylist() {
-        console.log(this.props);
         await this.props.deleteSongFromPlaylistWithID(this.props.selectedPlaylistID, this.props.item.songID);
         this.props.refresh();
     }
@@ -58,7 +56,6 @@ class ListItem extends Component {
                         <View style={styles.menuStyle}>
                             <BorderlessButton
                                 onPress={() => {
-                                    console.log(this.props);
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
                                     Actions.playerScreen({ listType: this.props.listType, item: this.props.item });

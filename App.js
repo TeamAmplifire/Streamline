@@ -8,7 +8,6 @@ import Reducers from './src/Reducers';
 import { backgroundColor } from './src/Values/colors';
 import Router from './src/Router/Router';
 import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
-import PlayerTray from './src/Components/PlayerTray';
 
 const App = () => {
     permissionCheck();
@@ -22,7 +21,6 @@ const App = () => {
                     />
                 </View>
                 <Router backgroundColor={backgroundColor} />
-                <PlayerTray />
             </View>
         </Provider>
     );

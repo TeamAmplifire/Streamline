@@ -20,33 +20,30 @@ import {
 class ListView extends PureComponent {
     state = {
         dataSource: [],
-        shouldResetState: true
     };
     componentWillMount() {
         this.refresh();
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.shouldResetState) {
-            switch (nextProps.listType) {
-                case ALL_SONGS:
-                    this.setState({ dataSource: nextProps.songs, shouldResetState: false });
-                    break;
-                case RECENTLY_ADDED_SONGS:
-                    this.setState({ dataSource: nextProps.recentlyAdded, shouldResetState: false });
-                    break;
-                case ALBUM_WITH_ID:
-                    this.setState({ dataSource: nextProps.selectedAlbumSongList, shouldResetState: false });
-                    break;
-                case ARTIST_WITH_ID:
-                    this.setState({ dataSource: nextProps.selectedArtistSongList, shouldResetState: false });
-                    break;
-                case PLAYLIST_WITH_ID:
-                    this.setState({ dataSource: nextProps.selectedPlaylistSongList, shouldResetState: false });
-                    break;
-                default:
-                    this.setState({ dataSource: [] });
-            }
+        switch (nextProps.listType) {
+            case ALL_SONGS:
+                this.setState({ dataSource: nextProps.songs });
+                break;
+            case RECENTLY_ADDED_SONGS:
+                this.setState({ dataSource: nextProps.recentlyAdded });
+                break;
+            case ALBUM_WITH_ID:
+                this.setState({ dataSource: nextProps.selectedAlbumSongList });
+                break;
+            case ARTIST_WITH_ID:
+                this.setState({ dataSource: nextProps.selectedArtistSongList });
+                break;
+            case PLAYLIST_WITH_ID:
+                this.setState({ dataSource: nextProps.selectedPlaylistSongList });
+                break;
+            default:
+                this.setState({ dataSource: [] });
         }
     }
     

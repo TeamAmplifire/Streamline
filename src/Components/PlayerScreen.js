@@ -24,14 +24,13 @@ import {
 class PlayerScreen extends Component {
     constructor(props) {
         super(props);
-        this.setPlayList(props.item.songId);
+        this.setPlayList(props.item.songID);
     }
     
     state = {
         iconToggle: true,
     };
     
-
     async setPlayList(songID) {
         let list = [];
         switch (this.props.listType) {
@@ -52,29 +51,28 @@ class PlayerScreen extends Component {
                 break;
             default:
         }
-        const song = _.find(this.props.songs, { songID });
+        const song = _.find(list, { songID });
         const index = list.indexOf(song);
         TrackPlayer.reset();
-        const check = (10 - index) > 0;
-        let lowerBound;
-        if (check) {
-            lowerBound = (10 - index);
-        } else {
-            lowerBound = 0;
-        }
-        console.log(lowerBound);
-        for (let i = lowerBound; i < index + 10; i++) {
+        for (let i = 0; i <= index; i++) {
             await TrackPlayer.add([{
                 id: list[i].songID,
-                url: `file:// ${list[i].fullPath}`,
+                url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
             }]);
-            console.log(list[i].songID);
         }
-        TrackPlayer.play();
         for (let j = 0; j < index; j++) {
             TrackPlayer.skipToNext();
+        }
+        TrackPlayer.play();
+        for (let i = index + 1; i < list.length; i++) {
+            await TrackPlayer.add([{
+                id: list[i].songID,
+                url: `file://${list[i].fullPath}`,
+                title: list[i].songName,
+                artist: list[i].artistName,
+            }]);
         }
     }
 
