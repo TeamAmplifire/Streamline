@@ -10,7 +10,7 @@ import { Actions } from 'react-native-router-flux';
 // import RNFS from 'react-native-fs';
 import { CardSection } from './Common';
 import * as Act from '../Actions';
-import { onBackgroundColor, backgroundColor, backgroundColorDark, accentColor } from '../Values/colors';
+import { onBackgroundColor, backgroundColor } from '../Values/colors';
 import { BorderlessButton } from './Common/BorderlessButton';
 import ConfirmationModal from './Common/ConfirmationModal';
 import EditTags from './Common/EditTags';
@@ -58,7 +58,7 @@ class ListItem extends Component {
                                 onPress={() => {
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
+                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item, setList: true });
                                 }}
                             >
                                 Play
@@ -99,7 +99,7 @@ class ListItem extends Component {
                                 onPress={() => {
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
+                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item, setList: true });
                                 }}
                             >
                                 PLAY
@@ -124,13 +124,12 @@ class ListItem extends Component {
                 style={styles.containerStyle}
                 
                 onLongPress={() => {
-                    ToastAndroid.show('LONG PRESS!', ToastAndroid.SHORT);
                     this.setState({ isExpanded: !this.state.isExpanded });
                 }}
                 onPress={() => {
                     this.props.selectSong(this.props.item.songID);
                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item });
+                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item, setList: true });
                 }}
             >
                 <CardSection>

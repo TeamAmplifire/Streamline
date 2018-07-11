@@ -24,13 +24,22 @@ import {
 class PlayerScreen extends Component {
     constructor(props) {
         super(props);
-        this.setPlayList(props.item.songID);
+        if (props.setList !== undefined) {
+            this.setPlayList(props.item.songID);
+        }
     }
     
     state = {
         iconToggle: true,
     };
     
+    onSongEnd() {
+        const nextSong = this.getNextSong(this.props.selectedSong.songID);
+        this.props.selectSong(nextSong.songID);
+        this.props.getArtworkForSongWithID(nextSong.songID);
+        this.setState(this.state);
+    }
+
     async setPlayList(songID) {
         let list = [];
         switch (this.props.listType) {
@@ -56,19 +65,17 @@ class PlayerScreen extends Component {
         TrackPlayer.reset();
         for (let i = 0; i <= index; i++) {
             await TrackPlayer.add([{
-                id: list[i].songID,
+                id: `${list[i].songID}`,
                 url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
             }]);
         }
-        for (let j = 0; j < index; j++) {
-            TrackPlayer.skipToNext();
-        }
+        TrackPlayer.skip(`${songID}`);
         TrackPlayer.play();
         for (let i = index + 1; i < list.length; i++) {
             await TrackPlayer.add([{
-                id: list[i].songID,
+                id: `${list[i].songID}`,
                 url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
@@ -143,14 +150,14 @@ class PlayerScreen extends Component {
                     />
                 </View>
 
-                <MyProgressBar />
+                <MyProgressBar onEnd={this.onSongEnd.bind(this)} />
 
                 <Text style={styles.titleStyle} numberOfLines={1}>
-                    { this.props.selectedSong.songName}
+                    {this.props.selectedSong.songName}
                 </Text>
 
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
-                    { this.props.selectedSong.albumName}  •  { this.props.selectedSong.artistName}
+                    {this.props.selectedSong.albumName}  •  {this.props.selectedSong.artistName}
                 </Text>
 
                 <View style={styles.buttonContainerStyle}>

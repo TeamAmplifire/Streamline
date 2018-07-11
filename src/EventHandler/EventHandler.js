@@ -2,7 +2,6 @@ import TrackPlayer from 'react-native-track-player';
 
 async function eventHandler(store, data) {
     switch(data.type) {
-
         case 'remote-play':
             TrackPlayer.play();
             break;
@@ -21,11 +20,9 @@ async function eventHandler(store, data) {
         case 'remote-seek':
             TrackPlayer.seekTo(data.position);
             break;
-
         case 'remote-duck':
             TrackPlayer.setVolume(data.ducking ? 0.2 : 1);
             break;
-            
     }
 };
 
