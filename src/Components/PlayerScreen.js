@@ -60,6 +60,7 @@ class PlayerScreen extends Component {
                 url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
+                artwork: require('../Drawables/images/placeholder_cover.jpg')
             }]);
         }
         for (let j = 0; j < index; j++) {
@@ -72,6 +73,7 @@ class PlayerScreen extends Component {
                 url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
+                artwork: require('../Drawables/images/placeholder_cover.jpg')
             }]);
         }
     }

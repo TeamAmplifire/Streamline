@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Slider } from 'react-native';
+import { View, Text, StyleSheet, Slider } from 'react-native';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { formatTime } from '../Utilities/Utilities';
-import { accentColor, backgroundColorLight, onBackgroundColor } from '../Values/colors';
+import { onBackgroundColor } from '../Values/colors';
 
 export default class MyProgressBar extends ProgressComponent {
     
     render() {
         const position = formatTime(Math.floor(this.state.position));
         const audioDuration = formatTime(Math.floor(this.state.duration));
-        const info = position + ' / ' + audioDuration;
         // if(this.state.position===this.state.duration)
         // {
         //     console.log('endT');
@@ -36,7 +35,6 @@ export default class MyProgressBar extends ProgressComponent {
             </View>
         );
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -54,7 +52,7 @@ const styles = StyleSheet.create({
         color: onBackgroundColor,
         fontFamily: 'Montserrat-Medium',
         fontSize: 12,
-    },
+    }
 });
 
 // export default connect(null, onEnd)(MyProgressBar);
