@@ -4,19 +4,15 @@ import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { connect } from 'react-redux';
 import { formatTime } from '../Utilities/Utilities';
 import { onBackgroundColor } from '../Values/colors';
-<<<<<<< HEAD
 import * as Act from '../Actions';
 
 class MyProgressBar extends ProgressComponent {
     renderNext = true;
     songEnd = false;
-=======
->>>>>>> 1eb57eb869a1ae60d3c1d7936606dea5761543b5
 
     render() {
         const position = formatTime(Math.floor(this.state.position));
         const audioDuration = formatTime(Math.floor(this.state.duration));
-<<<<<<< HEAD
         if ((this.state.duration - this.state.position < 1) && (this.state.position > 3) && this.renderNext) {
             this.props.onEnd();
             this.renderNext = false;
@@ -28,16 +24,6 @@ class MyProgressBar extends ProgressComponent {
                 this.songEnd = false;
             }
         });
-=======
-        // if(this.state.position===this.state.duration)
-        // {
-        //     console.log('endT');
-        //     this.onEnd(true);
-        // }
-        // else {
-        //     this.onEnd(false);
-        // }
->>>>>>> 1eb57eb869a1ae60d3c1d7936606dea5761543b5
         return (
             <View style={styles.view}>
                 <Text style={styles.info}>{position}</Text>
