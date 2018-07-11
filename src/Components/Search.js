@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
-import { Header, Input } from './Common';
+import { HeaderTextInput } from './Common';
 import * as Act from '../Actions';
 import { backgroundColor } from '../Values/colors';
 import ListItem from '../Components/ListItem';
@@ -37,9 +37,8 @@ class Search extends PureComponent {
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (
-            <View style={{ flex: 1, backgroundColor }}>
-                <Header headerText='Search' />
-                <Input 
+            <View>
+                <HeaderTextInput 
                     value={this.state.text} 
                     placeholder='Search...' 
                     onChangeText={(text) => {
@@ -49,7 +48,6 @@ class Search extends PureComponent {
                     }                
                 />
                 <RecyclerViewList
-                    style={{ flex: 1 }}
                     dataSource={dataSource}
                     renderItem={({ item, index }) => <ListItem item={item} />}
                 />
@@ -57,6 +55,10 @@ class Search extends PureComponent {
         );
     }
 }
+
+const styles = {
+    
+};
 
 const mapStateToProps = (state) => {
     return {

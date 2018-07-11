@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { onBackgroundColor } from '../../Values/colors';
+import { onBackgroundColor, accentColor } from '../../Values/colors';
 
 const BorderlessButton = ({ children, onPress }) => {
     return (
@@ -14,17 +14,16 @@ const BorderlessButton = ({ children, onPress }) => {
 
 const styles = {
     buttonStyle: {
-        flex: 1,
-        alignSelf: 'stretch',
-        marginLeft: 5,
-        marginRight: 5
+        alignSelf: 'center',
+        marginLeft: 12,
+        marginRight: 12
     },
     textStyle: {
         alignSelf: 'stretch',
-        textAlign: 'left',
-        color: onBackgroundColor,
-        fontSize: 16,
-        fontFamily: 'Montserrat-Regular',
+        textAlign: 'center',
+        color: accentColor,
+        fontSize: 14,
+        fontFamily: 'Montserrat-Medium',
         paddingTop: 10,
         paddingBottom: 10
     }

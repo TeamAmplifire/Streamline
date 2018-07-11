@@ -11,6 +11,7 @@ import { CardSection } from './CardSection';
 import { BorderlessButton } from './BorderlessButton';
 import * as actions from '../../Actions';
 import SingleInputModal from './SingleInputModal';
+import { backgroundColor, onBackgroundColor } from '../../Values/colors';
 
 class PlaylistListModal extends Component {
     state = {
@@ -45,14 +46,14 @@ class PlaylistListModal extends Component {
                                             this.setState({ visibilty: false });
                                         }}
                                     >
-                                        <Text style={{ color: '#fff' }}>{item.item.name}</Text>
+                                        <Text style={styles.textStyle} numberOfLines={1}>{item.item.name}</Text>
                                     </TouchableOpacity>
                                 );
                             }}
                         />
                     </CardSection>
                  
-                    <CardSection>
+                    <View style={styles.buttonContainerStyle}>
                         <BorderlessButton onPress={this.props.onDiscard}> 
                             Cancel
                         </BorderlessButton>
@@ -64,7 +65,7 @@ class PlaylistListModal extends Component {
                         >
                             Create New Playlist
                         </BorderlessButton>
-                    </CardSection>
+                    </View>
                     
                     <SingleInputModal 
                         visible={this.state.createPlaylistVisibility}
@@ -85,14 +86,27 @@ const styles = {
     textStyle: {
         flex: 1,
         fontSize: 18,
-        textAlign: 'center',
-        lineHeight: 40
+        color: onBackgroundColor,
+        fontFamily: 'Montserrat-Medium',
+        textAlign: 'left',
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 6,
+        lineHeight: 50
     },
     containerStyle: {
         backgroundColor: 'rgba(0,0,0,0.75)',
         position: 'relative',
         flex: 1,
         justifyContent: 'center'
+    },
+
+    buttonContainerStyle: {
+        backgroundColor,
+        height: 60, 
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     }
 };
 

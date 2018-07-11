@@ -9,7 +9,7 @@ import { Input } from './Input';
 import { CardSection } from './CardSection';
 import { BorderlessButton } from './BorderlessButton';
 import * as actions from '../../Actions';
-import { onBackgroundColor } from '../../Values/colors';
+import { onBackgroundColor, backgroundColor } from '../../Values/colors';
 
 class SingleInputModal extends Component {
     state = { playlistName: '', myVisibility: true };
@@ -31,7 +31,7 @@ class SingleInputModal extends Component {
                             onChangeText={playlistName => this.setState({ playlistName })}
                         />
                     </CardSection>
-                    <CardSection>
+                    <View style={styles.buttonContainerStyle}>
                         <BorderlessButton onPress={this.props.onDiscard}>Discard</BorderlessButton>
                         <BorderlessButton 
                             onPress={() => {
@@ -41,7 +41,7 @@ class SingleInputModal extends Component {
                         >
                             Save
                         </BorderlessButton>
-                    </CardSection>
+                    </View>
                 </View>
             </Modal>
         );
@@ -56,7 +56,7 @@ const styles = {
         flex: 1,
         fontSize: 18,
         textAlign: 'center',
-        lineHeight: 40,
+        padding: 12,
         color: onBackgroundColor
     },
     containerStyle: {
@@ -64,6 +64,14 @@ const styles = {
         position: 'relative',
         flex: 1,
         justifyContent: 'center'
+    },
+
+    buttonContainerStyle: {
+        backgroundColor,
+        height: 60, 
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     }
 };
 

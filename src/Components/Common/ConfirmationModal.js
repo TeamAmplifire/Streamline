@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, View, Modal } from 'react-native';
 import { CardSection } from './CardSection';
-import { Button } from './Button';
+import { BorderlessButton } from './BorderlessButton';
+import { backgroundColor, onBackgroundColor } from '../../Values/colors';
 
 const ConfirmationModal = ({ children, visible, onAccept, onDecline }) => {
     return (
@@ -16,10 +17,10 @@ const ConfirmationModal = ({ children, visible, onAccept, onDecline }) => {
                     <Text style={styles.textStyle}>{children}</Text>
                 </CardSection>
 
-                <CardSection>
-                    <Button onPress={onAccept}>Accept</Button>
-                    <Button onPress={onDecline}>Cancel</Button>
-                </CardSection>
+                <View style={styles.buttonContainerStyle}>
+                    <BorderlessButton onPress={onDecline}>Cancel</BorderlessButton>
+                    <BorderlessButton onPress={onAccept}>Accept</BorderlessButton>
+                </View>
             </View>
         </Modal>
     );
@@ -32,9 +33,11 @@ const styles = {
 
     textStyle: {
         flex: 1,
-        fontSize: 18,
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 14,
+        color: onBackgroundColor,
         textAlign: 'center',
-        lineHeight: 40
+        lineHeight: 50
     },
 
     containerStyle: {
@@ -42,6 +45,14 @@ const styles = {
         position: 'relative',
         flex: 1,
         justifyContent: 'center'
+    },
+
+    buttonContainerStyle: {
+        backgroundColor,
+        height: 60, 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 
 };

@@ -9,6 +9,7 @@ import { CardSection } from './CardSection';
 import { Input } from './Input';
 import { BorderlessButton } from './BorderlessButton';
 import * as actions from '../../Actions';
+import { backgroundColor } from '../../Values/colors';
 
 class EditTags extends Component {
     state = {
@@ -60,7 +61,7 @@ class EditTags extends Component {
                         />
                     </CardSection>
 
-                    <CardSection>
+                    <View style={styles.buttonContainerStyle}>
                             <BorderlessButton onPress={this.props.onDiscard}> 
                                 Discard
                             </BorderlessButton>
@@ -72,12 +73,12 @@ class EditTags extends Component {
                                     this.state.artistName, 
                                     this.props.item.songID, 
                                     this.props.item.fullPath);
-                                    this.setState({ visibilty: false })
+                                    this.setState({ visibilty: false });
                                 }}
                             >
-                                SAVE
+                                Save
                             </BorderlessButton>
-                    </CardSection>
+                    </View>
                 </View>
             </Modal>
         );
@@ -88,17 +89,27 @@ const styles = {
     cardSelectionStyle: {
         justifyContent: 'center'
     },
+
     textStyle: {
         flex: 1,
         fontSize: 18,
         textAlign: 'center',
         lineHeight: 40
     },
+
     containerStyle: {
         backgroundColor: 'rgba(0,0,0,0.75)',
         position: 'relative',
         flex: 1,
         justifyContent: 'center'
+    },
+
+    buttonContainerStyle: {
+        backgroundColor,
+        height: 60, 
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     }
 };
 

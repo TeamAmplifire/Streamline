@@ -5,3 +5,4 @@ export * from './CardSection';
 export * from './Input';
 export * from './Spinner';
 export * from './SquareButton';
+export * from './HeaderTextInput';    
