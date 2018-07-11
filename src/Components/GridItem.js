@@ -19,6 +19,9 @@ import {
     PLAYLIST_LIST,
     ARTIST_LIST,
  } from '../Values/Types';
+import { onBackgroundColor, backgroundColor, accentColor } from '../Values/colors';
+
+const defaultAlbumArt = require('../Drawables/images/placeholder_cover.png');
 
 class GridItem extends Component {
     componentWillMount() {
@@ -27,26 +30,46 @@ class GridItem extends Component {
         }
     }
 
-    renderItem() {
-        console.log(this.props.listType);
-        if (this.props.listType === ALBUM_LIST) {
-            const albumArt = this.props.item.albumArt;
-            return (
-                <ImageBackground
-                    source={{ isStatic: true, uri: albumArt }} 
-                    style={styles.containerStyle}
-                >
-                    <Text style={styles.textStyle} >
-                        {this.props.item.name}
-                    </Text>
-                </ImageBackground>
-            );
+    renderAlbumArt() {
+        const albumArt = this.props.item.albumArt;
+        if (albumArt === 'file://null') {
+            return defaultAlbumArt;  
         }
-        return (
-            <Text style={styles.textStyle} >{this.props.item.name}</Text>
-        );        
+        return { isStatic: true, uri: albumArt };
     }
 
+    renderItem() {
+        console.log(this.props.item);
+        if (this.props.listType === ALBUM_LIST) {
+            return (
+                <View style={styles.containerStyle}>
+                    <ImageBackground
+                        source={this.renderAlbumArt()}
+                        style={styles.albumArtStyle}
+                    />
+
+                    <Text style={styles.textStyle} numberOfLines={1}>
+                        {this.props.item.name}
+                    </Text>
+                </View>
+            );
+        }
+
+        const name = this.props.item.name;
+        return (
+            <View>
+                <View style={styles.thumbnailLetterStyle}>
+                    <Text style={styles.singleLetterStyle}>
+                        {name.substr(0, 1)}
+                    </Text> 
+                </View>
+                <Text style={styles.textStyle} numberOfLines={1}>
+                    {this.props.item.name}
+                </Text>
+            </View>
+        );        
+    }
+m
     render() {
         console.log(this.props.item);
         const { name, id } = this.props.item;
@@ -82,16 +105,37 @@ class GridItem extends Component {
 
 const styles = {
     textStyle: {
-        fontSize: 20,
-        color: '#fff',
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 16,
+        color: onBackgroundColor,
         flex: 1,
-        justifyContent: 'center',
+        paddingTop: 4,
+        paddingBottom: 8
     },
     containerStyle: {
-        width: Dimensions.get('window').width * 0.5,
-        height: Dimensions.get('window').width * 0.5,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
+        width: Dimensions.get('window').width * 0.45,
+        flex: 1,
+        flexDirection: 'column',
+    },
+
+    albumArtStyle: {
+        aspectRatio: 0.99,
+        borderBottomColor: accentColor,
+        borderBottomWidth: 2
+    },
+
+    thumbnailLetterStyle: {
+        aspectRatio: 1,
+        borderWidth: 2,
+        borderColor: accentColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    singleLetterStyle: {
+        fontFamily: 'Montserrat-Bold',
+        color: '#fff',
+        fontSize: 150,
     }
 };
 
