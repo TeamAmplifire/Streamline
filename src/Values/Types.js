@@ -26,3 +26,4 @@ export const SELECT_ALBUM = 'select_album';
 export const SELECT_ARTIST = 'select_artist';
 export const GET_ALBUM_ART = 'get_album_art';
 export const GET_SONG_ARTWORK = 'get_song_artwork';
+export const LOADING = 'loading';

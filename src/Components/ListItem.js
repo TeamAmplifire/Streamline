@@ -237,7 +237,7 @@ const mapStateToProps = (state) => {
     return {
         paddingLeft: 16,
         songs: state.songs,
-        selectedPlaylistID: state.selectedPlaylistID
+        selectedPlaylistID: state.selectedPlaylistID,
     };
 };
 

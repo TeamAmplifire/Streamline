@@ -3,6 +3,7 @@ import {
   Text,
   View
 } from 'react-native';
+import Spinner from 'react-native-spinkit';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import ListItem from './ListItem';
@@ -15,13 +16,19 @@ import {
     ARTIST_WITH_ID,
     PLAYLIST_WITH_ID
  } from '../Values/Types';
+ import { accentColor } from '../Values/colors';
 
 class ListView extends PureComponent {
     state = {
         dataSource: [],
+        loading: true
     };
     componentWillMount() {
         this.refresh();
+    }
+
+    componentDidMount() {
+        this.setState({ loading: false });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -71,15 +78,30 @@ class ListView extends PureComponent {
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (
-            <RecyclerViewList 
-                style={{ flex: 1 }}
-                dataSource={dataSource}
-                renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} refresh={this.refresh.bind(this)} />}
-                ListHeaderComponent={<Header headerText={this.props.headerText} />}
-            />
+            <View style={{ flex: 1 }}>
+                <Spinner
+                    isVisible={this.state.loading}
+                    color='#fff'
+                    size={37}
+                    type='wave'
+                    style={styles.loadingStyle}
+                />
+                <RecyclerViewList 
+                    style={{ flex: 1 }}
+                    dataSource={dataSource}
+                    renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} refresh={this.refresh.bind(this)} />}
+                    ListHeaderComponent={<Header headerText={this.props.headerText} />}
+                />
+            </View>
         );
     }
 }
+
+const styles = {
+    loadingStyle: {
+        flex: 1
+    }
+};
 
 const mapStateToProps = (state) => {
     return {

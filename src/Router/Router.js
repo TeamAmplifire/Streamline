@@ -23,7 +23,6 @@ const RouterComponent = () => {
                 <Scene key='artistSongList' component={ListView} />
                 <Scene key='playerScreen' component={PlayerScreen} />
             </Stack>
-            
         </Router>
     );
 };
