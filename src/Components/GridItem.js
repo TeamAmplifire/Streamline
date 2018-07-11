@@ -60,7 +60,7 @@ class GridItem extends Component {
             <View>
                 <View style={styles.thumbnailLetterStyle}>
                     <Text style={styles.singleLetterStyle}>
-                        {name.substr(0, 1)}
+                        {name.substr(0, 2)}
                     </Text> 
                 </View>
                 <Text style={styles.textStyle} numberOfLines={1}>
@@ -135,7 +135,7 @@ const styles = {
     singleLetterStyle: {
         fontFamily: 'Montserrat-Bold',
         color: '#fff',
-        fontSize: 150,
+        fontSize: 100,
     }
 };
 
