@@ -54,11 +54,22 @@ class GridItem extends Component {
                 </View>
             );
         }
+
+        const name = this.props.item.name;
         return (
-            <Text style={styles.textStyle} >{this.props.item.name}</Text>
+            <View>
+                <View style={styles.thumbnailLetterStyle}>
+                    <Text style={styles.singleLetterStyle}>
+                        {name.substr(0, 1)}
+                    </Text> 
+                </View>
+                <Text style={styles.textStyle} numberOfLines={1}>
+                    {this.props.item.name}
+                </Text>
+            </View>
         );        
     }
-
+m
     render() {
         console.log(this.props.item);
         const { name, id } = this.props.item;
@@ -111,6 +122,20 @@ const styles = {
         aspectRatio: 0.99,
         borderBottomColor: accentColor,
         borderBottomWidth: 2
+    },
+
+    thumbnailLetterStyle: {
+        aspectRatio: 1,
+        borderWidth: 2,
+        borderColor: accentColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    singleLetterStyle: {
+        fontFamily: 'Montserrat-Bold',
+        color: '#fff',
+        fontSize: 150,
     }
 };
 

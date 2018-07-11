@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import { HeaderTextInput } from './Common';
 import * as Act from '../Actions';
-import { backgroundColor } from '../Values/colors';
+import { backgroundColor, backgroundColorLight } from '../Values/colors';
 import ListItem from '../Components/ListItem';
 
 class Search extends PureComponent {
@@ -38,6 +38,10 @@ class Search extends PureComponent {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (
             <View>
+                <StatusBar
+                    backgroundColor={backgroundColorLight} 
+                    barstyle='dark-content'
+                />
                 <HeaderTextInput 
                     value={this.state.text} 
                     placeholder='Search...' 
@@ -48,6 +52,7 @@ class Search extends PureComponent {
                     }                
                 />
                 <RecyclerViewList
+                    style={{ flex: 1 }}
                     dataSource={dataSource}
                     renderItem={({ item, index }) => <ListItem item={item} />}
                 />

@@ -20,6 +20,8 @@ import {
  } from '../Values/Types';
  import * as Act from '../Actions';
 
+const defaultAlbumArt = require('../Drawables/images/placeholder_cover.png');
+
 
 class PlayerScreen extends Component {
     constructor(props) {
@@ -135,12 +137,20 @@ class PlayerScreen extends Component {
         return playIcon;
     }
 
+    renderAlbumArt() {
+        const albumArt = this.props.selectedSongArtwork;
+        if (albumArt === 'file://null') {
+            return defaultAlbumArt;  
+        }
+        return { isStatic: true, uri: albumArt };
+    }
+
     render() {
         return (
             <View style={styles.containerStyle}>
                 <View style={styles.albumArtContainerStyle}>
                     <ImageBackground
-                        source={{ isStatic: true, uri: this.props.selectedSongArtwork }}
+                        source={this.renderAlbumArt()}
                         style={styles.albumArtStyle}
                     />
                 </View>
