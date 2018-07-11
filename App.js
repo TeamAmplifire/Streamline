@@ -1,19 +1,32 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { View, StatusBar, AsyncStorage } from 'react-native';
+import { Provider, connect } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import TrackPlayer from 'react-native-track-player';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
 import Reducers from './src/Reducers';
 import { backgroundColor } from './src/Values/colors';
 import Router from './src/Router/Router';
 import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
 
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+const persistedReducer = persistReducer(persistConfig, Reducers);
+let store = createStore(persistedReducer);
+let persistor = persistStore(store);
+const appStore = createStore(persistedReducer, {}, applyMiddleware(ReduxThunk));
+
 const App = () => {
     permissionCheck();
     initialisePlayer();
     return (
-        <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
+        <Provider store={appStore}>
+            <PersistGate loading={null} persistor={persistor}>
             <View style={{ flex: 1 }}>
                 <View>
                     <StatusBar 
@@ -22,6 +35,7 @@ const App = () => {
                 </View>
                 <Router backgroundColor={backgroundColor} />
             </View>
+            </PersistGate>
         </Provider>
     );
 };

@@ -24,15 +24,12 @@ class Grid extends Component {
         switch (this.props.listType) {
             case PLAYLIST_LIST:
                 this.props.fetchPlaylistList();
-                this.setState({ dataSource: this.props.playlistList });
                 break;
             case ALBUM_LIST:
                 this.props.fetchAlbumList();
-                this.setState({ dataSource: this.props.albumList });
                 break;
             case ARTIST_LIST:
                 this.props.fetchArtistList();
-                this.setState({ dataSource: this.props.artistList });
                 break;
             default:
                 this.setState({ dataSource: [] });

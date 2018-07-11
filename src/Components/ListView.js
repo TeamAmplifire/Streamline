@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
-import TrackPlayer from 'react-native-track-player';
 import ListItem from './ListItem';
 import * as Act from '../Actions';
 import { Header } from './Common';

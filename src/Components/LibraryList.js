@@ -5,9 +5,11 @@ import {
   ListView,
   TouchableOpacity
 } from 'react-native';
-import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
+import { DataSource } from 'react-native-recyclerview-list';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Header, SquareButton, CardSection } from './Common';
+import { Header, SquareButton } from './Common';
+import * as Act from '../Actions';
 import { 
     ALL_SONGS,
     RECENTLY_ADDED_SONGS,
@@ -15,7 +17,7 @@ import {
     ARTIST_LIST,
     PLAYLIST_LIST
  } from '../Values/Types';
-import { backgroundColor, onBackgroundColor, accentColor } from '../Values/colors';
+import { onBackgroundColor } from '../Values/colors';
 import { searchIcon } from '../Drawables/icons';
 
 class LibraryList extends PureComponent {
@@ -48,8 +50,9 @@ class LibraryList extends PureComponent {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
-
-        this.dataSource = ds.cloneWithRows(this.state.dataSource);
+        this.dataSource = ds.cloneWithRows(this.state.dataSource); 
+        this.props.fetchSongs();
+        this.props.fetchRecentlyAdded();
     }
 
     renderRow(item) {
@@ -130,4 +133,4 @@ const styles = {
     }
 };
 
-export default LibraryList;
+export default connect(null, Act)(LibraryList);
