@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Slider } from 'react-native';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { formatTime } from '../Utilities/Utilities';
+import { accentColor, backgroundColorLight, onBackgroundColor } from '../Values/colors';
 
 export default class MyProgressBar extends ProgressComponent {
     
@@ -19,18 +20,19 @@ export default class MyProgressBar extends ProgressComponent {
         // }
         return (
             <View style={styles.view}>
-                <Text style={styles.info}>{info}</Text>
+                <Text style={styles.info}>{position}</Text>
                 <Slider
+                    style={{ flex: 1 }}
                     minimumValue={0}
                     maximumValue={this.state.duration}
                     step={1}
-                    width={Dimensions.get('window').width * 0.9}
                     value={this.state.position}
                     onValueChange={(value) => {
                             TrackPlayer.seekTo(value);
                         }
                     }
                 />
+                <Text style={styles.info}>{audioDuration}</Text>
             </View>
         );
     }
@@ -39,35 +41,20 @@ export default class MyProgressBar extends ProgressComponent {
 
 const styles = StyleSheet.create({
     view: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
-        width: '100%',
         justifyContent: 'center',
-
+        paddingTop: 50,
+        paddingBottom: 8,
+        paddingLeft: 24,
+        paddingRight: 24
     },
     info: {
-        color: '#c0c0c0',
-        fontSize: 16,
-        fontWeight: '300',
-        margin: 10
+        color: onBackgroundColor,
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 12,
     },
-    bar: {
-        backgroundColor: '#575757',
-        height: 5,
-        width: '100%',
-        margin: 10,
-        flexDirection: 'row',
-        alignItems: 'flex-start'
-    },
-    played: {
-        backgroundColor: '#34fd33',
-        height: 5
-    },
-    buffered: {
-        backgroundColor: '#797979',
-        height: 5
-    }
 });
 
 // export default connect(null, onEnd)(MyProgressBar);

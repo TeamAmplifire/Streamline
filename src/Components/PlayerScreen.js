@@ -66,8 +66,7 @@ class PlayerScreen extends Component {
         let lowerBound;
         if (check) {
             lowerBound = index - 10;
-        }
-        else {
+        } else {
             lowerBound = 0;
         }
         for (let i = lowerBound; i < index + 10; i++) {
@@ -144,59 +143,60 @@ class PlayerScreen extends Component {
     render() {
         return (
             <View style={styles.containerStyle}>
-            
                 <View style={styles.albumArtContainerStyle}>
                     <ImageBackground
                         source={{ isStatic: true, uri: this.props.selectedSongArtwork }}
                         style={styles.albumArtStyle}
                     />
                 </View>
+
+                <MyProgressBar />
+
                 <Text style={styles.titleStyle} numberOfLines={1}>
                     { this.props.selectedSong.songName}
                 </Text>
+
                 <Text style={styles.subtitleStyle} numberOfLines={1}>
-                    { this.props.selectedSong.artistName}  •  { this.props.selectedSong.albumName}
+                    { this.props.selectedSong.albumName}  •  { this.props.selectedSong.artistName}
                 </Text>
+
                 <View style={styles.buttonContainerStyle}>
                     <SquareButton 
-                    image={prevIcon}
-                    onPress={() => {
-                                const nextSong = this.getPreviousSong(this.props.selectedSong.songID);
-                                TrackPlayer.skipToPrevious();
-                                this.props.selectSong(nextSong.songID);
-                                this.props.getArtworkForSongWithID(nextSong.songID);
-                            }
-                        } 
+                        image={prevIcon}
+                        onPress={() => {
+                            const nextSong = this.getPreviousSong(this.props.selectedSong.songID);
+                            TrackPlayer.skipToPrevious();
+                            this.props.selectSong(nextSong.songID);
+                            this.props.getArtworkForSongWithID(nextSong.songID);
+                        }} 
                     />
                     <SquareButton 
                     image={this.renderIcon()}
-                    style={{ width: 45, height: 45 }}
+                    style={{ width: 35, height: 35 }}
                     onPress={() => {
-                        TrackPlayer.getState().then((playBackState)=> {
+                        TrackPlayer.getState()
+                            .then((playBackState) => {
                                 if (playBackState === TrackPlayer.STATE_PLAYING || playBackState === 3) {
                                     this.setState({ iconToggle: false });
                                     TrackPlayer.pause();    
-                                }
-                                else {
+                                } else {
                                     this.setState({ iconToggle: true });
                                     TrackPlayer.play();
                                 }
                             });
-                            }
-                        } 
+                        }} 
                     />
+                    
                     <SquareButton 
                     image={nextIcon}
                     onPress={() => {
-                                const nextSong = this.getNextSong(this.props.selectedSong.songID);
-                                TrackPlayer.skipToNext();
-                                this.props.selectSong(nextSong.songID);
-                                this.props.getArtworkForSongWithID(nextSong.songID);
-                            }
-                        } 
+                            const nextSong = this.getNextSong(this.props.selectedSong.songID);
+                            TrackPlayer.skipToNext();
+                            this.props.selectSong(nextSong.songID);
+                            this.props.getArtworkForSongWithID(nextSong.songID);
+                        }} 
                     />
                 </View>
-                <MyProgressBar />
             </View>
         );
     }
@@ -219,7 +219,7 @@ const styles = {
     },
 
     titleStyle: {
-        fontSize: 20,
+        fontSize: 16,
         paddingTop: 40,
         paddingLeft: 24,
         paddingRight: 24,
@@ -231,7 +231,7 @@ const styles = {
     },
 
     subtitleStyle: {
-        fontSize: 18,
+        fontSize: 14,
         paddingLeft: 24,
         paddingRight: 24,
         alignSelf: 'stretch',
@@ -241,9 +241,13 @@ const styles = {
     },
 
     buttonContainerStyle: {
-        padding: 16,
+        paddingLeft: 70,
+        paddingRight: 70,
+        paddingTop: 50,
+        paddingBottom: 30,
         backgroundColor,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         flexDirection: 'row',
         borderColor: '#ddd',
         position: 'relative'

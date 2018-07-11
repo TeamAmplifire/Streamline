@@ -22,7 +22,7 @@ const App = () => {
                     />
                 </View>
                 <Router backgroundColor={backgroundColor} />
-                <PlayerTray />
+                {/* <PlayerTray /> */}
             </View>
         </Provider>
     );
