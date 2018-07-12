@@ -3,7 +3,6 @@ import {
   Text,
   View
 } from 'react-native';
-import Spinner from 'react-native-spinkit';
 import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import ListItem from './ListItem';
@@ -19,11 +18,14 @@ import { Header, SquareButton } from './Common';
 import { searchIcon, editIcon, deleteIcon } from '../Drawables/icons';
 import { accentColor } from '../Values/colors';
 import EditPlaylistModal from './Common/EditPlaylistModal';
+import ConfirmationModal from './Common/ConfirmationModal';
 
 class ListView extends PureComponent {
     state = {
         dataSource: [],
-        loading: true
+        loading: true,
+        confirmModal: false,
+        editModal: true
     };
 
     componentWillMount() {
@@ -31,7 +33,7 @@ class ListView extends PureComponent {
     }
 
     componentDidMount() {
-        this.setState({ loading: false });
+        this.setState({ loading: false, editModal: false });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -57,22 +59,14 @@ class ListView extends PureComponent {
         }
     }
 
-    onDeleteConfirm() {
+    onConfirmDelete() {
         this.props.deletePlaylistWithID(this.props.selectedPlaylistID);
         this.refresh();
         this.setState({ confirmModal: false });
     }
 
-    onDeleteCancel() {
+    onCancelDelete() {
         this.setState({ confirmModal: false });
-    }
-    
-    onEditConfirm() {
-        this.setState({ editModal: false });
-    }
-
-    onEditCancel() {
-        this.setState({ editModal: false });
     }
 
     refresh() {
@@ -102,56 +96,63 @@ class ListView extends PureComponent {
             return (
                 <View style={styles.headerContainerStyle}>
                     <View>
-                        <Header headerText={this.props.item.name} />
+                        <Header headerText={this.props.headerText} />
                     </View>
 
-                    <View style={{ paddingRight: 12 }}>
-                        <SquareButton 
-                            style={{ height: 25, width: 25 }}
-                            image={editIcon} 
-                            onPress={() => { 
-                                
-                            }}
-                        />
-
-                        <EditPlaylistModal 
-                            visible={this.state.editModal}
-                            playlistName={this.props.item.name}
-                        />
-                    </View>
-                    
-                    <View style={{ paddingRight: 12 }}>
-                        <SquareButton 
-                            style={{ height: 25, width: 25 }}
-                            image={deleteIcon} 
-                            onPress={() => { 
-                            }}
-                        />
+                    <View style={styles.buttonContainerStyle}>
+                        <View style={{ paddingRight: 24 }}>
+                            <SquareButton 
+                                style={{ height: 25, width: 25 }}
+                                image={editIcon} 
+                                onPress={() => { 
+                                    this.setState({ editModal: true });
+                                }}
+                            />
+                        </View>
+                        
+                        <View style={{ paddingRight: 12 }}>
+                            <SquareButton 
+                                style={{ height: 25, width: 25 }}
+                                image={deleteIcon}
+                                onPress={() => { 
+                                    this.setState({ confirmModal: true });
+                                }}
+                            />
+                        </View>
                     </View>
                 </View>            
             );
         }
         
-        return <Header headerText={this.props.item.name} />;
+        return <Header headerText={this.props.headerText} />;
     }
 
     render() {
+        console.log(this.props);
+        
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (
             <View style={{ flex: 1 }}>
-                <Spinner
-                    isVisible={this.state.loading}
-                    color='#fff'
-                    size={37}
-                    type='wave'
-                    style={styles.loadingStyle}
-                />
+                {this.renderHeader()}
                 <RecyclerViewList 
                     style={{ flex: 1 }}
                     dataSource={dataSource}
                     renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} refresh={this.refresh.bind(this)} />}
-                    ListHeaderComponent={this.renderHeader()}
                 />
+                <EditPlaylistModal 
+                    visible={this.state.editModal}
+                    playlistName={this.props.headerText}
+                    onDiscard={() => {
+                        this.setState({ editModal: false });
+                    }}
+                />
+                <ConfirmationModal
+                        visible={this.state.confirmModal}
+                        onAccept={this.onConfirmDelete.bind(this)}
+                        onDecline={this.onCancelDelete.bind(this)}
+                >
+                        Are you sure you want to delete this?
+                </ConfirmationModal>
             </View>
         );
     }
@@ -165,7 +166,13 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    buttonContainerStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     }
+
 };
 
 const mapStateToProps = (state) => {
