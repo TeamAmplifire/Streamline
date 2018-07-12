@@ -16,7 +16,7 @@ import {
     PLAYLIST_WITH_ID
  } from '../Values/Types';
 import { Header, SquareButton } from './Common';
-import { searchIcon } from '../Drawables/icons';
+import { searchIcon, editIcon, deleteIcon } from '../Drawables/icons';
 import { accentColor } from '../Values/colors';
 import EditPlaylistModal from './Common/EditPlaylistModal';
 
@@ -108,7 +108,7 @@ class ListView extends PureComponent {
                     <View style={{ paddingRight: 12 }}>
                         <SquareButton 
                             style={{ height: 25, width: 25 }}
-                            image={searchIcon} 
+                            image={editIcon} 
                             onPress={() => { 
                                 
                             }}
@@ -123,7 +123,7 @@ class ListView extends PureComponent {
                     <View style={{ paddingRight: 12 }}>
                         <SquareButton 
                             style={{ height: 25, width: 25 }}
-                            image={searchIcon} 
+                            image={deleteIcon} 
                             onPress={() => { 
                             }}
                         />
@@ -131,6 +131,8 @@ class ListView extends PureComponent {
                 </View>            
             );
         }
+        
+        return <Header headerText={this.props.item.name} />;
     }
 
     render() {
@@ -148,7 +150,7 @@ class ListView extends PureComponent {
                     style={{ flex: 1 }}
                     dataSource={dataSource}
                     renderItem={({ item, index }) => <ListItem item={item} index={index} listType={this.props.listType} refresh={this.refresh.bind(this)} />}
-                    ListHeaderComponent={<Header headerText={this.props.headerText} />}
+                    ListHeaderComponent={this.renderHeader()}
                 />
             </View>
         );
