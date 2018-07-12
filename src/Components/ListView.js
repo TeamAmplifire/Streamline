@@ -18,12 +18,14 @@ import {
 import { Header, SquareButton } from './Common';
 import { searchIcon } from '../Drawables/icons';
 import { accentColor } from '../Values/colors';
+import EditPlaylistModal from './Common/EditPlaylistModal';
 
 class ListView extends PureComponent {
     state = {
         dataSource: [],
         loading: true
     };
+
     componentWillMount() {
         this.refresh();
     }
@@ -54,7 +56,25 @@ class ListView extends PureComponent {
                 this.setState({ dataSource: [] });
         }
     }
+
+    onDeleteConfirm() {
+        this.props.deletePlaylistWithID(this.props.selectedPlaylistID);
+        this.refresh();
+        this.setState({ confirmModal: false });
+    }
+
+    onDeleteCancel() {
+        this.setState({ confirmModal: false });
+    }
     
+    onEditConfirm() {
+        this.setState({ editModal: false });
+    }
+
+    onEditCancel() {
+        this.setState({ editModal: false });
+    }
+
     refresh() {
         switch (this.props.listType) {
             case ALL_SONGS:
@@ -78,11 +98,11 @@ class ListView extends PureComponent {
     }
         
     renderHeader() {
-        if(this.props.listType === PLAYLIST_WITH_ID) {
+        if (this.props.listType === PLAYLIST_WITH_ID) {
             return (
                 <View style={styles.headerContainerStyle}>
                     <View>
-                        <Header headerText='Library' />
+                        <Header headerText={this.props.item.name} />
                     </View>
 
                     <View style={{ paddingRight: 12 }}>
@@ -90,8 +110,13 @@ class ListView extends PureComponent {
                             style={{ height: 25, width: 25 }}
                             image={searchIcon} 
                             onPress={() => { 
-                                //Edit
+                                
                             }}
+                        />
+
+                        <EditPlaylistModal 
+                            visible={this.state.editModal}
+                            playlistName={this.props.item.name}
                         />
                     </View>
                     
@@ -100,17 +125,6 @@ class ListView extends PureComponent {
                             style={{ height: 25, width: 25 }}
                             image={searchIcon} 
                             onPress={() => { 
-                                //Delete
-                            }}
-                        />
-                    </View>
-
-                    <View style={{ paddingRight: 12 }}>
-                        <SquareButton 
-                            style={{ height: 25, width: 25 }}
-                            image={searchIcon} 
-                            onPress={() => { 
-                                Actions.search(); 
                             }}
                         />
                     </View>
@@ -144,6 +158,11 @@ class ListView extends PureComponent {
 const styles = {
     loadingStyle: {
         flex: 1
+    },
+    headerContainerStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 };
 
