@@ -29,11 +29,16 @@ class PlayerScreen extends Component {
         if (props.setList !== undefined) {
             this.setPlayList(props.item.songID);
         }
+        this.props.playerTray(false);
     }
     
     state = {
         iconToggle: true,
     };
+    
+    componentWillUnmount() {
+        this.props.playerTray(true);
+    }
     
     onSongEnd() {
         const nextSong = this.getNextSong(this.props.selectedSong.songID);
@@ -281,6 +286,7 @@ const mapStateToProps = (state) => {
         selectedArtistID: state.selectedArtistID,
         selectedArtistSongList: state.selectedArtistSongList,
         selectedSongArtwork: state.selectedSongArtwork,
+        listType: state.listType,
     };
 };
 

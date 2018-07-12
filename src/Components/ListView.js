@@ -32,6 +32,7 @@ class ListView extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
+        nextProps.selectListType(nextProps.listType);
         switch (nextProps.listType) {
             case ALL_SONGS:
                 this.setState({ dataSource: nextProps.songs });

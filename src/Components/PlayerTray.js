@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { 
     View,
-    TouchableOpacity, 
-    Text,     
+    TouchableOpacity,      
     ImageBackground,
     Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
+import { Actions } from 'react-native-router-flux';
 import MarqueeText from 'react-native-marquee';
 import { SquareButton } from './Common';
 import { playIcon, pauseIcon } from '../Drawables/icons';
-import { accentColor, onBackgroundColor, backgroundColor, backgroundColorDark } from '../Values/colors';
+import { accentColor, onBackgroundColor, backgroundColorDark } from '../Values/colors';
+
+const defaultAlbumArt = require('../Drawables/images/placeholder_cover.png');
 
 class PlayerTray extends Component {
     state = { iconToggle: true };
@@ -23,15 +25,23 @@ class PlayerTray extends Component {
         return playIcon;
     }
 
+    renderAlbumArt() {
+        const albumArt = this.props.selectedSongArtwork;
+        if (albumArt === 'file://null') {
+            return defaultAlbumArt;
+        }
+        return { isStatic: true, uri: albumArt };
+    }
+
     render() {
-        if (this.props.selectedSong.songID !== null) {
+        if (this.props.showHidePlayerTray === true) {
             return (
                 <View style={styles.containerStyle}>
                     <ImageBackground
-                        source={{ isStatic: true, uri: this.props.selectedSongArtwork }} 
+                        source={this.renderAlbumArt()} 
                         style={styles.imageStyle}
                     />
-                    <TouchableOpacity style={styles.textContainerStyle}>
+                    <TouchableOpacity style={styles.textContainerStyle} onPress={() => {Actions.playerScreen({ item: this.props.selectedSong })}} >
                         <MarqueeText
                             style={styles.titleTextStyle}
                             marqueeOnStart
@@ -60,8 +70,7 @@ class PlayerTray extends Component {
                                         if (playBackState === TrackPlayer.STATE_PLAYING || playBackState === 3) {
                                             this.setState({ iconToggle: false });
                                             TrackPlayer.pause();    
-                                        }
-                                        else {
+                                        } else {
                                             this.setState({ iconToggle: true });
                                             TrackPlayer.play();
                                         }
@@ -131,6 +140,7 @@ const mapStateToProps = (state) => {
     return {
         selectedSong: state.selectedSong,
         selectedSongArtwork: state.selectedSongArtwork,        
+        showHidePlayerTray: state.showHidePlayerTray
     };
 };
 

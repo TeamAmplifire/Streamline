@@ -58,7 +58,7 @@ class ListItem extends Component {
                                 onPress={() => {
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item, setList: true });
+                                    Actions.playerScreen({ item: this.props.item, setList: true });
                                 }}
                             >
                                 Play
@@ -99,7 +99,7 @@ class ListItem extends Component {
                                 onPress={() => {
                                     this.props.selectSong(this.props.item.songID);
                                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item, setList: true });
+                                    Actions.playerScreen({ item: this.props.item, setList: true });
                                 }}
                             >
                                 PLAY
@@ -129,7 +129,7 @@ class ListItem extends Component {
                 onPress={() => {
                     this.props.selectSong(this.props.item.songID);
                     this.props.getArtworkForSongWithID(this.props.item.songID);
-                    Actions.playerScreen({ listType: this.props.listType, item: this.props.item, setList: true });
+                    Actions.playerScreen({ item: this.props.item, setList: true });
                 }}
             >
                 <CardSection>

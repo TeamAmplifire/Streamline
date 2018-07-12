@@ -26,4 +26,5 @@ export const SELECT_ALBUM = 'select_album';
 export const SELECT_ARTIST = 'select_artist';
 export const GET_ALBUM_ART = 'get_album_art';
 export const GET_SONG_ARTWORK = 'get_song_artwork';
-export const LOADING = 'loading';
+export const SHOW_HIDE_PLAYER_TRAY = 'show_hide_player_tray';
+export const SELECT_LIST_TYPE = 'select_list_type';
