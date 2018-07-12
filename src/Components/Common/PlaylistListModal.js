@@ -43,6 +43,7 @@ class PlaylistListModal extends Component {
                                     <TouchableOpacity 
                                         onPress={() => {
                                             this.props.addSongToPlaylistWithID(item.item.id, this.props.item.songID);
+                                            this.props.fetchPlaylistList();
                                             this.setState({ visibilty: false });
                                         }}
                                     >

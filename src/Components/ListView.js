@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import RecyclerViewList, { DataSource } from 'react-native-recyclerview-list';
 import ListItem from './ListItem';
 import * as Act from '../Actions';
-import { Header } from './Common';
 import { 
     ALL_SONGS,
     RECENTLY_ADDED_SONGS,
@@ -16,7 +15,9 @@ import {
     ARTIST_WITH_ID,
     PLAYLIST_WITH_ID
  } from '../Values/Types';
- import { accentColor } from '../Values/colors';
+import { Header, SquareButton } from './Common';
+import { searchIcon } from '../Drawables/icons';
+import { accentColor } from '../Values/colors';
 
 class ListView extends PureComponent {
     state = {
@@ -76,6 +77,48 @@ class ListView extends PureComponent {
         }
     }
         
+    renderHeader() {
+        if(this.props.listType === PLAYLIST_WITH_ID) {
+            return (
+                <View style={styles.headerContainerStyle}>
+                    <View>
+                        <Header headerText='Library' />
+                    </View>
+
+                    <View style={{ paddingRight: 12 }}>
+                        <SquareButton 
+                            style={{ height: 25, width: 25 }}
+                            image={searchIcon} 
+                            onPress={() => { 
+                                //Edit
+                            }}
+                        />
+                    </View>
+                    
+                    <View style={{ paddingRight: 12 }}>
+                        <SquareButton 
+                            style={{ height: 25, width: 25 }}
+                            image={searchIcon} 
+                            onPress={() => { 
+                                //Delete
+                            }}
+                        />
+                    </View>
+
+                    <View style={{ paddingRight: 12 }}>
+                        <SquareButton 
+                            style={{ height: 25, width: 25 }}
+                            image={searchIcon} 
+                            onPress={() => { 
+                                Actions.search(); 
+                            }}
+                        />
+                    </View>
+                </View>            
+            );
+        }
+    }
+
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (

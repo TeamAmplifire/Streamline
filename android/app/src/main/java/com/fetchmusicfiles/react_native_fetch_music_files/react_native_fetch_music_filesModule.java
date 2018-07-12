@@ -219,13 +219,13 @@ public class react_native_fetch_music_filesModule extends ReactContextBaseJavaMo
     
     @ReactMethod
     public void permissionCheck(){
-        if (ActivityCompat.checkSelfPermission(reactContext.getCurrentActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(reactContext.getCurrentActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-        }
+//        if (ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//            ActivityCompat.requestPermissions(reactContext, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+//        }
     }
 
     @ReactMethod

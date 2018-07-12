@@ -8,7 +8,6 @@ import PlayerTray from '../Components/PlayerTray';
 import * as Act from '../Actions';
 
 class App extends Component {
-
     render() {
         console.log(this.props);
         TrackPlayer.getState().then(value => {
@@ -33,23 +32,5 @@ class App extends Component {
         );
     }   
 }
-
-// const mapStateToProps = state => {
-//     return {
-//         songs: state.songs,
-//         selectedSong: state.selectedSong,
-//         recentlyAdded: state.recentlyAdded,
-//         playlistList: state.playlistList,
-//         selectedPlaylistID: state.selectedPlaylistID,
-//         selectedPlaylistSongList: state.selectedPlaylistSongList,
-//         albumList: state.albumList,
-//         selectedAlbumID: state.selectedAlbumID,
-//         selectedAlbumSongList: state.selectedAlbumSongList,
-//         artistList: state.artistList,
-//         selectedArtistID: state.selectedArtistID,
-//         selectedArtistSongList: state.selectedArtistSongList,
-//         listType: state.listType,
-//     };
-// };
 
 export default connect(null, Act)(App);

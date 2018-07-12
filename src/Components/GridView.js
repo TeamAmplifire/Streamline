@@ -20,20 +20,7 @@ class Grid extends Component {
     state = { dataSource: [] };
 
     componentWillMount() {
-        // console.log(this.props);
-        switch (this.props.listType) {
-            case PLAYLIST_LIST:
-                this.props.fetchPlaylistList();
-                break;
-            case ALBUM_LIST:
-                this.props.fetchAlbumList();
-                break;
-            case ARTIST_LIST:
-                this.props.fetchArtistList();
-                break;
-            default:
-                this.setState({ dataSource: [] });
-        }
+        this.refresh();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -47,6 +34,22 @@ class Grid extends Component {
                 break;
             case ARTIST_LIST:
                 this.setState({ dataSource: nextProps.artistList });
+                break;
+            default:
+                this.setState({ dataSource: [] });
+        }
+    }
+
+    refresh() {
+        switch (this.props.listType) {
+            case PLAYLIST_LIST:
+                this.props.fetchPlaylistList();
+                break;
+            case ALBUM_LIST:
+                this.props.fetchAlbumList();
+                break;
+            case ARTIST_LIST:
+                this.props.fetchArtistList();
                 break;
             default:
                 this.setState({ dataSource: [] });
@@ -70,7 +73,7 @@ class Grid extends Component {
                     items={this.state.dataSource}
                     style={styles.gridView}
                     renderItem={(item) => {
-                        return <GridItem item={item} listType={this.props.listType} />;
+                        return <GridItem item={item} listType={this.props.listType} refresh={this.refresh.bind(this)} />;
                     }}
                 />
             </View>

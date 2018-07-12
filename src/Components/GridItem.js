@@ -19,16 +19,11 @@ import {
     PLAYLIST_LIST,
     ARTIST_LIST,
  } from '../Values/Types';
-import { onBackgroundColor, backgroundColor, accentColor } from '../Values/colors';
+import { onBackgroundColor, accentColor } from '../Values/colors';
 
 const defaultAlbumArt = require('../Drawables/images/placeholder_cover.png');
 
 class GridItem extends Component {
-    componentWillMount() {
-        if (Platform.OS === 'android') {
-            UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-        }
-    }
 
     renderAlbumArt() {
         const albumArt = this.props.item.albumArt;
@@ -39,7 +34,6 @@ class GridItem extends Component {
     }
 
     renderItem() {
-        console.log(this.props.item);
         if (this.props.listType === ALBUM_LIST) {
             return (
                 <View style={styles.containerStyle}>
@@ -54,7 +48,6 @@ class GridItem extends Component {
                 </View>
             );
         }
-
         const name = this.props.item.name;
         return (
             <View>
@@ -71,34 +64,36 @@ class GridItem extends Component {
     }
 
     render() {
-        console.log(this.props.item);
         const { name, id } = this.props.item;
         return (
-            <TouchableOpacity 
-                onPress={
-                    () => {
-                        switch (this.props.listType) {
-                            case PLAYLIST_LIST:
-                                this.props.selectPlaylist(id);
-                                Actions.playlistSongList({ listType: PLAYLIST_WITH_ID, headerText: name });
-                                break;
-                            case ALBUM_LIST:
-                                this.props.selectAlbum(id);
-                                Actions.albumSongList({ listType: ALBUM_WITH_ID, headerText: name });
-                                break;
-                            case ARTIST_LIST:
-                            this.props.selectArtist(id);
-                                Actions.artistSongList({ listType: ARTIST_WITH_ID, headerText: name });
-                                break;
-                            default:
+            <View>
+                <TouchableOpacity
+                    onPress={
+                        () => {
+                            switch (this.props.listType) {
+                                case PLAYLIST_LIST:
+                                    this.props.selectPlaylist(id);
+                                    Actions.playlistSongList({ listType: PLAYLIST_WITH_ID, headerText: name });
+                                    break;
+                                case ALBUM_LIST:
+                                    this.props.selectAlbum(id);
+                                    Actions.albumSongList({ listType: ALBUM_WITH_ID, headerText: name });
+                                    break;
+                                case ARTIST_LIST:
+                                this.props.selectArtist(id);
+                                    Actions.artistSongList({ listType: ARTIST_WITH_ID, headerText: name });
+                                    break;
+                                default:
+                            }
                         }
                     }
-                }
-            >
-                <View>
-                    {this.renderItem()}
-                </View>
-            </TouchableOpacity>
+                >
+                    <View style={{ flex: 1 }} > 
+                        {this.renderItem()}
+                    </View>
+                </TouchableOpacity>
+            </View>
+            
         );
     }
 }
@@ -136,7 +131,14 @@ const styles = {
         fontFamily: 'Montserrat-Bold',
         color: '#fff',
         fontSize: 100,
-    }
+    },
+    menuStyle: {
+        borderBottomWidth: 2,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
 };
 
 export default connect(null, Act)(GridItem);

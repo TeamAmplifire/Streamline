@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
+import { PermissionsAndroid, ToastAndroid } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 import Reducers from './src/Reducers';
-import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
+// import { permissionCheck } from './react_native_fetch_music_filesNativeModule';
 import MyApp from './src/Components/App';
 
 const persistConfig = {
@@ -19,17 +20,22 @@ let store = createStore(persistedReducer);
 let persistor = persistStore(store);
 const appStore = createStore(persistedReducer, {}, applyMiddleware(ReduxThunk));
 
-const App = () => {
-    permissionCheck();
-    initialisePlayer();
-    return (
-        <Provider store={appStore}>
-            <PersistGate loading={null} persistor={persistor}>
-                <MyApp />
-            </PersistGate>
-        </Provider>
-    );
-};
+class App extends Component {
+    async componentWillMount() {
+        initialisePlayer();
+        await permissionCheck();
+    }
+
+    render() {
+        return (
+            <Provider store={appStore}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <MyApp />
+                </PersistGate>
+            </Provider>
+        );
+    }
+}
 
 const initialisePlayer = async () => {
     await TrackPlayer.setupPlayer({})
@@ -50,6 +56,18 @@ const initialisePlayer = async () => {
             });
         }
     );
+};
+
+const permissionCheck = async () => {
+    try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+            ToastAndroid.show('Access to storage denied!', ToastAndroid.SHORT);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
 };
 
 export default App;
