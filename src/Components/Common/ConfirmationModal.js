@@ -28,14 +28,16 @@ const ConfirmationModal = ({ children, visible, onAccept, onDecline }) => {
 
 const styles = {
     cardSectionStyle: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingTop: 16
     },
 
     textStyle: {
         flex: 1,
         fontFamily: 'Montserrat-Medium',
-        fontSize: 14,
+        fontSize: 16,
         color: onBackgroundColor,
+        paddingTop: 16,
         textAlign: 'center',
         lineHeight: 50
     },

@@ -27,6 +27,9 @@ class SingleInputModal extends Component {
                 onRequestClose={() => {}}
             >
                 <View style={styles.containerStyle}>
+                    <View style={{ backgroundColor, paddingTop: 12 }}>
+                        <Text style={styles.modalTitleStyle}>Rename playlist</Text>
+                    </View>
                     <CardSection>
                         <Input
                             label="Playlist Name"
@@ -56,12 +59,19 @@ const styles = {
     cardSelectionStyle: {
         justifyContent: 'center'
     },
+    modalTitleStyle: {
+        padding: 12,
+        fontFamily: 'Montserrat-SemiBold',
+        color: onBackgroundColor,
+        fontSize: 24
+    },
     textStyle: {
+        backgroundColor,
         flex: 1,
         fontSize: 18,
         textAlign: 'center',
         padding: 12,
-        color: onBackgroundColor
+        color: onBackgroundColor,
     },
     containerStyle: {
         backgroundColor: 'rgba(0,0,0,0.75)',
