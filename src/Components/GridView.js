@@ -24,7 +24,7 @@ class Grid extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(this.props);
+        //console.log(this.props);
         switch (this.props.listType) {
             case PLAYLIST_LIST:
                 this.setState({ dataSource: nextProps.playlistList });
@@ -57,14 +57,14 @@ class Grid extends Component {
     }
 
     renderHeader() {
-        console.log(this.props, 'renderHeader');
+        //console.log(this.props, 'renderHeader');
         return (
             <Header headerText={this.props.headerText} />
         );
     }
 
     render() {
-        console.log(this.props, 'render');
+        //console.log(this.props, 'render');
         return (
             <View style={{ flex: 1, backgroundColor }}>
                 {this.renderHeader()}

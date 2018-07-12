@@ -38,7 +38,7 @@ class PlaylistListModal extends Component {
                             data={this.props.playlistList}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={(item) => {
-                                console.log(item);
+                                //console.log(item);
                                 return (
                                     <TouchableOpacity 
                                         onPress={() => {

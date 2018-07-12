@@ -32,7 +32,7 @@ class Search extends PureComponent {
 
     render() {
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
-        console.log(dataSource);
+        //console.log(dataSource);
         return (
             <View style={{ flex: 1 }} >
                 <StatusBar

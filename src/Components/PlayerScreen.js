@@ -76,7 +76,7 @@ class PlayerScreen extends Component {
                 url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
-                artwork: require('../Drawables/images/placeholder_cover.jpg')
+                artwork: require('../Drawables/images/placeholder_cover_notif.jpg')
             }]);
         }
         TrackPlayer.skip(`${songID}`);
@@ -87,7 +87,7 @@ class PlayerScreen extends Component {
                 url: `file://${list[i].fullPath}`,
                 title: list[i].songName,
                 artist: list[i].artistName,
-                artwork: require('../Drawables/images/placeholder_cover.jpg')
+                artwork: require('../Drawables/images/placeholder_cover_notif.jpg')
             }]);
         }
     }

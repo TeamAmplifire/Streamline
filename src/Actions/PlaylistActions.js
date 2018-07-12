@@ -26,7 +26,7 @@ export const selectPlaylist = (playlistID) => {
 export const fetchPlaylistList = () => {
     return (dispatch) => {
         fetchAllPlaylists((errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -39,10 +39,10 @@ export const fetchPlaylistList = () => {
 export const createNewPlaylist = (playlistName) => {
     return () => {
         createPlaylist(playlistName, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
+            //console.log(successCallback);
         });
     };
 };
@@ -50,10 +50,10 @@ export const createNewPlaylist = (playlistName) => {
 export const addSongToPlaylistWithID = (playlistID, songID) => {
     return () => {
         addSongToPlaylist(playlistID, songID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
+            //console.log(successCallback);
         });
     };
 };
@@ -67,10 +67,10 @@ export const deletePlaylistWithID = (playlistID) => {
 export const renamePlaylistWithID = (playlistID, newName) => {
     return () => {
         renamePlaylist(playlistID, newName, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
-            console.log(successCallback);
+            //console.log(successCallback);
         });
     };
 };
@@ -78,7 +78,7 @@ export const renamePlaylistWithID = (playlistID, newName) => {
 export const getSongsFromPlaylistWithID = (playlistID) => {
     return (dispatch) => {
         getSongsFromPlaylist(playlistID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];

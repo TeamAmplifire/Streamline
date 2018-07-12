@@ -21,7 +21,7 @@ import {
 export const fetchArtistList = () => {
     return (dispatch) => {
         fetchAllArtists((errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -34,7 +34,7 @@ export const fetchArtistList = () => {
 export const getSongsFromArtistWithID = (artistID) => {
     return (dispatch) => {
         getSongsFromArtist(artistID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];

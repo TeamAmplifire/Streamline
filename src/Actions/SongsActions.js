@@ -16,7 +16,7 @@ import {
 export const selectSong = (songID) => {
     return (dispatch) => {
         getSong(songID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -29,7 +29,7 @@ export const selectSong = (songID) => {
 export const fetchSongs = () => {
     return (dispatch) => {
         fetchAllSongs((errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -42,7 +42,7 @@ export const fetchSongs = () => {
 export const fetchRecentlyAdded = () => {
     return (dispatch) => {
         fetchRecentlyAddedSongs((errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -55,7 +55,7 @@ export const fetchRecentlyAdded = () => {
 export const editSongInfoWithID = (newTitle, newAlbum, newArtist, songId, fullPath) => {
     return () => {
         editSongInfo(newTitle, newAlbum, newArtist, songId, fullPath, (successCallback) => {
-            console.log(successCallback);
+            //console.log(successCallback);
         });
     };
 };
@@ -64,7 +64,7 @@ export const deleteSongWithID = (songId, fullPath) => {
     return () => {
         deleteSong(songId, fullPath, 
         (successCallback) => {
-            console.log(successCallback);
+            //console.log(successCallback);
         });
     };
 };
@@ -72,10 +72,10 @@ export const deleteSongWithID = (songId, fullPath) => {
 export const getArtworkForSongWithID = (songID) => {
     return (dispatch) => {
         getArtworkForSong(songID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
-            // console.log(successCallback);
+            // //console.log(successCallback);
             dispatch({ type: GET_SONG_ARTWORK, payload: successCallback });
         });
     };

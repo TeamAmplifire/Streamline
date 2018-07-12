@@ -9,7 +9,7 @@ import * as Act from '../Actions';
 
 class App extends Component {
     render() {
-        console.log(this.props);
+        //console.log(this.props);
         TrackPlayer.getState().then(value => {
             if (value === 3) {
                 TrackPlayer.getCurrentTrack().then((songID) => {

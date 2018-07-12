@@ -128,7 +128,7 @@ class ListView extends PureComponent {
     }
 
     render() {
-        console.log(this.props);
+        //console.log(this.props);
         
         const dataSource = new DataSource(this.state.dataSource, (item, index) => item.songID);
         return (

@@ -23,7 +23,7 @@ export const selectAlbum = (albumID) => {
 export const fetchAlbumList = () => {
     return (dispatch) => {
         fetchAllAlbums((errorCallBack) => {
-            console.log(errorCallBack);
+            // //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -36,7 +36,7 @@ export const fetchAlbumList = () => {
 export const getSongsFromAlbumWithID = (albumID) => {
     return (dispatch) => {
         getSongsFromAlbum(albumID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             let JsonArray = [];
@@ -49,7 +49,7 @@ export const getSongsFromAlbumWithID = (albumID) => {
 export const getAlbumArtWithID = (albumID) => {
     return (dispatch) => {
         getAlbumArt(albumID, (errorCallBack) => {
-            console.log(errorCallBack);
+            //console.log(errorCallBack);
         },
         (successCallback) => {
             dispatch({ type: GET_ALBUM_ART, payload: successCallback });
